@@ -24,7 +24,19 @@
   }
 
   * { box-sizing: border-box; font-family: 'Segoe UI', 'Montserrat', Roboto, Helvetica, Arial, sans-serif; }
-  html, body { margin: 0; padding: 0; background-color: var(--bg-gray); color: var(--text-color); min-height: 100vh; width: 100%; overflow-x: hidden; }
+  
+  /* CORRECCIÓN DE SCROLL INFINITO Y ALTURA TOTAL */
+  html, body { 
+    margin: 0; 
+    padding: 0; 
+    background-color: var(--bg-gray); 
+    color: var(--text-color); 
+    width: 100%; 
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
   /* OCULTAR MENSAJES NATIVOS DE BLOGGER PERO PERMITIR FUNCIONAMIENTO */
   #ContactForm1_contact-form-error-message,
@@ -83,9 +95,17 @@
     box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3);
   }
 
-  /* DASHBOARD FULL WIDTH */
-  .dashboard-full { width: 100%; min-height: 100vh; background: #ffffff; margin: 0; padding: 0; text-align: left; }
-  .dashboard-header { background: #ffffff; padding: 15px 25px; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; width: 100%; }
+  /* DASHBOARD FULL WIDTH SIN BORDES LATERALES */
+  .dashboard-full { 
+    width: 100%; 
+    min-height: 100vh; 
+    background: #ffffff; 
+    margin: 0; 
+    padding: 0; 
+    text-align: left; 
+    overflow: visible;
+  }
+  .dashboard-header { background: #ffffff; padding: 15px 20px; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; width: 100%; }
   
   .header-info { text-align: left; }
   .header-info h2 { margin: 0; font-size: 20px; color: #111; text-align: left; font-weight: 700; }
@@ -115,13 +135,28 @@
   .tab-btn { padding: 12px 18px; background: #e9ecef; color: #495057; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
   .tab-btn.active { background: var(--header-bg); color: #ffffff; }
 
-  /* CONTENIDO PRINCIPAL */
-  .main-content-full { padding: 25px 20px; width: 100%; margin: 0; text-align: left; }
-  .tab-content { display: none; width: 100%; text-align: left; }
+  /* CONTENIDO PRINCIPAL SIN BORDES Y CON EXPANSIÓN TOTAL */
+  .main-content-full { 
+    padding: 0; 
+    width: 100%; 
+    margin: 0; 
+    text-align: left; 
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+  }
+  .tab-content { display: none; width: 100%; text-align: left; flex: 1; }
   .tab-content.active { display: block; }
 
+  /* CONTENEDORES INTERNOS CON PADDING CERO PARA ELIMINAR BORDES LATERALES */
+  .full-width-section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   /* TARJETAS NOTICIAS */
-  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; text-align: left; }
+  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; text-align: left; padding: 20px; }
   .news-card { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.04); text-align: left; }
   .news-card img { width: 100%; height: 200px; object-fit: cover; }
   .news-card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; text-align: left; }
@@ -210,9 +245,11 @@
   <div class="main-content-full">
     
     <div id="tab-noticais" class="tab-content active">
-      <!-- Elfsight Blog | Untitled Blog -->
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-9682f774-d1f8-4a2f-bafb-b6ae8fccf335" data-elfsight-app-lazy></div>
+      <div class="full-width-section">
+        <!-- Elfsight Blog | Untitled Blog -->
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-9682f774-d1f8-4a2f-bafb-b6ae8fccf335" data-elfsight-app-lazy></div>
+      </div>
     </div>
 
     <div id="tab-exclusivo" class="tab-content">
@@ -233,13 +270,20 @@
 
     <!-- PESTAÑA SORTEOS -->
     <div id="tab-sorteos" class="tab-content">
-      <!-- Elfsight Form Builder | Untitled Form Builder -->
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-25c50845-bf94-4f9b-9879-2f5da5469520" data-elfsight-app-lazy></div>
+      <div class="full-width-section" style="padding: 20px;">
+        <div style="background: linear-gradient(135deg, #fff8f0 0%, #fff1e0 100%); border: 2px solid var(--primary-orange); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;">
+          <h3 style="color: var(--dark-orange); margin-top: 0; font-size: 18px; font-weight: 800;">Haz un comentario y si tu comentario es el más popular te ganas un par de entradas</h3>
+          <p style="font-size: 14px; color: #444; margin-bottom: 0;">Deja tu opinión o comentario abajo. ¡El comentario con más interacciones se lleva las entradas!</p>
+        </div>
+
+        <!-- Elfsight Comments | Untitled Comments -->
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-88478a52-c397-4b30-bbe7-52087adff91c" data-elfsight-app-lazy></div>
+      </div>
     </div>
 
     <!-- SECCIÓN MI USUARIO -->
-    <div id="drawer-sec-mi-usuario" class="tab-content">
+    <div id="drawer-sec-mi-usuario" class="tab-content" style="padding: 20px;">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Información Completa de Usuario</h3>
       <table class="data-table">
         <tr><th>Nombre Completo</th><td id="usr-data-fullname"></td></tr>
@@ -273,7 +317,7 @@
     </div>
 
     <!-- SECCIÓN CONFIGURACIÓN -->
-    <div id="drawer-sec-configuracion" class="tab-content">
+    <div id="drawer-sec-configuracion" class="tab-content" style="padding: 20px;">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Configuración de Suscripción y Medio de Pago</h3>
       <table class="data-table">
         <tr><th>Modalidad Actual</th><td id="cfg-medio-pago">Mercado Pago</td></tr>
@@ -309,13 +353,13 @@
     </div>
 
     <!-- SECCIÓN GUARDADOS -->
-    <div id="drawer-sec-guardados" class="tab-content">
+    <div id="drawer-sec-guardados" class="tab-content" style="padding: 20px;">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Contenidos Guardados en Favoritos</h3>
-      <div id="favoritos-container-list" class="news-grid"></div>
+      <div id="favoritos-container-list" class="news-grid" style="padding: 0;"></div>
     </div>
 
     <!-- SECCIÓN AYUDA -->
-    <div id="drawer-sec-ayuda" class="tab-content">
+    <div id="drawer-sec-ayuda" class="tab-content" style="padding: 20px;">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Centro de Ayuda y Contacto</h3>
       <p style="font-size:14px; color:#444;">Canales oficiales de asistencia directa:</p>
       <ul style="line-height:1.8; font-size:14px; padding-left: 20px;">
@@ -336,7 +380,7 @@
     </div>
 
     <!-- LECTOR DE NOTICIA -->
-    <div id="full-news-view">
+    <div id="full-news-view" style="padding: 20px;">
       <button class="btn-primary-custom" onclick="volverDesdeLectorCompleto()" style="margin-bottom: 15px; width: auto; background: #333; box-shadow: none;"><i class="fas fa-arrow-left"></i> Volver</button>
       <img id="full-news-img" src="" alt="Noticia">
       <h2 id="full-news-title" style="color:#111;"></h2>
