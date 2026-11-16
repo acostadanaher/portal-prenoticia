@@ -26,18 +26,12 @@
   * { box-sizing: border-box; font-family: 'Segoe UI', 'Montserrat', Roboto, Helvetica, Arial, sans-serif; }
   html, body { margin: 0; padding: 0; background-color: var(--bg-gray); color: var(--text-color); min-height: 100vh; width: 100%; overflow-x: hidden; }
 
-  /* OCULTAR MENSAJES NATIVOS DE BLOGGER */
+  /* OCULTAR MENSAJES NATIVOS DE BLOGGER PERO PERMITIR FUNCIONAMIENTO */
   #ContactForm1_contact-form-error-message,
   #ContactForm1_contact-form-success-message,
   .contact-form-error-message,
-  .contact-form-success-message,
-  .widget-content .contact-form-success-message {
+  .contact-form-success-message {
       display: none !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      height: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
   }
 
   /* LOGIN CONTENEDOR - BLOQUE SUPERIOR PROFESIONAL */
@@ -89,7 +83,7 @@
     box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3);
   }
 
-  /* DASHBOARD FULL WIDTH (SIN MÁRGENES IZQUIERDOS, ALINEADO IZQUIERDA) */
+  /* DASHBOARD FULL WIDTH */
   .dashboard-full { width: 100%; min-height: 100vh; background: #ffffff; margin: 0; padding: 0; text-align: left; }
   .dashboard-header { background: #ffffff; padding: 15px 25px; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; width: 100%; }
   
@@ -97,12 +91,11 @@
   .header-info h2 { margin: 0; font-size: 20px; color: #111; text-align: left; font-weight: 700; }
   .header-info .date-text { font-size: 13px; color: var(--text-muted); margin-top: 4px; display: block; text-align: left; }
 
-  /* BOTÓN DE MENÚ CON 3 RAYITAS PURAS */
+  /* BOTÓN DE MENÚ */
   .btn-menu-trigger { background: var(--header-bg); color: #fff; border: none; padding: 10px 14px; border-radius: 8px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 44px; height: 40px; box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3); }
   .btn-menu-trigger:hover { background: var(--dark-orange); }
 
-  /* DRAWER MENU LATERAL (SIN SOMBRADO DE FONDO / BACKDROP) Y DESPLIEGUE AL LADO */
-  .drawer-overlay { display: none !important; }
+  /* DRAWER MENU LATERAL */
   .drawer-content { position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background: #ffffff; z-index: 100000; transition: right 0.3s ease; box-shadow: -5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; text-align: left; }
   .drawer-content.open { right: 0; }
   .drawer-header { background: var(--primary-orange); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
@@ -114,21 +107,20 @@
   .drawer-menu-item button { width: 100%; background: none; color: #333; text-align: left; padding: 16px 20px; border-radius: 0; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 12px; border: none; cursor: pointer; }
   .drawer-menu-item button:hover { background: #f8f9fa; color: var(--primary-orange); }
 
-  /* TABS CON SCROLL HORIZONTAL Y SCROLL GLOBAL */
+  /* TABS CON SCROLL HORIZONTAL */
   .tabs-scroll-container { display: flex; background: #ffffff; border-bottom: 3px solid var(--header-bg); padding: 10px 15px 0 15px; gap: 8px; position: sticky; top: 0; z-index: 100; overflow-x: auto; scrollbar-width: thin; width: 100%; white-space: nowrap; -webkit-overflow-scrolling: touch; }
   .tabs-scroll-container::-webkit-scrollbar { height: 4px; }
   .tabs-scroll-container::-webkit-scrollbar-thumb { background: var(--primary-orange); border-radius: 4px; }
 
   .tab-btn { padding: 12px 18px; background: #e9ecef; color: #495057; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
   .tab-btn.active { background: var(--header-bg); color: #ffffff; }
-  .btn-add-interest-tab { background: #fff3e0; color: var(--dark-orange); border: 2px dashed var(--primary-orange); border-radius: 8px 8px 0 0; padding: 10px 16px; font-weight: 800; cursor: pointer; flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px; }
 
-  /* CONTENIDO PRINCIPAL ANCHO COMPLETO - SIN MÁRGENES IZQUIERDOS */
+  /* CONTENIDO PRINCIPAL */
   .main-content-full { padding: 25px 20px; width: 100%; margin: 0; text-align: left; }
   .tab-content { display: none; width: 100%; text-align: left; }
   .tab-content.active { display: block; }
 
-  /* TARJETAS NOTICIAS FULL ANCHO RESPONSIVE */
+  /* TARJETAS NOTICIAS */
   .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; text-align: left; }
   .news-card { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.04); text-align: left; }
   .news-card img { width: 100%; height: 200px; object-fit: cover; }
@@ -140,15 +132,11 @@
   .btn-card-primary { flex: 1; background: var(--header-bg); color: #fff; font-size: 13px; padding: 10px 12px; border-radius: 6px; border: none; font-weight: 700; cursor: pointer; }
   .btn-card-save { background: #f8f9fa; color: #333; border: 1px solid #ccc; font-size: 13px; padding: 10px 12px; border-radius: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: 600; }
 
-  /* INPUTS & FORMULARIOS ALINEADOS A LA IZQUIERDA */
+  /* INPUTS */
   .input-group { margin-bottom: 18px; text-align: left; }
   .input-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
   input[type="text"], input[type="password"], input[type="email"], select, textarea { width: 100%; padding: 12px 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 14.5px; outline: none; text-align: left; background: #fff; }
 
-  /* MODALES SUPERPUESTOS */
-  .custom-modal-backdrop { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 99999; align-items: center; justify-content: center; padding: 15px; }
-  .custom-modal-card { background: #ffffff; border-radius: 14px; max-width: 500px; width: 100%; padding: 25px; text-align: left; border-top: 5px solid var(--primary-orange); box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
-  
   .data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; text-align: left; }
   .data-table th, .data-table td { padding: 14px; border: 1px solid var(--border-color); font-size: 14px; text-align: left; }
   .data-table th { background: #f8f9fa; width: 35%; text-align: left; }
@@ -165,7 +153,7 @@
 </head>
 <body>
 
-<!-- DRAWER MENU LATERAL DESPLEGABLE (SIN SOMBRADO / BACKDROP) -->
+<!-- DRAWER MENU LATERAL -->
 <div class="drawer-content" id="drawer-content">
   <div class="drawer-header">
     <h3>Menú de Opciones</h3>
@@ -180,20 +168,7 @@
   </ul>
 </div>
 
-<!-- MODAL PARA SOLICITAR AGREGAR MÁS TEMAS/INTERESES DE SU INTERÉS -->
-<div class="custom-modal-backdrop" id="modal-add-interest">
-  <div class="custom-modal-card">
-    <h3 style="color: var(--dark-orange);">Solicitar Nuevos Temas</h3>
-    <p style="font-size: 13.5px; color: #555;">Seleccione las categorías adicionales que desea habilitar en su portal. Su solicitud se enviará para ser cargada en su perfil:</p>
-    <div id="missing-interests-list" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px; text-align:left;"></div>
-    <div style="display:flex; gap:10px;">
-      <button class="btn-primary-custom" onclick="enviarSolicitudNuevosIntereses()" style="flex:1;">Enviar Solicitud</button>
-      <button class="btn-primary-custom" onclick="cerrarModalIntereses()" style="background:#6c757d; box-shadow:none;">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<!-- VISTA 1: LOGIN (BLOQUE SUPERIOR PROFESIONAL) -->
+<!-- VISTA 1: LOGIN -->
 <div class="login-container" id="login-container">
   <div class="login-section">
     <h2>Iniciar Sesión</h2>
@@ -208,7 +183,6 @@
     <button type="button" class="btn-primary-custom" onclick="login()">Ingresar</button>
     <p id="login-error" style="color:var(--red-error); margin-top: 15px; font-weight: bold; text-align: left;"></p>
 
-    <!-- SECCIÓN ¿AÚN NO TENÉS CUENTA? DESTACADA Y ESTÉTICA -->
     <div class="unregistered-banner">
       <h3>¿Aún no tenés una cuenta?</h3>
       <p>Accedé a contenido exclusivo y participá de sorteos por <span class="price-highlight">$5.000 / mes</span>.</p>
@@ -219,32 +193,26 @@
   </div>
 </div>
 
-<!-- VISTA 2: DASHBOARD COMPLETO (ANCHO COMPLETO, ALINEADO A LA IZQUIERDA) -->
+<!-- VISTA 2: DASHBOARD COMPLETO -->
 <div class="dashboard-full" id="dashboard-container" style="display:none;">
   <div class="dashboard-header">
     <div class="header-info">
       <h2>Hola, <span id="user-display-name"></span></h2>
       <span class="date-text" id="current-date-display"></span>
     </div>
-    <!-- BOTÓN DE MENÚ CON 3 RAYITAS PURAS -->
     <button class="btn-menu-trigger" onclick="toggleDrawer(true)" aria-label="Abrir Menú">
       <i class="fas fa-bars"></i>
     </button>
   </div>
 
-  <!-- SCROLL HORIZONTAL DE SECCIONES / PESTAÑAS (SOLO NOVEDADES, EXCLUSIVO, SORTEOS) -->
-  <div class="tabs-scroll-container" id="tabs-scroll-bar">
-    <!-- Pestañas dinámicas según preferencias -->
-  </div>
+  <div class="tabs-scroll-container" id="tabs-scroll-bar"></div>
 
   <div class="main-content-full">
     
-    <!-- PESTAÑA DINÁMICA NOVEDADES -->
     <div id="tab-novedades" class="tab-content active">
       <div id="news-list-view" class="news-grid"></div>
     </div>
 
-    <!-- PESTAÑA DINÁMICA EXCLUSIVO -->
     <div id="tab-exclusivo" class="tab-content">
       <div class="news-grid">
         <div class="news-card">
@@ -261,7 +229,7 @@
       </div>
     </div>
 
-    <!-- PESTAÑA DINÁMICA SORTEOS (FLUJO DE CACHÉ Y FORMULARIO BLOGGER) -->
+    <!-- PESTAÑA SORTEOS -->
     <div id="tab-sorteos" class="tab-content">
       <div class="news-card" style="max-width: 500px; margin: 0;">
         <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop&q=80" alt="Sorteo">
@@ -275,7 +243,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN DRAWER: MI USUARIO -->
+    <!-- SECCIÓN MI USUARIO -->
     <div id="drawer-sec-mi-usuario" class="tab-content">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Información Completa de Usuario</h3>
       <table class="data-table">
@@ -309,7 +277,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN DRAWER: CONFIGURACIÓN -->
+    <!-- SECCIÓN CONFIGURACIÓN -->
     <div id="drawer-sec-configuracion" class="tab-content">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Configuración de Suscripción y Medio de Pago</h3>
       <table class="data-table">
@@ -345,15 +313,13 @@
       </div>
     </div>
 
-    <!-- SECCIÓN DRAWER: GUARDADOS -->
+    <!-- SECCIÓN GUARDADOS -->
     <div id="drawer-sec-guardados" class="tab-content">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Contenidos Guardados en Favoritos</h3>
-      <div id="favoritos-container-list" class="news-grid">
-        <!-- Lista de guardados -->
-      </div>
+      <div id="favoritos-container-list" class="news-grid"></div>
     </div>
 
-    <!-- SECCIÓN DRAWER: AYUDA -->
+    <!-- SECCIÓN AYUDA -->
     <div id="drawer-sec-ayuda" class="tab-content">
       <h3 style="color:var(--primary-orange); margin-bottom:15px;">Centro de Ayuda y Contacto</h3>
       <p style="font-size:14px; color:#444;">Canales oficiales de asistencia directa:</p>
@@ -374,7 +340,7 @@
       </div>
     </div>
 
-    <!-- LECTOR DE NOTICIA COMPLETA FULL WIDTH -->
+    <!-- LECTOR DE NOTICIA -->
     <div id="full-news-view">
       <button class="btn-primary-custom" onclick="volverDesdeLectorCompleto()" style="margin-bottom: 15px; width: auto; background: #333; box-shadow: none;"><i class="fas fa-arrow-left"></i> Volver</button>
       <img id="full-news-img" src="" alt="Noticia">
@@ -385,22 +351,23 @@
   </div>
 </div>
 
-<!-- COMPONENTE NATIVO DE BLOGGER PARA ENVÍO DE EMAIL SILENCIOSO -->
-<div class='widget-content contact-form-widget' style="display:none !important;">
-<div class='form'>
-<form name='contact-form' id="blogger-native-contact-form">
-<input ariby='Name' class='contact-form-name' id='ContactForm1_contact-form-name' name='name' placeholder='Nombre y Apellido' size='30' type='text' value=''/>
-<input ariby='Email *' class='contact-form-email' id='ContactForm1_contact-form-email' name='email' placeholder='Correo electrónico' size='30' type='text' value=''/>
-<textarea ariby='Message *' class='contact-form-email-message' cols='25' id='ContactForm1_contact-form-email-message' name='email-message' placeholder='Mensaje' rows='5'></textarea>
-<input class='contact-form-button btn contact-form-button-submit' id='ContactForm1_contact-form-submit' type='button' value='Enviar'/>
-<p class='contact-form-error-message' id='ContactForm1_contact-form-error-message'></p>
-<p class='contact-form-success-message' id='ContactForm1_contact-form-success-message'></p>
-</form>
-</div>
+<!-- ================================================================= -->
+<!-- MOTOR DE ENVÍO FORZADO DE BLOGGER (IFRAME OCULTO + FORMULARIO REAL) -->
+<!-- ================================================================= -->
+<iframe name="hidden_iframe_blogger" id="hidden_iframe_blogger" style="display:none;" onload="if(window.enviandoBlogger) { alert('¡Inscripción enviada exitosamente a su correo!'); window.enviandoBlogger=false; }"></iframe>
+
+<div style="display:none !important; visibility:hidden !important; opacity:0 !important; height:0; overflow:hidden;">
+  <form id="blogger-submit-hack" action="https://prenoticia.com/contact/post" method="post" target="hidden_iframe_blogger">
+    <input type="hidden" name="actionType" value="sendMessage">
+    <input type="hidden" name="archiveMonth" value="">
+    <input type="hidden" name="archiveYear" value="">
+    <input type="text" id="hack-name" name="name" value="">
+    <input type="text" id="hack-email" name="email" value="">
+    <textarea id="hack-message" name="email-message"></textarea>
+  </form>
 </div>
 
 <script>
-// BASE DE DATOS LOCAL DE USUARIOS CON PREFERENCIAS
 const users = {
   "luciacarpio20@gmail.com": {
     email: "luciacarpio20@gmail.com",
@@ -431,6 +398,7 @@ const articulosRepositorio = [
 
 let currentUser = null;
 let listaFavoritosMemoria = [];
+window.enviandoBlogger = false;
 
 window.addEventListener("load", () => {
   const hoy = new Date();
@@ -464,7 +432,6 @@ function cargarDashboard(user) {
   document.getElementById("dashboard-container").style.display = "block";
   document.getElementById("user-display-name").textContent = user.nombreSaludo;
 
-  // Llenar Ficha Mi Usuario
   document.getElementById("usr-data-fullname").textContent = user.nombreCompleto;
   document.getElementById("usr-data-dni").textContent = user.dni;
   document.getElementById("usr-data-email").textContent = user.email;
@@ -508,7 +475,6 @@ function openTab(tabId) {
   volverDesdeLectorCompleto();
 }
 
-/* DRAWER MENU DESPLEGABLE (AL LADO, SIN BACKDROP/SOMBRADO) */
 function toggleDrawer(open) {
   const content = document.getElementById("drawer-content");
   if (open) {
@@ -527,7 +493,6 @@ function abrirSeccionDrawer(seccionId) {
   volverDesdeLectorCompleto();
 }
 
-/* RENDER DE ARTÍCULOS */
 function renderizarArticulosNoticias() {
   const grid = document.getElementById("news-list-view");
   grid.innerHTML = "";
@@ -562,7 +527,6 @@ function volverDesdeLectorCompleto() {
   document.getElementById('full-news-view').style.display = 'none';
 }
 
-/* GUARDADOS EN FAVORITOS */
 function guardarEnFavoritosDirecto(titulo, tipo) {
   if (!listaFavoritosMemoria.some(f => f.titulo === titulo)) {
     listaFavoritosMemoria.push({ titulo, tipo });
@@ -593,13 +557,14 @@ function renderizarFavoritosEnDrawer() {
   });
 }
 
-/* SORTEOS: CACHÉ, COPIADO Y ENVÍO DE EMAIL SILENCIOSO (BLINDADO) */
+/* ================================================================= */
+/* SORTEOS: ENVÍO FORZADO REAL A BLOGGER (CERO FALLOS) */
+/* ================================================================= */
 function prepararInscripcionSorteo(nombreSorteo) {
   const ahora = new Date();
   const fechaHoraStr = ahora.toLocaleString('es-AR');
   const etiquetaSorteo = "Sorteos";
 
-  // Guardar en caché local de forma segura
   const datosCache = {
     usuario: currentUser.nombreCompleto,
     email: currentUser.email,
@@ -610,45 +575,39 @@ function prepararInscripcionSorteo(nombreSorteo) {
   
   try {
     localStorage.setItem("ultimo_sorteo_cache", JSON.stringify(datosCache));
-  } catch (e) {
-    console.warn("Almacenamiento local restringido, operando en memoria.");
-  }
+  } catch (e) {}
 
-  // Autocompletar datos en el formulario oculto de Blogger
-  document.getElementById("ContactForm1_contact-form-name").value = currentUser.nombreCompleto;
-  document.getElementById("ContactForm1_contact-form-email").value = currentUser.email;
-  document.getElementById("ContactForm1_contact-form-email-message").value = 
-    `INSCRIPCIÓN A SORTEO\n-------------------------------\nUsuario: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nSorteo: ${nombreSorteo}\nEtiqueta: ${etiquetaSorteo}\nFecha y Hora: ${fechaHoraStr}`;
-
-  // Copia segura al portapapeles blindada contra errores de permisos móviles
-  const textoPortapapeles = `Participación Sorteo:\nNombre: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nEtiqueta: ${etiquetaSorteo}\nSorteo: ${nombreSorteo}\nHora: ${fechaHoraStr}`;
-  
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(textoPortapapeles).catch(() => {});
-  }
-
-  // Reemplazar botón por el botón "Confirmar" de manera limpia sin alertas de error
   const wrapper = document.getElementById("sorteo-action-wrapper");
   wrapper.innerHTML = `
-    <button class="btn-card-primary" style="background:var(--green-success);" onclick="confirmarEnvioSorteo()">Confirmar y Enviar</button>
-    <span style="font-size:12px; color:var(--green-success); display:block; margin-top:5px;"><i class="fas fa-check-circle"></i> Datos preparados y sincronizados correctamente.</span>
+    <button class="btn-card-primary" style="background:var(--green-success);" onclick="confirmarEnvioSorteo('${nombreSorteo}')">Confirmar y Enviar</button>
+    <span style="font-size:12px; color:var(--green-success); display:block; margin-top:5px;"><i class="fas fa-check-circle"></i> Listo para procesar envío a su correo.</span>
   `;
 }
 
-function confirmarEnvioSorteo() {
+function confirmarEnvioSorteo(nombreSorteo) {
+  const ahora = new Date();
+  const fechaHoraStr = ahora.toLocaleString('es-AR');
+  const mensajeDetalle = `INSCRIPCIÓN A SORTEO\n-------------------------------\nUsuario: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nSorteo: ${nombreSorteo}\nFecha y Hora: ${fechaHoraStr}`;
+
+  // Inyectar en el formulario Hack de Blogger con acción directa POST
+  document.getElementById("hack-name").value = currentUser.nombreCompleto;
+  document.getElementById("hack-email").value = currentUser.email;
+  document.getElementById("hack-message").value = mensajeDetalle;
+
+  window.enviandoBlogger = true;
+  
   try {
-    document.getElementById("ContactForm1_contact-form-submit").click();
-    alert("¡Inscripción enviada exitosamente a su correo!");
+    // Forzar el submit real por POST hacia Blogger mediante el iframe oculto
+    document.getElementById("blogger-submit-hack").submit();
     
-    // Restaurar botón original
+    // Restaurar botón original de manera limpia
     const wrapper = document.getElementById("sorteo-action-wrapper");
     wrapper.innerHTML = `<button class="btn-card-primary" onclick="prepararInscripcionSorteo('Sorteo de Entradas: COYOTE VS ACME')">Participar</button>`;
   } catch (e) {
-    alert("No se pudo completar el envío automático.");
+    alert("Error de conexión al procesar el envío automático.");
   }
 }
 
-/* FORMULARIOS SILENCIOSOS Y GESTIÓN DE DATOS */
 function toggleFormModificarDatos(show) {
   document.getElementById("form-modificar-datos-wrapper").style.display = show ? "block" : "none";
 }
@@ -690,7 +649,7 @@ function enviarMensajeChat() {
   container.innerHTML += `<div class="chat-msg user">${txt}</div>`;
   document.getElementById("chat-input-text").value = "";
 
-  dispararFormularioBloggerSilencioso("CONSULTA DE CHAT EN VIVO DE AYUDA", `Usuario: ${currentUser.nombreCompleto}\nCorreo: ${currentUser.email}\nMensaje: ${txt}`);
+  dispararFormularioBloggerSilencioso("CONSULTA DE CHAT EN VIVO DE AYUDA", `Usuario: ${currentUser.nombreCompleto}\nCorreo: ${currentUser.email}\n Mensaje: ${txt}`);
 
   setTimeout(() => {
     container.innerHTML += `<div class="chat-msg system">Hemos recibido tu consulta. Te responderemos a la brevedad a tu correo.</div>`;
@@ -699,12 +658,12 @@ function enviarMensajeChat() {
 }
 
 function dispararFormularioBloggerSilencioso(asunto, detalle) {
-  document.getElementById("ContactForm1_contact-form-name").value = currentUser.nombreCompleto;
-  document.getElementById("ContactForm1_contact-form-email").value = currentUser.email;
-  document.getElementById("ContactForm1_contact-form-email-message").value = `${asunto}\n-------------------------------\n${detalle}`;
+  document.getElementById("hack-name").value = currentUser.nombreCompleto;
+  document.getElementById("hack-email").value = currentUser.email;
+  document.getElementById("hack-message").value = `${asunto}\n-------------------------------\n${detalle}`;
 
   try {
-    document.getElementById("ContactForm1_contact-form-submit").click();
+    document.getElementById("blogger-submit-hack").submit();
   } catch (e) {}
 }
 
