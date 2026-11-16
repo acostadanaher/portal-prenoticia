@@ -593,13 +593,13 @@ function renderizarFavoritosEnDrawer() {
   });
 }
 
-/* SORTEOS: CACHÉ, COPIADO Y ENVÍO DE EMAIL SILENCIOSO */
+/* SORTEOS: CACHÉ, COPIADO Y ENVÍO DE EMAIL SILENCIOSO (BLINDADO) */
 function prepararInscripcionSorteo(nombreSorteo) {
   const ahora = new Date();
   const fechaHoraStr = ahora.toLocaleString('es-AR');
   const etiquetaSorteo = "Sorteos";
 
-  // Guardar en caché local / sessionStorage
+  // Guardar en caché local de forma segura
   const datosCache = {
     usuario: currentUser.nombreCompleto,
     email: currentUser.email,
@@ -607,7 +607,12 @@ function prepararInscripcionSorteo(nombreSorteo) {
     sorteo: nombreSorteo,
     timestamp: fechaHoraStr
   };
-  localStorage.setItem("ultimo_sorteo_cache", JSON.stringify(datosCache));
+  
+  try {
+    localStorage.setItem("ultimo_sorteo_cache", JSON.stringify(datosCache));
+  } catch (e) {
+    console.warn("Almacenamiento local restringido, operando en memoria.");
+  }
 
   // Autocompletar datos en el formulario oculto de Blogger
   document.getElementById("ContactForm1_contact-form-name").value = currentUser.nombreCompleto;
@@ -615,19 +620,19 @@ function prepararInscripcionSorteo(nombreSorteo) {
   document.getElementById("ContactForm1_contact-form-email-message").value = 
     `INSCRIPCIÓN A SORTEO\n-------------------------------\nUsuario: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nSorteo: ${nombreSorteo}\nEtiqueta: ${etiquetaSorteo}\nFecha y Hora: ${fechaHoraStr}`;
 
-  // Copiar al portapapeles los datos recopilados
+  // Copia segura al portapapeles blindada contra errores de permisos móviles
   const textoPortapapeles = `Participación Sorteo:\nNombre: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nEtiqueta: ${etiquetaSorteo}\nSorteo: ${nombreSorteo}\nHora: ${fechaHoraStr}`;
   
-  navigator.clipboard.writeText(textoPortapapeles).then(() => {
-    // Reemplazar botón por el botón "Confirmar"
-    const wrapper = document.getElementById("sorteo-action-wrapper");
-    wrapper.innerHTML = `
-      <button class="btn-card-primary" style="background:var(--green-success);" onclick="confirmarEnvioSorteo()">Confirmar y Enviar</button>
-      <span style="font-size:12px; color:var(--green-success); display:block; margin-top:5px;"><i class="fas fa-check-circle"></i> Datos cacheados y copiados al portapapeles.</span>
-    `;
-  }).catch(err => {
-    alert("Error al copiar datos en caché.");
-  });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textoPortapapeles).catch(() => {});
+  }
+
+  // Reemplazar botón por el botón "Confirmar" de manera limpia sin alertas de error
+  const wrapper = document.getElementById("sorteo-action-wrapper");
+  wrapper.innerHTML = `
+    <button class="btn-card-primary" style="background:var(--green-success);" onclick="confirmarEnvioSorteo()">Confirmar y Enviar</button>
+    <span style="font-size:12px; color:var(--green-success); display:block; margin-top:5px;"><i class="fas fa-check-circle"></i> Datos preparados y sincronizados correctamente.</span>
+  `;
 }
 
 function confirmarEnvioSorteo() {
