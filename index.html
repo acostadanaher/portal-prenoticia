@@ -224,30 +224,30 @@
         .user-nav-area {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
         }
 
-        /* Botón de casita */
-        .menu-toggle {
+        /* Botones de casita y lupa en el header */
+        .header-icon-btn {
             background: none;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             padding: 0;
             color: var(--primary);
-            border-radius: 6px;
-            transition: background 0.2s;
+            border-radius: 8px;
+            transition: background 0.2s, transform 0.15s;
         }
 
-        .menu-toggle:hover {
+        .header-icon-btn:hover, .header-icon-btn.active {
             background: var(--primary-light);
         }
 
-        .menu-toggle svg {
+        .header-icon-btn svg {
             width: 22px;
             height: 22px;
             fill: currentColor;
@@ -378,6 +378,7 @@
             transition: background 0.2s;
             text-decoration: none;
             display: block;
+            font-size: 14px;
         }
 
         .btn-sidebar-action:hover {
@@ -392,6 +393,16 @@
 
         .btn-upgrade-sidebar:hover {
             background: var(--primary-hover);
+        }
+
+        .btn-downgrade-sidebar {
+            background: #fff6ea;
+            color: #b45309;
+            border: 1px solid #fbd38d;
+        }
+
+        .btn-downgrade-sidebar:hover {
+            background: #ffedd5;
         }
 
         .btn-logout {
@@ -467,6 +478,119 @@
             width: 100%;
             height: 3px;
             background-color: var(--primary);
+        }
+
+        /* Buscador deslizante debajo de las pestañas de navegación */
+        .search-drawer {
+            background: #fffaf3;
+            border-bottom: 0 solid var(--border-color);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.35s ease, border-bottom-width 0.35s ease;
+            flex-shrink: 0;
+            z-index: 85;
+            padding: 0 24px;
+        }
+
+        .search-drawer.open {
+            max-height: 130px;
+            padding: 16px 24px;
+            border-bottom-width: 1px;
+        }
+
+        .search-drawer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-input-wrap {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input-wrap input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            border: 1px solid #fbd38d;
+            border-radius: 8px;
+            outline: none;
+            background: #ffffff;
+            color: var(--text-color);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input-wrap input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(246, 142, 2, 0.15);
+        }
+
+        .btn-search-submit {
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.2s;
+        }
+
+        .btn-search-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-search-close {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-search-close:hover {
+            background: #f1f5f9;
+            color: var(--text-color);
+        }
+
+        /* Rueda de carga de búsqueda */
+        .search-loader-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .spinner-ring {
+            width: 44px;
+            height: 44px;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spinLoader 0.8s linear infinite;
+            margin-bottom: 14px;
+        }
+
+        @keyframes spinLoader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Contenedor de contenido con scroll interno fluido */
@@ -613,8 +737,8 @@
             border-radius: 12px;
             padding: 36px 24px;
             text-align: center;
-            max-width: 580px;
-            margin: 20px auto;
+            max-width: 620px;
+            margin: 24px auto;
         }
 
         .membership-lock-box h3 {
@@ -690,10 +814,19 @@
         }
 
         .detail-card-full h2 {
-            font-size: 22px !important;
+            font-size: 24px !important;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        .detail-subtitle {
+            font-size: 17px !important;
+            font-weight: 500;
+            color: #333333 !important;
+            line-height: 1.55 !important;
+            margin-bottom: 20px !important;
         }
 
         .detail-card-full p {
@@ -784,6 +917,12 @@
             .sorteo-title {
                 font-size: 20px;
             }
+            .search-drawer.open {
+                padding: 12px 16px;
+            }
+            .btn-search-submit {
+                padding: 12px 14px;
+            }
         }
     </style>
 </head>
@@ -831,8 +970,12 @@
                 </div>
                 <div class="user-nav-area">
                     <!-- Botón de casita -->
-                    <button class="menu-toggle" id="menu-toggle-btn" aria-label="Menú principal">
+                    <button class="header-icon-btn" id="menu-toggle-btn" aria-label="Menú principal" title="Menú de cuenta">
                         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </button>
+                    <!-- Botón de lupita a la derecha de la casita -->
+                    <button class="header-icon-btn" id="search-toggle-btn" aria-label="Buscar noticias" title="Buscar">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                     </button>
                 </div>
             </div>
@@ -850,7 +993,7 @@
                 <!-- Banner de Membresía -->
                 <div style="background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
                     <p style="font-size: 13px; color: var(--text-color); line-height: 1.4;">
-                        ★ <strong>Membresía Premium:</strong> Accedé a noticias exclusivas y participá por entradas de cine a solo <strong>$990 por mes</strong>.
+                        ★ <strong>Membresía Premium:</strong> Accedé a noticias completas y participá por entradas de cine a solo <strong>$990 por mes</strong>.
                     </p>
                 </div>
 
@@ -861,17 +1004,35 @@
                     <p><strong>Correo electrónico:</strong> <span id="acc-email"></span></p>
                     <p><strong>Tipo de suscripción:</strong> <span id="acc-plan-badge"></span></p>
                     <p style="margin-top: 8px;"><strong>Temas de interés:</strong><br><span id="acc-interests"></span></p>
-                    <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Mercado Pago</p>
-                    <p><strong>Próximo débito:</strong> <span id="acc-next-debit">1 de diciembre de 2026</span></p>
+                    
+                    <!-- Solo visible para usuarios Premium -->
+                    <div id="premium-billing-details">
+                        <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Mercado Pago</p>
+                        <p><strong>Próximo débito:</strong> <span id="acc-next-debit">1 de diciembre de 2026</span></p>
+                    </div>
+
                     <p><strong>Estado de la cuenta:</strong> <span id="acc-status-box"></span></p>
                 </div>
 
                 <div class="sidebar-actions">
+                    <!-- Botón para básicos: mejorar a Premium -->
                     <a href="https://mpago.la/1oNLzRZ" target="_blank" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($990/mes)</a>
+                    
+                    <!-- Botón para Premium: cambiar a Básico (ubicado arriba del de actualizar o modificar datos) -->
+                    <button class="btn-sidebar-action btn-downgrade-sidebar hidden" id="nav-downgrade-basic">Cambiar a plan Básico</button>
+                    
                     <button class="btn-sidebar-action" id="nav-update-data">Actualizar o modificar datos</button>
                     <button class="btn-sidebar-action" id="nav-delete-account">Eliminar cuenta</button>
                     <button class="btn-sidebar-action btn-logout" id="btn-logout">Cerrar sesión</button>
                 </div>
+            </div>
+
+            <!-- Vista: Cambiar a Plan Básico (exactamente igual a la de modificar datos) -->
+            <div id="sidebar-downgrade-view" class="account-subview">
+                <button class="btn-back-account" id="back-from-downgrade">&larr; Volver atrás</button>
+                <h4 style="margin-bottom: 16px;">Cambiar a Plan Básico</h4>
+                <script src="https://elfsightcdn.com/platform.js" async></script>
+                <div class="elfsight-app-fe88d4bc-7b91-4ae9-a89c-d58164437272" data-elfsight-app-lazy></div>
             </div>
 
             <!-- Vista: Actualizar Datos -->
@@ -900,6 +1061,17 @@
                 <li><button class="tab-btn" data-target="tab-sorteos">Sorteos</button></li>
             </ul>
         </nav>
+
+        <!-- Buscador deslizante ubicado justo debajo de "Destacado, De tu interés, Lo más visto y Sorteos" -->
+        <div class="search-drawer" id="search-drawer">
+            <form class="search-drawer-inner" id="search-form">
+                <div class="search-input-wrap">
+                    <input type="text" id="search-input" placeholder="Buscar por título, tema o etiqueta (ej. cine, economía, supermercados)...">
+                </div>
+                <button type="submit" class="btn-search-submit">Buscar</button>
+                <button type="button" class="btn-search-close" id="btn-search-close" aria-label="Cerrar buscador" title="Cerrar buscador">&times;</button>
+            </form>
+        </div>
 
         <!-- Contenido Central con scroll interno fluido -->
         <main class="tab-content-area" id="main-content-container">
@@ -932,6 +1104,16 @@
                 <div id="sorteos-content-wrapper"></div>
             </div>
 
+            <!-- TAB 5: RESULTADOS DE BÚSQUEDA -->
+            <div id="tab-busqueda" class="tab-pane">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
+                    <h2 class="section-title" style="margin-bottom: 0;">Resultados de búsqueda</h2>
+                    <button type="button" class="detail-back-btn" id="btn-clear-search-view" style="margin-bottom: 0;">&larr; Volver a la sección anterior</button>
+                </div>
+                <p class="section-desc" id="search-results-subtitle">Mostrando coincidencias por título, descripción y etiquetas.</p>
+                <div id="search-results-container"></div>
+            </div>
+
             <!-- VISTA DE DETALLE COMPLETO -->
             <div id="detail-view-section">
                 <button class="detail-back-btn" id="btn-back-to-list">&larr; Volver atrás</button>
@@ -945,7 +1127,7 @@
     <script>
         (function() {
             const MP_LINK = "https://mpago.la/1oNLzRZ";
-            const SESSION_KEY = "portal_miembros_session_v3";
+            const SESSION_KEY = "portal_miembros_session_v4";
 
             // =========================================================================
             // PERSISTENCIA BLINDADA DE SESIÓN (localStorage + sessionStorage + Cookies)
@@ -989,6 +1171,7 @@
             function borrarSesion() {
                 try {
                     localStorage.removeItem(SESSION_KEY);
+                    localStorage.removeItem('portal_miembros_session_v3');
                     localStorage.removeItem('empleos_vacantes_member_email_v2');
                 } catch (e) {}
                 try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
@@ -1009,7 +1192,7 @@
                     nombre: "Mauricio David",
                     apellido: "Acosta Danaher",
                     ubicacion: "Capital Federal",
-                    tipoUsuario: "basico",
+                    tipoUsuario: "premium",
                     intereses: ["cine", "tecnología", "economía", "actualidad", "espectáculos", "beneficios"],
                     estadoMembresia: "habilitado",
                     mesesAdeudados: 0,
@@ -1042,11 +1225,14 @@
             ];
 
             let currentUser = null;
+            let lastActiveViewId = "tab-destacado";
+            let searchTimeoutId = null;
 
             // =========================================================================
             // BASE DE DATOS UNIFICADA DE NOTICIAS CON ETIQUETAS Y NIVEL DE ACCESO
-            // acceso: "basico" (visible para todos) | "premium" (solo usuarios premium)
-            // secciones: ["destacado", "mas_visto"]
+            // acceso: "basico" | "premium"
+            // Nota: Los usuarios básicos solo pueden ver título + subtítulo de todas las notas
+            // y para leer el cuerpo completo deben mejorar su cuenta a Premium.
             // =========================================================================
             const noticiasData = [
                 {
@@ -1054,7 +1240,7 @@
                     title: "Godzilla Minus Zero llega a los cines: todos los detalles del estreno más esperado del año",
                     category: "cine",
                     categoryName: "Cine",
-                    tags: ["cine", "espectáculos", "actualidad", "beneficios"],
+                    tags: ["cine", "espectáculos", "actualidad", "beneficios", "godzilla", "cinemark"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
                     image: "https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg",
@@ -1066,7 +1252,7 @@
                     title: "Nuevos beneficios y descuentos en supermercados y comercios durante noviembre",
                     category: "beneficios",
                     categoryName: "Beneficios",
-                    tags: ["beneficios", "economía", "actualidad"],
+                    tags: ["beneficios", "economía", "actualidad", "supermercados", "descuentos"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
                     image: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=600&q=80",
@@ -1078,7 +1264,7 @@
                     title: "Informe especial: proyección económica y tendencias financieras para el cierre de 2026",
                     category: "economía",
                     categoryName: "Economía",
-                    tags: ["economía", "actualidad", "tecnología"],
+                    tags: ["economía", "actualidad", "tecnología", "finanzas", "dólar"],
                     acceso: "premium",
                     secciones: ["destacado"],
                     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
@@ -1090,7 +1276,7 @@
                     title: "Las plataformas digitales y herramientas de IA que transforman el trabajo diario",
                     category: "tecnología",
                     categoryName: "Tecnología",
-                    tags: ["tecnología", "actualidad"],
+                    tags: ["tecnología", "actualidad", "inteligencia artificial", "digital"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
                     image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80",
@@ -1102,7 +1288,7 @@
                     title: "Agenda cultural y estrenos de cine de la semana en Buenos Aires",
                     category: "espectáculos",
                     categoryName: "Espectáculos",
-                    tags: ["espectáculos", "cine", "beneficios"],
+                    tags: ["espectáculos", "cine", "beneficios", "cartelera", "buenos aires"],
                     acceso: "basico",
                     secciones: ["mas_visto"],
                     image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80",
@@ -1114,7 +1300,7 @@
                     title: "Guía exclusiva: cómo acceder a preventas VIP y funciones privadas de cine",
                     category: "cine",
                     categoryName: "Cine",
-                    tags: ["cine", "beneficios", "espectáculos"],
+                    tags: ["cine", "beneficios", "espectáculos", "entradas", "vip"],
                     acceso: "premium",
                     secciones: ["mas_visto"],
                     image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
@@ -1172,7 +1358,9 @@
                     const emailEl = document.getElementById('acc-email');
                     const debitEl = document.getElementById('acc-next-debit');
                     const planBadgeEl = document.getElementById('acc-plan-badge');
+                    const billingDetailsBox = document.getElementById('premium-billing-details');
                     const upgradeSidebarBtn = document.getElementById('sidebar-upgrade-btn');
+                    const downgradeSidebarBtn = document.getElementById('nav-downgrade-basic');
 
                     if (nameEl) nameEl.textContent = user.nombre;
                     if (lastNameEl) lastNameEl.textContent = user.apellido;
@@ -1188,11 +1376,23 @@
                         }
                     }
 
-                    if (upgradeSidebarBtn) {
+                    // Ocultar Medio de Pago y Próximo Débito a usuarios básicos; mostrarlos solo a Premium
+                    if (billingDetailsBox) {
+                        if (isPremium) {
+                            billingDetailsBox.classList.remove('hidden');
+                        } else {
+                            billingDetailsBox.classList.add('hidden');
+                        }
+                    }
+
+                    // Botones de cambio de plan según tipo de usuario
+                    if (upgradeSidebarBtn && downgradeSidebarBtn) {
                         if (isPremium) {
                             upgradeSidebarBtn.classList.add('hidden');
+                            downgradeSidebarBtn.classList.remove('hidden');
                         } else {
                             upgradeSidebarBtn.classList.remove('hidden');
+                            downgradeSidebarBtn.classList.add('hidden');
                         }
                     }
 
@@ -1212,7 +1412,7 @@
                     const statusBox = document.getElementById('acc-status-box');
                     if (statusBox) {
                         if (!isPremium) {
-                            statusBox.innerHTML = `<span style="color: #64748b; font-weight: 600;">Plan Básico activo (Acceso limitado)</span>`;
+                            statusBox.innerHTML = `<span style="color: #64748b; font-weight: 600;">Plan Básico activo (Vista previa)</span>`;
                         } else if (user.estadoMembresia === "vencido" || user.mesesAdeudados > 0) {
                             statusBox.innerHTML = `<span style="color: #d93838; font-weight: 600;">Membresía vencida / Pago pendiente</span>`;
                         } else {
@@ -1300,23 +1500,33 @@
                         loginForm.reset();
                         loginError.style.display = 'none';
                         closeMenu();
+                        cerrarBuscador();
                     });
                 }
 
+                // =========================================================================
+                // MENÚ LATERAL Y SUBVISTAS (Cambiar a Básico, Actualizar Datos, Eliminar)
+                // =========================================================================
                 const menuToggleBtn = document.getElementById('menu-toggle-btn');
                 const closeSidebarBtn = document.getElementById('close-sidebar-btn');
                 const sidebarMenu = document.getElementById('sidebar-menu');
                 const menuBackdrop = document.getElementById('menu-backdrop');
                 const sidebarMainView = document.getElementById('sidebar-main-view');
+                const sidebarDowngradeView = document.getElementById('sidebar-downgrade-view');
                 const sidebarUpdateView = document.getElementById('sidebar-update-view');
                 const sidebarDeleteView = document.getElementById('sidebar-delete-view');
+
+                function resetSidebarViews() {
+                    if (sidebarMainView) sidebarMainView.classList.remove('hidden');
+                    if (sidebarDowngradeView) sidebarDowngradeView.classList.remove('active');
+                    if (sidebarUpdateView) sidebarUpdateView.classList.remove('active');
+                    if (sidebarDeleteView) sidebarDeleteView.classList.remove('active');
+                }
 
                 function openMenu() {
                     if (sidebarMenu) sidebarMenu.classList.add('active');
                     if (menuBackdrop) menuBackdrop.style.display = 'block';
-                    if (sidebarMainView) sidebarMainView.classList.remove('hidden');
-                    if (sidebarUpdateView) sidebarUpdateView.classList.remove('active');
-                    if (sidebarDeleteView) sidebarDeleteView.classList.remove('active');
+                    resetSidebarViews();
                 }
 
                 function closeMenu() {
@@ -1328,10 +1538,19 @@
                 if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeMenu);
                 if (menuBackdrop) menuBackdrop.addEventListener('click', closeMenu);
 
+                const navDowngradeBasic = document.getElementById('nav-downgrade-basic');
                 const navUpdateData = document.getElementById('nav-update-data');
                 const navDeleteAccount = document.getElementById('nav-delete-account');
+                const backFromDowngrade = document.getElementById('back-from-downgrade');
                 const backFromUpdate = document.getElementById('back-from-update');
                 const backFromDelete = document.getElementById('back-from-delete');
+
+                if (navDowngradeBasic) {
+                    navDowngradeBasic.addEventListener('click', () => {
+                        if (sidebarMainView) sidebarMainView.classList.add('hidden');
+                        if (sidebarDowngradeView) sidebarDowngradeView.classList.add('active');
+                    });
+                }
 
                 if (navUpdateData) {
                     navUpdateData.addEventListener('click', () => {
@@ -1347,20 +1566,156 @@
                     });
                 }
 
+                if (backFromDowngrade) {
+                    backFromDowngrade.addEventListener('click', resetSidebarViews);
+                }
+
                 if (backFromUpdate) {
-                    backFromUpdate.addEventListener('click', () => {
-                        if (sidebarUpdateView) sidebarUpdateView.classList.remove('active');
-                        if (sidebarMainView) sidebarMainView.classList.remove('hidden');
-                    });
+                    backFromUpdate.addEventListener('click', resetSidebarViews);
                 }
 
                 if (backFromDelete) {
-                    backFromDelete.addEventListener('click', () => {
-                        if (sidebarDeleteView) sidebarDeleteView.classList.remove('active');
-                        if (sidebarMainView) sidebarMainView.classList.remove('hidden');
+                    backFromDelete.addEventListener('click', resetSidebarViews);
+                }
+
+                // =========================================================================
+                // BUSCADOR DESLIZANTE Y BÚSQUEDA CON RUEDA DE CARGA
+                // =========================================================================
+                const searchToggleBtn = document.getElementById('search-toggle-btn');
+                const searchDrawer = document.getElementById('search-drawer');
+                const searchForm = document.getElementById('search-form');
+                const searchInput = document.getElementById('search-input');
+                const btnSearchClose = document.getElementById('btn-search-close');
+                const tabBusqueda = document.getElementById('tab-busqueda');
+                const searchResultsContainer = document.getElementById('search-results-container');
+                const searchResultsSubtitle = document.getElementById('search-results-subtitle');
+                const btnClearSearchView = document.getElementById('btn-clear-search-view');
+
+                function abrirBuscador() {
+                    if (searchDrawer) searchDrawer.classList.add('open');
+                    if (searchToggleBtn) searchToggleBtn.classList.add('active');
+                    setTimeout(() => {
+                        if (searchInput) searchInput.focus();
+                    }, 250);
+                }
+
+                function cerrarBuscador() {
+                    if (searchDrawer) searchDrawer.classList.remove('open');
+                    if (searchToggleBtn) searchToggleBtn.classList.remove('active');
+                }
+
+                if (searchToggleBtn) {
+                    searchToggleBtn.addEventListener('click', () => {
+                        if (searchDrawer && searchDrawer.classList.contains('open')) {
+                            cerrarBuscador();
+                        } else {
+                            abrirBuscador();
+                        }
                     });
                 }
 
+                if (btnSearchClose) {
+                    btnSearchClose.addEventListener('click', cerrarBuscador);
+                }
+
+                function restaurarTabAnterior() {
+                    document.getElementById('detail-view-section').classList.remove('active');
+                    tabPanes.forEach(p => p.classList.remove('active'));
+                    const activeTabBtn = document.querySelector('.tab-btn.active');
+                    const targetId = activeTabBtn ? activeTabBtn.getAttribute('data-target') : 'tab-destacado';
+                    const targetPane = document.getElementById(targetId);
+                    if (targetPane) targetPane.classList.add('active');
+                    lastActiveViewId = targetId;
+                }
+
+                if (btnClearSearchView) {
+                    btnClearSearchView.addEventListener('click', () => {
+                        restaurarTabAnterior();
+                    });
+                }
+
+                function ejecutarBusqueda(terminoRaw) {
+                    const termino = terminoRaw.trim();
+                    if (!termino) return;
+
+                    // Ocultar detalle y otras pestañas y mostrar pestaña de búsqueda
+                    document.getElementById('detail-view-section').classList.remove('active');
+                    tabPanes.forEach(p => p.classList.remove('active'));
+                    if (tabBusqueda) tabBusqueda.classList.add('active');
+                    lastActiveViewId = "tab-busqueda";
+
+                    if (searchResultsSubtitle) {
+                        searchResultsSubtitle.textContent = `Buscando resultados relacionados con "${termino}"...`;
+                    }
+
+                    // Mostrar rueda de carga durante unos instantes
+                    if (searchResultsContainer) {
+                        searchResultsContainer.innerHTML = `
+                            <div class="search-loader-box">
+                                <div class="spinner-ring"></div>
+                                <p style="font-size: 15px; font-weight: 600; color: var(--text-color);">Buscando noticias y etiquetas relacionadas...</p>
+                            </div>
+                        `;
+                    }
+
+                    const container = document.getElementById('main-content-container');
+                    if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    if (searchTimeoutId) clearTimeout(searchTimeoutId);
+
+                    searchTimeoutId = setTimeout(() => {
+                        const palabras = termino.toLowerCase().split(/\s+/).filter(Boolean);
+
+                        const resultados = noticiasData.filter(item => {
+                            const tituloLower = item.title.toLowerCase();
+                            const descLower = item.desc.toLowerCase();
+                            const catLower = item.categoryName.toLowerCase();
+                            const tagsLower = (item.tags || []).map(t => t.toLowerCase());
+
+                            return palabras.some(palabra =>
+                                tituloLower.includes(palabra) ||
+                                descLower.includes(palabra) ||
+                                catLower.includes(palabra) ||
+                                tagsLower.some(tag => tag.includes(palabra))
+                            );
+                        });
+
+                        if (searchResultsSubtitle) {
+                            searchResultsSubtitle.textContent = `${resultados.length} ${resultados.length === 1 ? 'resultado encontrado' : 'resultados encontrados'} para "${termino}"`;
+                        }
+
+                        if (searchResultsContainer) {
+                            if (resultados.length === 0) {
+                                searchResultsContainer.innerHTML = `
+                                    <div class="empty-state-box">
+                                        No se encontraron noticias ni etiquetas que coincidan con "<strong>${termino}</strong>". Probá con otro término o categoría.
+                                    </div>
+                                `;
+                            } else {
+                                const grid = document.createElement('div');
+                                grid.className = 'cards-grid';
+                                resultados.forEach(item => {
+                                    grid.appendChild(crearTarjetaNoticia(item));
+                                });
+                                searchResultsContainer.innerHTML = '';
+                                searchResultsContainer.appendChild(grid);
+                            }
+                        }
+                    }, 950);
+                }
+
+                if (searchForm) {
+                    searchForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        if (searchInput && searchInput.value.trim() !== "") {
+                            ejecutarBusqueda(searchInput.value);
+                        }
+                    });
+                }
+
+                // =========================================================================
+                // NAVEGACIÓN POR TABS
+                // =========================================================================
                 const tabBtns = document.querySelectorAll('.tab-btn');
                 const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -1371,12 +1726,13 @@
 
                         tabBtns.forEach(b => b.classList.remove('active'));
                         tabPanes.forEach(p => {
-                            if (p.id !== 'detail-view-section') p.classList.remove('active');
+                            p.classList.remove('active');
                         });
 
                         btn.classList.add('active');
                         const targetPane = document.getElementById(targetId);
                         if (targetPane) targetPane.classList.add('active');
+                        lastActiveViewId = targetId;
                         
                         const container = document.getElementById('main-content-container');
                         if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1400,7 +1756,7 @@
 
                     const badgeAcceso = item.acceso === "premium"
                         ? `<span class="item-tag tag-premium">★ Exclusivo Premium</span>`
-                        : `<span class="item-tag tag-basico">Acceso Básico</span>`;
+                        : `<span class="item-tag tag-basico">Vista Previa Básica</span>`;
 
                     card.innerHTML = `
                         <img src="${item.image}" alt="${item.title}">
@@ -1450,9 +1806,9 @@
                                         <p><strong>Ubicación:</strong> Butacas AK y AI (centro al medio)</p>
                                     </div>
                                     <div class="membership-lock-box" style="margin: 0; max-width: 100%;">
-                                        <h3>Contenido exclusivo para miembros Premium</h3>
-                                        <p>Para acceder a este contenido y participar del sorteo, mejorá tu suscripción a Premium.</p>
-                                        <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Abonar con Mercado Pago</a>
+                                        <h3>Este contenido es para usuarios Premium</h3>
+                                        <p>Para participar del sorteo y acceder a todos los beneficios exclusivos, mejorá tu usuario o cuenta a Premium.</p>
+                                        <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Mejorar cuenta con Mercado Pago</a>
                                     </div>
                                 </div>
                             </div>
@@ -1480,7 +1836,6 @@
                         </div>
                     `;
 
-                    // Cargar o reinicializar script de Elfsight si es necesario
                     if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
                         const scriptEl = document.createElement('script');
                         scriptEl.src = "https://elfsightcdn.com/platform.js";
@@ -1506,6 +1861,9 @@
                     renderSorteos();
                 }
 
+                // =========================================================================
+                // VISTA DE DETALLE (Básicos ven solo título + subtítulo + aviso Premium)
+                // =========================================================================
                 const detailViewSection = document.getElementById('detail-view-section');
                 const detailContentBox = document.getElementById('detail-content-box');
                 const btnBackToList = document.getElementById('btn-back-to-list');
@@ -1522,10 +1880,10 @@
                     if (detailContentBox) {
                         const badgeAcceso = item.acceso === "premium"
                             ? `<span class="item-tag tag-premium">★ Exclusivo Premium</span>`
-                            : `<span class="item-tag tag-basico">Acceso Básico</span>`;
+                            : `<span class="item-tag tag-basico">Vista Previa Básica</span>`;
 
-                        // Si la noticia es exclusivo premium y el usuario es básico, mostrar bloqueo con botón de Mercado Pago
-                        if (item.acceso === "premium" && !isPremium) {
+                        // Si el usuario es BÁSICO: solo ve hasta el título y el subtítulo, y nada más del cuerpo
+                        if (!isPremium) {
                             detailContentBox.innerHTML = `
                                 <img src="${item.image}" alt="${item.title}">
                                 <div class="tags-container" style="margin-bottom: 14px;">
@@ -1533,14 +1891,15 @@
                                     <span class="item-tag">🏷️ ${item.categoryName}</span>
                                 </div>
                                 <h2>${item.title}</h2>
-                                <p>${item.desc}</p>
+                                <p class="detail-subtitle">${item.desc}</p>
                                 <div class="membership-lock-box" style="margin-top: 24px;">
-                                    <h3>Contenido exclusivo para miembros Premium</h3>
-                                    <p>Para acceder a este contenido mejora tu suscripción a premium.</p>
-                                    <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Abonar con Mercado Pago</a>
+                                    <h3>Este contenido es para usuarios Premium</h3>
+                                    <p>Para leer el artículo completo, mejorá tu usuario o cuenta a Premium.</p>
+                                    <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Mejorar cuenta con Mercado Pago</a>
                                 </div>
                             `;
                         } else {
+                            // Usuario PREMIUM: lectura completa
                             detailContentBox.innerHTML = `
                                 <img src="${item.image}" alt="${item.title}">
                                 <div class="tags-container" style="margin-bottom: 14px;">
@@ -1548,6 +1907,7 @@
                                     <span class="item-tag">🏷️ ${item.categoryName}</span>
                                 </div>
                                 <h2>${item.title}</h2>
+                                <p class="detail-subtitle">${item.desc}</p>
                                 <p>${item.fullText}</p>
                             `;
                         }
@@ -1563,11 +1923,16 @@
                 if (btnBackToList) {
                     btnBackToList.addEventListener('click', () => {
                         if (detailViewSection) detailViewSection.classList.remove('active');
-                        const activeTabBtn = document.querySelector('.tab-btn.active');
-                        if (activeTabBtn) {
-                            const targetId = activeTabBtn.getAttribute('data-target');
-                            const targetPane = document.getElementById(targetId);
-                            if (targetPane) targetPane.classList.add('active');
+                        const targetPane = document.getElementById(lastActiveViewId);
+                        if (targetPane) {
+                            targetPane.classList.add('active');
+                        } else {
+                            const activeTabBtn = document.querySelector('.tab-btn.active');
+                            if (activeTabBtn) {
+                                const fallbackId = activeTabBtn.getAttribute('data-target');
+                                const fallbackPane = document.getElementById(fallbackId);
+                                if (fallbackPane) fallbackPane.classList.add('active');
+                            }
                         }
                         const container = document.getElementById('main-content-container');
                         if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
