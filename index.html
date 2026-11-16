@@ -10,15 +10,16 @@
 <style>
   :root {
     --primary-orange: #f58220;
-    --dark-orange: #d97015;
+    --dark-orange: #e68a00;
     --header-bg: #f58220;
-    --bg-gray: #f8f9fa;
+    --bg-gray: #f4f6f9;
     --card-bg: #ffffff;
     --text-color: #222222;
-    --text-muted: #555555;
-    --border-color: #e2e8f0;
+    --text-muted: #666666;
+    --border-color: #e0e0e0;
     --green-success: #2e7d32;
     --red-error: #c62828;
+    --warning-yellow: #f57c00;
     --mp-blue: #009ee3;
   }
 
@@ -39,18 +40,18 @@
       padding: 0 !important;
   }
 
-  /* LOGIN CONTENEDOR - UBICADO ARRIBA Y ESTILIZADO */
-  .login-container { width: 100%; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 40px 20px; background: var(--bg-gray); }
-  .login-section { width: 100%; max-width: 480px; padding: 40px 30px; border: 1px solid var(--border-color); border-radius: 16px; text-align: center; background: #ffffff; box-shadow: 0 10px 35px rgba(0,0,0,0.08); }
-  .login-section h2 { color: var(--primary-orange); margin-top: 0; font-size: 26px; margin-bottom: 24px; font-weight: 800; }
+  /* LOGIN CONTENEDOR - BLOQUE SUPERIOR PROFESIONAL */
+  .login-container { width: 100%; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 30px 15px; background: var(--bg-gray); }
+  .login-section { width: 100%; max-width: 480px; padding: 35px 25px; border: 1px solid var(--border-color); border-radius: 14px; text-align: left; background: #ffffff; box-shadow: 0 4px 25px rgba(0,0,0,0.06); margin-top: 10px; }
+  .login-section h2 { color: var(--header-bg); margin-top: 0; font-size: 26px; margin-bottom: 22px; font-weight: 800; text-align: center; }
 
-  /* BOTONES PROFESIONALES ESTILIZADOS */
-  .btn-pro {
+  /* BOTONES MEJORADOS Y ESTÉTICOS */
+  .btn-primary-custom {
     background: linear-gradient(135deg, var(--primary-orange) 0%, var(--dark-orange) 100%);
     color: white;
     border: none;
-    padding: 14px 24px;
-    border-radius: 10px;
+    padding: 14px 20px;
+    border-radius: 8px;
     font-weight: 700;
     font-size: 15px;
     cursor: pointer;
@@ -58,132 +59,113 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 15px rgba(245, 130, 32, 0.35);
-    transition: all 0.25s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    transition: all 0.2s ease;
   }
-  .btn-pro:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(245, 130, 32, 0.45);
-  }
-  .btn-pro:active {
-    transform: translateY(0);
-  }
+  .btn-primary-custom:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245, 130, 32, 0.45); }
 
-  /* BANNER "¿AÚN NO TENÉS CUENTA?" DESTACADO Y ESTÉTICO */
+  /* SECCIÓN "¿AÚN NO TENÉS CUENTA?" DESTACADA Y ESTÉTICA */
   .unregistered-banner {
-    background: linear-gradient(135deg, #fff8f0 0%, #ffecdc 100%);
+    background: linear-gradient(135deg, #fff8f0 0%, #fff1e0 100%);
     border: 2px solid var(--primary-orange);
-    border-radius: 14px;
-    padding: 28px 22px;
+    border-radius: 12px;
+    padding: 24px 20px;
     margin-top: 30px;
     text-align: center;
-    box-shadow: 0 6px 20px rgba(245, 130, 32, 0.12);
+    box-shadow: 0 4px 15px rgba(245, 130, 32, 0.08);
   }
-  .unregistered-banner h3 { color: #b35900; margin: 0 0 12px 0; font-size: 20px; font-weight: 800; }
-  .unregistered-banner p { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 20px; }
+  .unregistered-banner h3 { color: var(--dark-orange); margin: 0 0 10px 0; font-size: 19px; font-weight: 800; }
+  .unregistered-banner p { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 18px; }
   
   /* PRECIO DESTACADO DE $5000 POR MES */
-  .highlight-price {
+  .price-highlight {
+    display: inline-block;
     background: var(--primary-orange);
     color: #ffffff;
-    padding: 4px 10px;
-    border-radius: 6px;
     font-weight: 800;
     font-size: 15px;
-    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
     box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3);
   }
 
-  /* DASHBOARD FULL WIDTH - ALINEADO ESTRICTAMENTE A LA IZQUIERDA */
-  .dashboard-full { width: 100%; min-height: 100vh; background: #ffffff; margin: 0; padding: 0; text-align: left !important; }
-  .dashboard-header { background: #ffffff; padding: 18px 30px; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 0; }
-  .header-info { text-align: left !important; }
-  .header-info h2 { margin: 0; font-size: 22px; color: #111; font-weight: 700; text-align: left !important; }
-  .header-info .date-text { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; display: block; text-align: left !important; }
+  /* DASHBOARD FULL WIDTH (SIN MÁRGENES IZQUIERDOS, ALINEADO IZQUIERDA) */
+  .dashboard-full { width: 100%; min-height: 100vh; background: #ffffff; margin: 0; padding: 0; text-align: left; }
+  .dashboard-header { background: #ffffff; padding: 15px 25px; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; width: 100%; }
+  
+  .header-info { text-align: left; }
+  .header-info h2 { margin: 0; font-size: 20px; color: #111; text-align: left; font-weight: 700; }
+  .header-info .date-text { font-size: 13px; color: var(--text-muted); margin-top: 4px; display: block; text-align: left; }
 
-  /* BOTÓN DE MENÚ CON 3 RAYITAS (HAMBURGUESA LIMPIA) */
-  .btn-menu-trigger { background: var(--primary-orange); color: #fff; border: none; padding: 12px 16px; border-radius: 10px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(245, 130, 32, 0.3); transition: all 0.2s; }
+  /* BOTÓN DE MENÚ CON 3 RAYITAS PURAS */
+  .btn-menu-trigger { background: var(--header-bg); color: #fff; border: none; padding: 10px 14px; border-radius: 8px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 44px; height: 40px; box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3); }
   .btn-menu-trigger:hover { background: var(--dark-orange); }
 
-  /* DRAWER MENU LATERAL DESPLEGABLE AL LADO */
-  .drawer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99999; backdrop-filter: blur(3px); }
-  .drawer-content { position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background: #ffffff; z-index: 100000; transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 30px rgba(0,0,0,0.2); display: flex; flex-direction: column; text-align: left; }
+  /* DRAWER MENU LATERAL (SIN SOMBRADO DE FONDO / BACKDROP) Y DESPLIEGUE AL LADO */
+  .drawer-overlay { display: none !important; }
+  .drawer-content { position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background: #ffffff; z-index: 100000; transition: right 0.3s ease; box-shadow: -5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; text-align: left; }
   .drawer-content.open { right: 0; }
-  .drawer-header { background: var(--primary-orange); color: white; padding: 22px 20px; display: flex; justify-content: space-between; align-items: center; }
-  .drawer-header h3 { margin: 0; font-size: 18px; font-weight: 700; }
-  .close-drawer-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; padding: 4px; }
+  .drawer-header { background: var(--primary-orange); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .drawer-header h3 { margin: 0; font-size: 18px; text-align: left; }
+  .close-drawer-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
   
-  .drawer-menu-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
-  .drawer-menu-item { border-bottom: 1px solid var(--border-color); }
-  .drawer-menu-item button { width: 100%; background: none; color: #333; text-align: left; padding: 18px 22px; border-radius: 0; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 14px; border: none; cursor: pointer; transition: background 0.2s; }
+  .drawer-menu-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; text-align: left; }
+  .drawer-menu-item { border-bottom: 1px solid var(--border-color); text-align: left; }
+  .drawer-menu-item button { width: 100%; background: none; color: #333; text-align: left; padding: 16px 20px; border-radius: 0; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 12px; border: none; cursor: pointer; }
   .drawer-menu-item button:hover { background: #f8f9fa; color: var(--primary-orange); }
 
-  /* TABS CON SCROLL HORIZONTAL FLUIDO */
-  .tabs-scroll-container { display: flex; background: #ffffff; border-bottom: 3px solid var(--primary-orange); padding: 12px 25px 0 25px; gap: 10px; position: sticky; top: 0; z-index: 100; overflow-x: auto; scrollbar-width: thin; width: 100%; white-space: nowrap; -webkit-overflow-scrolling: touch; text-align: left !important; }
-  .tabs-scroll-container::-webkit-scrollbar { height: 5px; }
+  /* TABS CON SCROLL HORIZONTAL Y SCROLL GLOBAL */
+  .tabs-scroll-container { display: flex; background: #ffffff; border-bottom: 3px solid var(--header-bg); padding: 10px 15px 0 15px; gap: 8px; position: sticky; top: 0; z-index: 100; overflow-x: auto; scrollbar-width: thin; width: 100%; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  .tabs-scroll-container::-webkit-scrollbar { height: 4px; }
   .tabs-scroll-container::-webkit-scrollbar-thumb { background: var(--primary-orange); border-radius: 4px; }
 
-  .tab-btn { padding: 12px 20px; background: #edf2f7; color: #4a5568; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; transition: all 0.2s; }
-  .tab-btn.active { background: var(--primary-orange); color: #ffffff; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
-  .btn-add-interest-tab { background: #fff5eb; color: var(--dark-orange); border: 2px dashed var(--primary-orange); border-radius: 10px 10px 0 0; padding: 10px 18px; font-weight: 800; cursor: pointer; flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+  .tab-btn { padding: 12px 18px; background: #e9ecef; color: #495057; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .tab-btn.active { background: var(--header-bg); color: #ffffff; }
+  .btn-add-interest-tab { background: #fff3e0; color: var(--dark-orange); border: 2px dashed var(--primary-orange); border-radius: 8px 8px 0 0; padding: 10px 16px; font-weight: 800; cursor: pointer; flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px; }
 
-  /* CONTENIDO PRINCIPAL - 100% ALINEADO A LA IZQUIERDA SIN MÁRGENES LATERALES INNECESARIOS */
-  .main-content-full { padding: 30px 25px; width: 100%; margin: 0; text-align: left !important; }
-  .tab-content { display: none; width: 100%; text-align: left !important; }
-  .tab-content.active { display: block; text-align: left !important; }
+  /* CONTENIDO PRINCIPAL ANCHO COMPLETO - SIN MÁRGENES IZQUIERDOS */
+  .main-content-full { padding: 25px 20px; width: 100%; margin: 0; text-align: left; }
+  .tab-content { display: none; width: 100%; text-align: left; }
+  .tab-content.active { display: block; }
 
   /* TARJETAS NOTICIAS FULL ANCHO RESPONSIVE */
-  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; text-align: left; }
-  .news-card { border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; background: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.2s; text-align: left; }
-  .news-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
-  .news-card img { width: 100%; height: 210px; object-fit: cover; }
-  .news-card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; text-align: left; }
-  .news-card-body h4 { margin: 0 0 12px 0; font-size: 18px; color: #111; font-weight: 700; text-align: left; }
-  .news-card-body p { font-size: 14.5px; color: #555; line-height: 1.6; margin-bottom: 18px; text-align: left; }
+  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; text-align: left; }
+  .news-card { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.04); text-align: left; }
+  .news-card img { width: 100%; height: 200px; object-fit: cover; }
+  .news-card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; text-align: left; }
+  .news-card-body h4 { margin: 0 0 10px 0; font-size: 17px; color: #111; text-align: left; }
+  .news-card-body p { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 15px; text-align: left; }
   
-  .card-actions-bar { display: flex; gap: 10px; margin-top: 10px; width: 100%; }
-  .btn-card-primary { flex: 1; background: var(--primary-orange); color: #fff; font-size: 13.5px; font-weight: 700; padding: 11px 14px; border-radius: 8px; border: none; cursor: pointer; transition: background 0.2s; }
-  .btn-card-primary:hover { background: var(--dark-orange); }
-  .btn-card-save { background: #f1f5f9; color: #334155; border: 1px solid var(--border-color); font-size: 13.5px; font-weight: 600; padding: 11px 14px; border-radius: 8px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: background 0.2s; }
-  .btn-card-save:hover { background: #e2e8f0; }
+  .card-actions-bar { display: flex; gap: 8px; margin-top: 10px; }
+  .btn-card-primary { flex: 1; background: var(--header-bg); color: #fff; font-size: 13px; padding: 10px 12px; border-radius: 6px; border: none; font-weight: 700; cursor: pointer; }
+  .btn-card-save { background: #f8f9fa; color: #333; border: 1px solid #ccc; font-size: 13px; padding: 10px 12px; border-radius: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: 600; }
 
-  /* SEARCH PANEL */
-  .search-box-wrapper { background: #fff; padding: 22px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); width: 100%; }
-  .search-input-group { position: relative; display: flex; gap: 10px; width: 100%; }
-  .search-input-group input { padding-left: 45px; width: 100%; }
-  .search-input-group i.search-icon-inside { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #888; font-size: 16px; }
-
-  /* INPUTS & FORMULARIOS */
-  .input-group { margin-bottom: 20px; text-align: left !important; }
-  .input-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left !important; }
-  input[type="text"], input[type="password"], input[type="email"], select, textarea { width: 100%; padding: 13px 16px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 15px; outline: none; background: #fff; color: #222; transition: border-color 0.2s; }
-  input:focus, select:focus, textarea:focus { border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(245, 130, 32, 0.15); }
+  /* INPUTS & FORMULARIOS ALINEADOS A LA IZQUIERDA */
+  .input-group { margin-bottom: 18px; text-align: left; }
+  .input-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
+  input[type="text"], input[type="password"], input[type="email"], select, textarea { width: 100%; padding: 12px 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 14.5px; outline: none; text-align: left; background: #fff; }
 
   /* MODALES SUPERPUESTOS */
-  .custom-modal-backdrop { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 99999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
-  .custom-modal-card { background: #ffffff; border-radius: 16px; max-width: 500px; width: 100%; padding: 30px; text-align: left; border-top: 6px solid var(--primary-orange); box-shadow: 0 15px 40px rgba(0,0,0,0.25); max-height: 90vh; overflow-y: auto; }
+  .custom-modal-backdrop { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 99999; align-items: center; justify-content: center; padding: 15px; }
+  .custom-modal-card { background: #ffffff; border-radius: 14px; max-width: 500px; width: 100%; padding: 25px; text-align: left; border-top: 5px solid var(--primary-orange); box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
   
-  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; }
-  .data-table th, .data-table td { padding: 15px 18px; border: 1px solid var(--border-color); font-size: 14.5px; text-align: left !important; }
-  .data-table th { background: #f8f9fa; width: 38%; font-weight: 700; color: #333; }
+  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; text-align: left; }
+  .data-table th, .data-table td { padding: 14px; border: 1px solid var(--border-color); font-size: 14px; text-align: left; }
+  .data-table th { background: #f8f9fa; width: 35%; text-align: left; }
 
-  #full-news-view { display: none; background: #ffffff; padding: 20px; width: 100%; text-align: left; }
-  #full-news-view img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 12px; margin-bottom: 25px; }
+  #full-news-view { display: none; background: #ffffff; padding: 15px; width: 100%; text-align: left; }
+  #full-news-view img { width: 100%; max-height: 420px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
 
-  .chat-box { border: 1px solid var(--border-color); border-radius: 12px; background: #fff; padding: 20px; display: flex; flex-direction: column; height: 360px; margin-top: 20px; }
-  .chat-messages { flex-grow: 1; overflow-y: auto; padding: 15px; background: #f8f9fa; border-radius: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px; }
-  .chat-msg { max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
-  .chat-msg.user { background: var(--primary-orange); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-  .chat-msg.system { background: #edf2f7; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
+  .chat-box { border: 1px solid var(--border-color); border-radius: 10px; background: #fff; padding: 15px; display: flex; flex-direction: column; height: 320px; margin-top: 15px; text-align: left; }
+  .chat-messages { flex-grow: 1; overflow-y: auto; padding: 10px; background: #f9f9f9; border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+  .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; text-align: left; }
+  .chat-msg.user { background: var(--primary-orange); color: white; align-self: flex-end; }
+  .chat-msg.system { background: #e9ecef; color: #333; align-self: flex-start; }
 </style>
 </head>
 <body>
 
-<!-- DRAWER MENU LATERAL DESPLEGABLE (AL LADO) -->
-<div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
+<!-- DRAWER MENU LATERAL DESPLEGABLE (SIN SOMBRADO / BACKDROP) -->
 <div class="drawer-content" id="drawer-content">
   <div class="drawer-header">
     <h3>Menú de Opciones</h3>
@@ -198,20 +180,20 @@
   </ul>
 </div>
 
-<!-- MODAL PARA SOLICITAR AGREGAR MÁS TEMAS/INTERESES -->
+<!-- MODAL PARA SOLICITAR AGREGAR MÁS TEMAS/INTERESES DE SU INTERÉS -->
 <div class="custom-modal-backdrop" id="modal-add-interest">
   <div class="custom-modal-card">
-    <h3 style="color: var(--primary-orange); margin-top:0; font-size:20px; font-weight:800;">Solicitar Nuevos Temas</h3>
-    <p style="font-size: 14px; color: #555; line-height:1.5;">Seleccione las categorías adicionales que desea habilitar en su portal. Su solicitud se enviará de forma automática:</p>
-    <div id="missing-interests-list" style="display:flex; flex-direction:column; gap:12px; margin: 20px 0; text-align:left;"></div>
-    <div style="display:flex; gap:12px;">
-      <button class="btn-pro" onclick="enviarSolicitudNuevosIntereses()">Enviar Solicitud</button>
-      <button class="btn-pro" onclick="cerrarModalIntereses()" style="background:#6c757d; box-shadow:none;">Cancelar</button>
+    <h3 style="color: var(--dark-orange);">Solicitar Nuevos Temas</h3>
+    <p style="font-size: 13.5px; color: #555;">Seleccione las categorías adicionales que desea habilitar en su portal. Su solicitud se enviará para ser cargada en su perfil:</p>
+    <div id="missing-interests-list" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px; text-align:left;"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn-primary-custom" onclick="enviarSolicitudNuevosIntereses()" style="flex:1;">Enviar Solicitud</button>
+      <button class="btn-primary-custom" onclick="cerrarModalIntereses()" style="background:#6c757d; box-shadow:none;">Cancelar</button>
     </div>
   </div>
 </div>
 
-<!-- VISTA 1: LOGIN (UBICADO ARRIBA Y ESTILIZADO) -->
+<!-- VISTA 1: LOGIN (BLOQUE SUPERIOR PROFESIONAL) -->
 <div class="login-container" id="login-container">
   <div class="login-section">
     <h2>Iniciar Sesión</h2>
@@ -223,46 +205,47 @@
       <label>Contraseña</label>
       <input type="password" id="login-password" placeholder="Ingrese su contraseña">
     </div>
-    <button type="button" class="btn-pro" onclick="login()">Ingresar</button>
-    <p id="login-error" style="color:var(--red-error); margin-top: 15px; font-weight: bold; font-size: 14px;"></p>
+    <button type="button" class="btn-primary-custom" onclick="login()">Ingresar</button>
+    <p id="login-error" style="color:var(--red-error); margin-top: 15px; font-weight: bold; text-align: left;"></p>
 
+    <!-- SECCIÓN ¿AÚN NO TENÉS CUENTA? DESTACADA Y ESTÉTICA -->
     <div class="unregistered-banner">
       <h3>¿Aún no tenés una cuenta?</h3>
-      <p>Accedé a contenido exclusivo y participá de sorteos por <span class="highlight-price">$5.000 / mes</span>.</p>
-      <button type="button" class="btn-pro" onclick="window.location.href='/p/crear-nueva-cuenta.html'">
+      <p>Accedé a contenido exclusivo y participá de sorteos por <span class="price-highlight">$5.000 / mes</span>.</p>
+      <button type="button" class="btn-primary-custom" onclick="window.location.href='/p/crear-nueva-cuenta.html'">
         <i class="fas fa-user-plus"></i> Registrarme Ahora
       </button>
     </div>
   </div>
 </div>
 
-<!-- VISTA 2: DASHBOARD COMPLETO (SIN MÁRGENES LATERALES, ALINEADO A LA IZQUIERDA) -->
+<!-- VISTA 2: DASHBOARD COMPLETO (ANCHO COMPLETO, ALINEADO A LA IZQUIERDA) -->
 <div class="dashboard-full" id="dashboard-container" style="display:none;">
   <div class="dashboard-header">
     <div class="header-info">
       <h2>Hola, <span id="user-display-name"></span></h2>
       <span class="date-text" id="current-date-display"></span>
     </div>
-    <!-- BOTÓN DE MENÚ CON 3 RAYITAS LIMPIAS -->
+    <!-- BOTÓN DE MENÚ CON 3 RAYITAS PURAS -->
     <button class="btn-menu-trigger" onclick="toggleDrawer(true)" aria-label="Abrir Menú">
       <i class="fas fa-bars"></i>
     </button>
   </div>
 
-  <!-- SCROLL HORIZONTAL DE SECCIONES / PESTAÑAS -->
+  <!-- SCROLL HORIZONTAL DE SECCIONES / PESTAÑAS (SOLO NOVEDADES, EXCLUSIVO, SORTEOS) -->
   <div class="tabs-scroll-container" id="tabs-scroll-bar">
-    <!-- Pestañas dinámicas -->
+    <!-- Pestañas dinámicas según preferencias -->
   </div>
 
   <div class="main-content-full">
     
-    <!-- PESTAÑA DINÁMICA NOTICIAS -->
-    <div id="tab-noticias" class="tab-content active">
+    <!-- PESTAÑA DINÁMICA NOVEDADES -->
+    <div id="tab-novedades" class="tab-content active">
       <div id="news-list-view" class="news-grid"></div>
     </div>
 
-    <!-- PESTAÑA DINÁMICA EXCLUSIVOS -->
-    <div id="tab-exclusivos" class="tab-content">
+    <!-- PESTAÑA DINÁMICA EXCLUSIVO -->
+    <div id="tab-exclusivo" class="tab-content">
       <div class="news-grid">
         <div class="news-card">
           <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80" alt="Exclusivo">
@@ -278,103 +261,23 @@
       </div>
     </div>
 
-    <!-- PESTAÑA DINÁMICA CINE -->
-    <div id="tab-cine" class="tab-content">
-      <div class="news-grid">
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop&q=80" alt="Cine">
-          <div class="news-card-body">
-            <h4>Próximos Estrenos de la Cartelera</h4>
-            <p>Revisión completa de las películas más esperadas del mes en salas locales...</p>
-            <div class="card-actions-bar">
-              <button class="btn-card-primary" onclick="verNoticiaCompleta('Próximos Estrenos de la Cartelera', 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&auto=format&fit=crop&q=80', 'Te traemos las fechas confirmadas y preventas exclusivas.', 'Cine')">Leer Nota</button>
-              <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('Próximos Estrenos de la Cartelera', 'Cine')"><i class="far fa-bookmark"></i> Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PESTAÑA DINÁMICA DEPORTES -->
-    <div id="tab-deportes" class="tab-content">
-      <div class="news-grid">
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=80" alt="Deportes">
-          <div class="news-card-body">
-            <h4>Cobertura Especial de Torneos Locales</h4>
-            <p>Resultados, tablas de posiciones y cobertura periodística independiente...</p>
-            <div class="card-actions-bar">
-              <button class="btn-card-primary" onclick="verNoticiaCompleta('Cobertura Especial de Torneos Locales', 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&auto=format&fit=crop&q=80', 'Resumen deportivo con fixture actualizado.', 'Deportes')">Leer Nota</button>
-              <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('Cobertura Especial de Torneos Locales', 'Deportes')"><i class="far fa-bookmark"></i> Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PESTAÑA DINÁMICA CULTURA -->
-    <div id="tab-cultura" class="tab-content">
-      <div class="news-grid">
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=600&auto=format&fit=crop&q=80" alt="Cultura">
-          <div class="news-card-body">
-            <h4>Agenda Cultural en Buenos Aires</h4>
-            <p>Muestras de arte, obras teatrales e itinerarios de fin de semana...</p>
-            <div class="card-actions-bar">
-              <button class="btn-card-primary" onclick="verNoticiaCompleta('Agenda Cultural en Buenos Aires', 'https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=800&auto=format&fit=crop&q=80', 'Guía completa de actividades gratuitas y con descuento.', 'Cultura')">Leer Nota</button>
-              <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('Agenda Cultural en Buenos Aires', 'Cultura')"><i class="far fa-bookmark"></i> Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PESTAÑA DINÁMICA BENEFICIOS -->
-    <div id="tab-beneficios" class="tab-content">
-      <div class="news-grid">
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80" alt="Beneficios">
-          <div class="news-card-body">
-            <h4>Descuentos Exclusivos en Comercios Adheridos</h4>
-            <p>Presentando tu credencial digital de suscriptor accedes a 20% OFF...</p>
-            <div class="card-actions-bar">
-              <button class="btn-card-primary" onclick="verNoticiaCompleta('Descuentos Exclusivos en Comercios Adheridos', 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80', 'Lista completa de locales adheridos en la red.', 'Beneficios')">Leer Nota</button>
-              <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('Descuentos Exclusivos en Comercios Adheridos', 'Beneficios')"><i class="far fa-bookmark"></i> Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PESTAÑA DINÁMICA SORTEOS -->
+    <!-- PESTAÑA DINÁMICA SORTEOS (FLUJO DE CACHÉ Y FORMULARIO BLOGGER) -->
     <div id="tab-sorteos" class="tab-content">
-      <div class="news-card" style="max-width: 500px;">
+      <div class="news-card" style="max-width: 500px; margin: 0;">
         <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop&q=80" alt="Sorteo">
         <div class="news-card-body">
           <h4>Sorteo de Entradas: COYOTE VS ACME</h4>
           <p><strong>Cine:</strong> Cinemark Abasto - Sábado 22:00 hs</p>
-          <div class="card-actions-bar" style="margin-top:15px;">
-            <button class="btn-card-primary" onclick="inscribirEnSorteo('Sorteo de Entradas: COYOTE VS ACME')">Participar del Sorteo</button>
-            <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('Sorteo de Entradas: COYOTE VS ACME', 'Sorteos')"><i class="far fa-bookmark"></i> Guardar</button>
+          <div class="card-actions-bar" style="margin-top:15px;" id="sorteo-action-wrapper">
+            <button class="btn-card-primary" id="btn-participar-inicial" onclick="prepararInscripcionSorteo('Sorteo de Entradas: COYOTE VS ACME')">Participar</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PESTAÑA BUSCADOR PREDICTIVO -->
-    <div id="tab-buscador" class="tab-content">
-      <div class="search-box-wrapper">
-        <div class="search-input-group">
-          <i class="fas fa-search search-icon-inside"></i>
-          <input type="text" id="predictive-search-input" placeholder="Buscar artículos, publicaciones o sorteos..." oninput="ejecutarBusquedaPredictiva()">
-        </div>
-      </div>
-      <div id="search-results-grid" class="news-grid"></div>
-    </div>
-
     <!-- SECCIÓN DRAWER: MI USUARIO -->
     <div id="drawer-sec-mi-usuario" class="tab-content">
-      <h3 style="color:var(--primary-orange); margin-bottom:20px; font-size:22px; font-weight:800;">Información Completa de Usuario</h3>
+      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Información Completa de Usuario</h3>
       <table class="data-table">
         <tr><th>Nombre Completo</th><td id="usr-data-fullname"></td></tr>
         <tr><th>DNI / Identificación</th><td id="usr-data-dni"></td></tr>
@@ -384,10 +287,10 @@
         <tr><th>Intereses Habilitados</th><td id="usr-data-intereses"></td></tr>
       </table>
 
-      <button class="btn-pro" onclick="toggleFormModificarDatos(true)" style="max-width:320px;"><i class="fas fa-edit"></i> Solicitar Modificación de Datos</button>
+      <button class="btn-primary-custom" onclick="toggleFormModificarDatos(true)" style="margin-top:10px; width:auto;"><i class="fas fa-edit"></i> Solicitar Modificación de Datos</button>
 
-      <div id="form-modificar-datos-wrapper" style="display:none; background:#f8f9fa; border:1px solid var(--border-color); padding:24px; border-radius:12px; margin-top:20px; max-width:600px;">
-        <h4 style="margin-top:0; color:var(--dark-orange); font-size:18px;">Seleccione el dato a modificar:</h4>
+      <div id="form-modificar-datos-wrapper" style="display:none; background:#f8f9fa; border:1px solid #ddd; padding:20px; border-radius:10px; margin-top:20px;">
+        <h4 style="margin-top:0; color:var(--dark-orange);">Seleccione el dato a modificar:</h4>
         <div class="input-group">
           <label>Campo a Modificar</label>
           <select id="mod-campo-select">
@@ -402,22 +305,22 @@
           <label>Nuevo Valor Solicitado *</label>
           <input type="text" id="mod-nuevo-valor" placeholder="Ingrese el nuevo dato correcto">
         </div>
-        <button class="btn-pro" onclick="enviarSolicitudModificacionDatos()">Enviar Solicitud de Cambio</button>
+        <button class="btn-primary-custom" onclick="enviarSolicitudModificacionDatos()">Enviar Solicitud de Cambio</button>
       </div>
     </div>
 
     <!-- SECCIÓN DRAWER: CONFIGURACIÓN -->
     <div id="drawer-sec-configuracion" class="tab-content">
-      <h3 style="color:var(--primary-orange); margin-bottom:20px; font-size:22px; font-weight:800;">Configuración de Suscripción y Medio de Pago</h3>
+      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Configuración de Suscripción y Medio de Pago</h3>
       <table class="data-table">
         <tr><th>Modalidad Actual</th><td id="cfg-medio-pago">Mercado Pago</td></tr>
-        <tr><th>Monto de Abono</th><td><span class="highlight-price">$5.000 / mes</span></td></tr>
-        <tr><th>Estado de Cuenta</th><td><span style="color:var(--green-success); font-weight:bold;"><i class="fas fa-check-circle"></i> Suscripción Activa</span></td></tr>
+        <tr><th>Monto de Abono</th><td><span class="price-highlight">$5.000 / mes</span></td></tr>
+        <tr><th>Estado de Cuenta</th><td><span style="color:var(--green-success); font-weight:bold;">Suscripción Activa</span></td></tr>
       </table>
 
-      <div style="background:#fff; border:1px solid var(--border-color); padding:24px; border-radius:12px; margin-top:20px; max-width:600px;">
-        <h4 style="margin-top:0; color:var(--dark-orange); font-size:18px;">Solicitar Cambio de Medio de Pago</h4>
-        <p style="font-size:14px; color:#555; line-height:1.5;">Si desea cambiar su débito por Mercado Pago a Transferencia Bancaria Directa (CBU/CVU), complete sus datos a continuación:</p>
+      <div style="background:#fff; border:1px solid var(--border-color); padding:20px; border-radius:10px; margin-top:20px;">
+        <h4 style="margin-top:0; color:var(--dark-orange);">Solicitar Cambio de Medio de Pago</h4>
+        <p style="font-size:13.5px; color:#555;">Si desea cambiar su débito por Mercado Pago a Transferencia Bancaria Directa (CBU/CVU), complete sus datos a continuación:</p>
         
         <div class="input-group">
           <label>Medio de Pago Deseado</label>
@@ -438,13 +341,13 @@
           <label>CBU / CVU o Alias para Vinculación *</label>
           <input type="text" id="cfg-cbu-alias" placeholder="Ej: 0000003100012345678901 o alias.mp">
         </div>
-        <button class="btn-pro" onclick="enviarSolicitudCambioMedioPago()">Solicitar Cambio de Medio de Pago</button>
+        <button class="btn-primary-custom" onclick="enviarSolicitudCambioMedioPago()">Solicitar Cambio de Medio de Pago</button>
       </div>
     </div>
 
     <!-- SECCIÓN DRAWER: GUARDADOS -->
     <div id="drawer-sec-guardados" class="tab-content">
-      <h3 style="color:var(--primary-orange); margin-bottom:20px; font-size:22px; font-weight:800;">Contenidos Guardados en Favoritos</h3>
+      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Contenidos Guardados en Favoritos</h3>
       <div id="favoritos-container-list" class="news-grid">
         <!-- Lista de guardados -->
       </div>
@@ -452,40 +355,40 @@
 
     <!-- SECCIÓN DRAWER: AYUDA -->
     <div id="drawer-sec-ayuda" class="tab-content">
-      <h3 style="color:var(--primary-orange); margin-bottom:20px; font-size:22px; font-weight:800;">Centro de Ayuda y Contacto</h3>
-      <p style="font-size:14.5px; color:#444;">Canales oficiales de asistencia directa:</p>
-      <ul style="line-height:1.8; font-size:14.5px; color:#333;">
+      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Centro de Ayuda y Contacto</h3>
+      <p style="font-size:14px; color:#444;">Canales oficiales de asistencia directa:</p>
+      <ul style="line-height:1.8; font-size:14px; padding-left: 20px;">
         <li><strong>E-mail Central:</strong> contacto@prenoticia.com</li>
         <li><strong>WhatsApp de Atención:</strong> +54 11 2167-9936</li>
       </ul>
 
-      <h4 style="color:var(--dark-orange); margin-top:25px; font-size:18px;">Chat de Asistencia en Vivo</h4>
-      <div class="chat-box" style="max-width:650px;">
+      <h4 style="color:var(--dark-orange); margin-top:25px;">Chat de Asistencia en Vivo</h4>
+      <div class="chat-box">
         <div class="chat-messages" id="chat-messages-container">
           <div class="chat-msg system">Hola, ¿en qué podemos ayudarte hoy? Escribe tu mensaje y lo derivaremos de inmediato.</div>
         </div>
-        <div style="display:flex; gap:10px;">
+        <div style="display:flex; gap:8px;">
           <input type="text" id="chat-input-text" placeholder="Escriba su consulta..." onkeypress="if(event.key==='Enter') enviarMensajeChat()">
-          <button class="btn-pro" style="width:auto; padding:12px 20px;" onclick="enviarMensajeChat()"><i class="fas fa-paper-plane"></i></button>
+          <button class="btn-card-primary" onclick="enviarMensajeChat()" style="width: 50px;"><i class="fas fa-paper-plane"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- LECTOR DE NOTICIA COMPLETA -->
+    <!-- LECTOR DE NOTICIA COMPLETA FULL WIDTH -->
     <div id="full-news-view">
-      <button class="btn-pro" onclick="volverDesdeLectorCompleto()" style="width:auto; margin-bottom: 20px; background: #334155; box-shadow:none;"><i class="fas fa-arrow-left"></i> Volver</button>
+      <button class="btn-primary-custom" onclick="volverDesdeLectorCompleto()" style="margin-bottom: 15px; width: auto; background: #333; box-shadow: none;"><i class="fas fa-arrow-left"></i> Volver</button>
       <img id="full-news-img" src="" alt="Noticia">
-      <h2 id="full-news-title" style="color:#111; font-size:26px; font-weight:800; margin-bottom:15px;"></h2>
-      <p id="full-news-body" style="font-size:16px; line-height:1.8; color:#333;"></p>
+      <h2 id="full-news-title" style="color:#111;"></h2>
+      <p id="full-news-body" style="font-size:15px; line-height:1.7; color:#333;"></p>
     </div>
 
   </div>
 </div>
 
-<!-- FORMULARIO DE BLOGGER INTEGRADO PARA ENVÍO SILENCIOSO CON CACHÉ Y AUTOCOMPLETADO -->
-<div class='widget-content contact-form-widget' style='display:none !important;'>
+<!-- COMPONENTE NATIVO DE BLOGGER PARA ENVÍO DE EMAIL SILENCIOSO -->
+<div class='widget-content contact-form-widget' style="display:none !important;">
 <div class='form'>
-<form name='contact-form' id='contact-form' onsubmit='return false;'>
+<form name='contact-form' id="blogger-native-contact-form">
 <input ariby='Name' class='contact-form-name' id='ContactForm1_contact-form-name' name='name' placeholder='Nombre y Apellido' size='30' type='text' value=''/>
 <input ariby='Email *' class='contact-form-email' id='ContactForm1_contact-form-email' name='email' placeholder='Correo electrónico' size='30' type='text' value=''/>
 <textarea ariby='Message *' class='contact-form-email-message' cols='25' id='ContactForm1_contact-form-email-message' name='email-message' placeholder='Mensaje' rows='5'></textarea>
@@ -507,7 +410,7 @@ const users = {
     dni: "38.123.456",
     localidad: "Liniers, CABA",
     telefono: "+54 11 2167-9936",
-    intereses: ["Noticias", "Cine", "Sorteos", "Beneficios"]
+    intereses: ["Novedades", "Exclusivo", "Sorteos"]
   },
   "mauricioacostacom@gmail.com": {
     email: "mauricioacostacom@gmail.com",
@@ -517,17 +420,13 @@ const users = {
     dni: "32.987.654",
     localidad: "Liniers, CABA",
     telefono: "+54 11 2167-9936",
-    intereses: ["Noticias", "Exclusivos", "Deportes", "Cultura", "Sorteos"]
+    intereses: ["Novedades", "Exclusivo", "Sorteos"]
   }
 };
 
-const todasLasCategoriasPosibles = ["Noticias", "Exclusivos", "Cine", "Deportes", "Cultura", "Beneficios", "Sorteos"];
-
 const articulosRepositorio = [
-  { id: 1, titulo: 'Actualizaciones en Registros Digitales 2026', tipo: 'Noticias', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'El proceso de modernización abarca la integración de firmas digitales, automatización de expedientes y atención prioritaria para suscriptores.' },
-  { id: 2, titulo: 'Informe Exclusivo: Innovación Digital 2026', tipo: 'Exclusivos', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'Contenido reservado para suscriptores de nivel superior con desglose de normativas.' },
-  { id: 3, titulo: 'Próximos Estrenos de la Cartelera', tipo: 'Cine', img: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop&q=80', cuerpo: 'Te traemos las fechas confirmadas y preventas exclusivas.' },
-  { id: 4, titulo: 'Cobertura Especial de Torneos Locales', tipo: 'Deportes', img: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=80', cuerpo: 'Resumen deportivo con fixture actualizado.' }
+  { id: 1, titulo: 'Actualizaciones en Registros Digitales 2026', tipo: 'Novedades', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'El proceso de modernización abarca la integración de firmas digitales, automatización de expedientes y atención prioritaria para suscriptores.' },
+  { id: 2, titulo: 'Informe Exclusivo: Innovación Digital 2026', tipo: 'Exclusivo', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'Contenido reservado para suscriptores de nivel superior con desglose de normativas.' }
 ];
 
 let currentUser = null;
@@ -537,12 +436,6 @@ window.addEventListener("load", () => {
   const hoy = new Date();
   const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   document.getElementById("current-date-display").textContent = hoy.toLocaleDateString('es-AR', opciones);
-
-  // Restaurar favoritos desde caché si existen
-  const cachedFavs = localStorage.getItem("prenoticia_user_favorites");
-  if (cachedFavs) {
-    try { listaFavoritosMemoria = JSON.parse(cachedFavs); } catch(e){}
-  }
 
   const activeUserEmail = localStorage.getItem("active_session_email");
   if (activeUserEmail && users[activeUserEmail]) {
@@ -581,22 +474,12 @@ function cargarDashboard(user) {
 
   construirPestañasScrollHorizontales(user.intereses);
   renderizarArticulosNoticias();
-  renderizarFavoritosEnDrawer();
 }
 
 function construirPestañasScrollHorizontales(interesesUsuario) {
   const scrollBar = document.getElementById("tabs-scroll-bar");
   scrollBar.innerHTML = "";
 
-  // 1. Pestaña de Buscador
-  const btnBuscador = document.createElement("button");
-  btnBuscador.className = "tab-btn";
-  btnBuscador.id = "btn-tab-buscador";
-  btnBuscador.innerHTML = `<i class="fas fa-search"></i> Buscador`;
-  btnBuscador.onclick = () => openTab("tab-buscador");
-  scrollBar.appendChild(btnBuscador);
-
-  // 2. Pestañas según Intereses
   interesesUsuario.forEach((interes, idx) => {
     const idTab = "tab-" + interes.toLowerCase();
     const btn = document.createElement("button");
@@ -607,17 +490,8 @@ function construirPestañasScrollHorizontales(interesesUsuario) {
     scrollBar.appendChild(btn);
   });
 
-  // 3. Botón (+) para agregar más temas
-  const btnAdd = document.createElement("button");
-  btnAdd.className = "btn-add-interest-tab";
-  btnAdd.innerHTML = `<i class="fas fa-plus-circle"></i> Agregar Tema`;
-  btnAdd.onclick = abrirModalNuevosIntereses;
-  scrollBar.appendChild(btnAdd);
-
   if (interesesUsuario.length > 0) {
     openTab("tab-" + interesesUsuario[0].toLowerCase());
-  } else {
-    openTab("tab-buscador");
   }
 }
 
@@ -631,21 +505,15 @@ function openTab(tabId) {
   if (targetTab) targetTab.classList.add('active');
   if (targetBtn) targetBtn.classList.add('active');
 
-  if (tabId === 'tab-buscador') {
-    ejecutarBusquedaPredictiva();
-  }
   volverDesdeLectorCompleto();
 }
 
-/* DRAWER MENU DESPLEGABLE */
+/* DRAWER MENU DESPLEGABLE (AL LADO, SIN BACKDROP/SOMBRADO) */
 function toggleDrawer(open) {
-  const overlay = document.getElementById("drawer-overlay");
   const content = document.getElementById("drawer-content");
   if (open) {
-    overlay.style.display = "block";
     content.classList.add("open");
   } else {
-    overlay.style.display = "none";
     content.classList.remove("open");
   }
 }
@@ -663,7 +531,7 @@ function abrirSeccionDrawer(seccionId) {
 function renderizarArticulosNoticias() {
   const grid = document.getElementById("news-list-view");
   grid.innerHTML = "";
-  articulosRepositorio.forEach(a => {
+  articulosRepositorio.filter(a => a.tipo === 'Novedades').forEach(a => {
     const card = document.createElement("div");
     card.className = "news-card";
     card.innerHTML = `
@@ -694,45 +562,11 @@ function volverDesdeLectorCompleto() {
   document.getElementById('full-news-view').style.display = 'none';
 }
 
-/* BUSCADOR PREDICTIVO */
-function ejecutarBusquedaPredictiva() {
-  const query = document.getElementById("predictive-search-input").value.trim().toLowerCase();
-  const resultsGrid = document.getElementById("search-results-grid");
-  resultsGrid.innerHTML = "";
-
-  const filtrados = articulosRepositorio.filter(a => 
-    a.titulo.toLowerCase().includes(query) || 
-    a.tipo.toLowerCase().includes(query) ||
-    a.cuerpo.toLowerCase().includes(query)
-  );
-
-  filtrados.forEach(a => {
-    const card = document.createElement("div");
-    card.className = "news-card";
-    card.innerHTML = `
-      <img src="${a.img}" alt="${a.titulo}">
-      <div class="news-card-body">
-        <h4>${a.titulo}</h4>
-        <p>${a.cuerpo}</p>
-        <div class="card-actions-bar">
-          <button class="btn-card-primary" onclick="verNoticiaCompleta('${a.titulo}', '${a.img}', '${a.cuerpo}', '${a.tipo}')">Leer Nota</button>
-          <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('${a.titulo}', '${a.tipo}')"><i class="far fa-bookmark"></i> Guardar</button>
-        </div>
-      </div>
-    `;
-    resultsGrid.appendChild(card);
-  });
-}
-
-/* GUARDADOS EN FAVORITOS Y CACHÉ */
+/* GUARDADOS EN FAVORITOS */
 function guardarEnFavoritosDirecto(titulo, tipo) {
   if (!listaFavoritosMemoria.some(f => f.titulo === titulo)) {
     listaFavoritosMemoria.push({ titulo, tipo });
-    localStorage.setItem("prenoticia_user_favorites", JSON.stringify(listaFavoritosMemoria));
     renderizarFavoritosEnDrawer();
-    
-    // Guardar en caché y autocompletar formulario de blogger de forma silenciosa
-    dispararFormularioBloggerSilencioso("GUARDADO EN FAVORITOS", `El usuario guardó en favoritos el contenido: ${titulo} (Categoría: ${tipo})`);
     alert("¡Artículo guardado en Favoritos!");
   } else {
     alert("El artículo ya se encuentra guardado.");
@@ -759,42 +593,57 @@ function renderizarFavoritosEnDrawer() {
   });
 }
 
-/* MODAL DE AGREGAR INTERESES */
-function abrirModalNuevosIntereses() {
-  const list = document.getElementById("missing-interests-list");
-  list.innerHTML = "";
-  const noInscritos = todasLasCategoriasPosibles.filter(c => !currentUser.intereses.includes(c));
+/* SORTEOS: CACHÉ, COPIADO Y ENVÍO DE EMAIL SILENCIOSO */
+function prepararInscripcionSorteo(nombreSorteo) {
+  const ahora = new Date();
+  const fechaHoraStr = ahora.toLocaleString('es-AR');
+  const etiquetaSorteo = "Sorteos";
 
-  if (noInscritos.length === 0) {
-    list.innerHTML = `<p style="font-size:14px; color:#666;">Ya se encuentra suscripto a todas las categorías disponibles.</p>`;
-  } else {
-    noInscritos.forEach(cat => {
-      list.innerHTML += `
-        <label style="font-size:14.5px; cursor:pointer; display:flex; align-items:center; gap:10px;">
-          <input type="checkbox" class="chk-new-int" value="${cat}" style="width:18px; height:18px; accent-color:var(--primary-orange);"> ${cat}
-        </label>
-      `;
-    });
+  // Guardar en caché local / sessionStorage
+  const datosCache = {
+    usuario: currentUser.nombreCompleto,
+    email: currentUser.email,
+    etiqueta: etiquetaSorteo,
+    sorteo: nombreSorteo,
+    timestamp: fechaHoraStr
+  };
+  localStorage.setItem("ultimo_sorteo_cache", JSON.stringify(datosCache));
+
+  // Autocompletar datos en el formulario oculto de Blogger
+  document.getElementById("ContactForm1_contact-form-name").value = currentUser.nombreCompleto;
+  document.getElementById("ContactForm1_contact-form-email").value = currentUser.email;
+  document.getElementById("ContactForm1_contact-form-email-message").value = 
+    `INSCRIPCIÓN A SORTEO\n-------------------------------\nUsuario: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nSorteo: ${nombreSorteo}\nEtiqueta: ${etiquetaSorteo}\nFecha y Hora: ${fechaHoraStr}`;
+
+  // Copiar al portapapeles los datos recopilados
+  const textoPortapapeles = `Participación Sorteo:\nNombre: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nEtiqueta: ${etiquetaSorteo}\nSorteo: ${nombreSorteo}\nHora: ${fechaHoraStr}`;
+  
+  navigator.clipboard.writeText(textoPortapapeles).then(() => {
+    // Reemplazar botón por el botón "Confirmar"
+    const wrapper = document.getElementById("sorteo-action-wrapper");
+    wrapper.innerHTML = `
+      <button class="btn-card-primary" style="background:var(--green-success);" onclick="confirmarEnvioSorteo()">Confirmar y Enviar</button>
+      <span style="font-size:12px; color:var(--green-success); display:block; margin-top:5px;"><i class="fas fa-check-circle"></i> Datos cacheados y copiados al portapapeles.</span>
+    `;
+  }).catch(err => {
+    alert("Error al copiar datos en caché.");
+  });
+}
+
+function confirmarEnvioSorteo() {
+  try {
+    document.getElementById("ContactForm1_contact-form-submit").click();
+    alert("¡Inscripción enviada exitosamente a su correo!");
+    
+    // Restaurar botón original
+    const wrapper = document.getElementById("sorteo-action-wrapper");
+    wrapper.innerHTML = `<button class="btn-card-primary" onclick="prepararInscripcionSorteo('Sorteo de Entradas: COYOTE VS ACME')">Participar</button>`;
+  } catch (e) {
+    alert("No se pudo completar el envío automático.");
   }
-  document.getElementById("modal-add-interest").style.display = "flex";
 }
 
-function cerrarModalIntereses() {
-  document.getElementById("modal-add-interest").style.display = "none";
-}
-
-function enviarSolicitudNuevosIntereses() {
-  const seleccionados = Array.from(document.querySelectorAll('.chk-new-int:checked')).map(cb => cb.value);
-  if (seleccionados.length === 0) {
-    alert("Seleccione al menos un tema.");
-    return;
-  }
-  dispararFormularioBloggerSilencioso("SOLICITUD DE ADICIÓN DE NUEVOS TEMAS", `El usuario ${currentUser.nombreCompleto} (${currentUser.email}) solicita agregar los siguientes temas: ${seleccionados.join(", ")}`);
-  cerrarModalIntereses();
-  alert("Solicitud enviada correctamente.");
-}
-
-/* FORMULARIOS SILENCIOSOS BLOGGER CON CACHÉ Y HORA ACTUAL */
+/* FORMULARIOS SILENCIOSOS Y GESTIÓN DE DATOS */
 function toggleFormModificarDatos(show) {
   document.getElementById("form-modificar-datos-wrapper").style.display = show ? "block" : "none";
 }
@@ -844,26 +693,10 @@ function enviarMensajeChat() {
   }, 800);
 }
 
-function inscribirEnSorteo(nombreSorteo) {
-  dispararFormularioBloggerSilencioso("INSCRIPCIÓN A SORTEO", `Inscripción registrada.\nUsuario: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nSorteo/Etiqueta: ${nombreSorteo}`);
-  alert("¡Inscripción confirmada! Te hemos registrado en el sorteo.");
-}
-
 function dispararFormularioBloggerSilencioso(asunto, detalle) {
-  const horaActual = new Date().toLocaleString('es-AR');
-  const payloadCompleto = `${asunto}\n[Hora de participación: ${horaActual}]\n-------------------------------\n${detalle}`;
-
-  // Autocompletar y guardar en caché local
-  document.getElementById("ContactForm1_contact-form-name").value = currentUser ? currentUser.nombreCompleto : "Invitado";
-  document.getElementById("ContactForm1_contact-form-email").value = currentUser ? currentUser.email : "sin-correo@prenoticia.com";
-  document.getElementById("ContactForm1_contact-form-email-message").value = payloadCompleto;
-
-  // Guardar registro de actividad en caché del navegador
-  try {
-    const historialAcciones = JSON.parse(localStorage.getItem("prenoticia_cache_acciones") || "[]");
-    historialAcciones.push({ asunto, detalle, hora: horaActual });
-    localStorage.setItem("prenoticia_cache_acciones", JSON.stringify(historialAcciones));
-  } catch(e) {}
+  document.getElementById("ContactForm1_contact-form-name").value = currentUser.nombreCompleto;
+  document.getElementById("ContactForm1_contact-form-email").value = currentUser.email;
+  document.getElementById("ContactForm1_contact-form-email-message").value = `${asunto}\n-------------------------------\n${detalle}`;
 
   try {
     document.getElementById("ContactForm1_contact-form-submit").click();
