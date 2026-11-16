@@ -209,8 +209,10 @@
 
   <div class="main-content-full">
     
-    <div id="tab-novedades" class="tab-content active">
-      <div id="news-list-view" class="news-grid"></div>
+    <div id="tab-noticais" class="tab-content active">
+      <!-- Elfsight Blog | Untitled Blog -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-9682f774-d1f8-4a2f-bafb-b6ae8fccf335" data-elfsight-app-lazy></div>
     </div>
 
     <div id="tab-exclusivo" class="tab-content">
@@ -231,16 +233,9 @@
 
     <!-- PESTAÑA SORTEOS -->
     <div id="tab-sorteos" class="tab-content">
-      <div class="news-card" style="max-width: 500px; margin: 0;">
-        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop&q=80" alt="Sorteo">
-        <div class="news-card-body">
-          <h4>Sorteo de Entradas: COYOTE VS ACME</h4>
-          <p><strong>Cine:</strong> Cinemark Abasto - Sábado 22:00 hs</p>
-          <div class="card-actions-bar" style="margin-top:15px;" id="sorteo-action-wrapper">
-            <button class="btn-card-primary" id="btn-participar-inicial" onclick="prepararInscripcionSorteo('Sorteo de Entradas: COYOTE VS ACME')">Participar</button>
-          </div>
-        </div>
-      </div>
+      <!-- Elfsight Form Builder | Untitled Form Builder -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-25c50845-bf94-4f9b-9879-2f5da5469520" data-elfsight-app-lazy></div>
     </div>
 
     <!-- SECCIÓN MI USUARIO -->
@@ -377,7 +372,7 @@ const users = {
     dni: "38.123.456",
     localidad: "Liniers, CABA",
     telefono: "+54 11 2167-9936",
-    intereses: ["Novedades", "Exclusivo", "Sorteos"]
+    intereses: ["Noticais", "Exclusivo", "Sorteos"]
   },
   "mauricioacostacom@gmail.com": {
     email: "mauricioacostacom@gmail.com",
@@ -387,12 +382,12 @@ const users = {
     dni: "32.987.654",
     localidad: "Liniers, CABA",
     telefono: "+54 11 2167-9936",
-    intereses: ["Novedades", "Exclusivo", "Sorteos"]
+    intereses: ["Noticais", "Exclusivo", "Sorteos"]
   }
 };
 
 const articulosRepositorio = [
-  { id: 1, titulo: 'Actualizaciones en Registros Digitales 2026', tipo: 'Novedades', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'El proceso de modernización abarca la integración de firmas digitales, automatización de expedientes y atención prioritaria para suscriptores.' },
+  { id: 1, titulo: 'Actualizaciones en Registros Digitales 2026', tipo: 'Noticais', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'El proceso de modernización abarca la integración de firmas digitales, automatización de expedientes y atención prioritaria para suscriptores.' },
   { id: 2, titulo: 'Informe Exclusivo: Innovación Digital 2026', tipo: 'Exclusivo', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'Contenido reservado para suscriptores de nivel superior con desglose de normativas.' }
 ];
 
@@ -440,7 +435,6 @@ function cargarDashboard(user) {
   document.getElementById("usr-data-intereses").textContent = user.intereses.join(", ");
 
   construirPestañasScrollHorizontales(user.intereses);
-  renderizarArticulosNoticias();
 }
 
 function construirPestañasScrollHorizontales(interesesUsuario) {
@@ -493,27 +487,6 @@ function abrirSeccionDrawer(seccionId) {
   volverDesdeLectorCompleto();
 }
 
-function renderizarArticulosNoticias() {
-  const grid = document.getElementById("news-list-view");
-  grid.innerHTML = "";
-  articulosRepositorio.filter(a => a.tipo === 'Novedades').forEach(a => {
-    const card = document.createElement("div");
-    card.className = "news-card";
-    card.innerHTML = `
-      <img src="${a.img}" alt="${a.titulo}">
-      <div class="news-card-body">
-        <h4>${a.titulo}</h4>
-        <p>${a.cuerpo}</p>
-        <div class="card-actions-bar">
-          <button class="btn-card-primary" onclick="verNoticiaCompleta('${a.titulo}', '${a.img}', '${a.cuerpo}', '${a.tipo}')">Leer Nota</button>
-          <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('${a.titulo}', '${a.tipo}')"><i class="far fa-bookmark"></i> Guardar</button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
 function verNoticiaCompleta(titulo, imgUrl, cuerpo, tipo) {
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   const fullView = document.getElementById('full-news-view');
@@ -555,57 +528,6 @@ function renderizarFavoritosEnDrawer() {
     `;
     container.appendChild(card);
   });
-}
-
-/* ================================================================= */
-/* SORTEOS: ENVÍO FORZADO REAL A BLOGGER (CERO FALLOS) */
-/* ================================================================= */
-function prepararInscripcionSorteo(nombreSorteo) {
-  const ahora = new Date();
-  const fechaHoraStr = ahora.toLocaleString('es-AR');
-  const etiquetaSorteo = "Sorteos";
-
-  const datosCache = {
-    usuario: currentUser.nombreCompleto,
-    email: currentUser.email,
-    etiqueta: etiquetaSorteo,
-    sorteo: nombreSorteo,
-    timestamp: fechaHoraStr
-  };
-  
-  try {
-    localStorage.setItem("ultimo_sorteo_cache", JSON.stringify(datosCache));
-  } catch (e) {}
-
-  const wrapper = document.getElementById("sorteo-action-wrapper");
-  wrapper.innerHTML = `
-    <button class="btn-card-primary" style="background:var(--green-success);" onclick="confirmarEnvioSorteo('${nombreSorteo}')">Confirmar y Enviar</button>
-    <span style="font-size:12px; color:var(--green-success); display:block; margin-top:5px;"><i class="fas fa-check-circle"></i> Listo para procesar envío a su correo.</span>
-  `;
-}
-
-function confirmarEnvioSorteo(nombreSorteo) {
-  const ahora = new Date();
-  const fechaHoraStr = ahora.toLocaleString('es-AR');
-  const mensajeDetalle = `INSCRIPCIÓN A SORTEO\n-------------------------------\nUsuario: ${currentUser.nombreCompleto}\nEmail: ${currentUser.email}\nSorteo: ${nombreSorteo}\nFecha y Hora: ${fechaHoraStr}`;
-
-  // Inyectar en el formulario Hack de Blogger con acción directa POST
-  document.getElementById("hack-name").value = currentUser.nombreCompleto;
-  document.getElementById("hack-email").value = currentUser.email;
-  document.getElementById("hack-message").value = mensajeDetalle;
-
-  window.enviandoBlogger = true;
-  
-  try {
-    // Forzar el submit real por POST hacia Blogger mediante el iframe oculto
-    document.getElementById("blogger-submit-hack").submit();
-    
-    // Restaurar botón original de manera limpia
-    const wrapper = document.getElementById("sorteo-action-wrapper");
-    wrapper.innerHTML = `<button class="btn-card-primary" onclick="prepararInscripcionSorteo('Sorteo de Entradas: COYOTE VS ACME')">Participar</button>`;
-  } catch (e) {
-    alert("Error de conexión al procesar el envío automático.");
-  }
 }
 
 function toggleFormModificarDatos(show) {
