@@ -1,645 +1,1586 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Portal de Usuarios - Prenoticia</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Miembros</title>
+    <style>
+        :root {
+            --primary: #f68e02;
+            --primary-hover: #d97a00;
+            --primary-light: #fff6ea;
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --text-muted: #555555;
+            --border-color: #e5e5e5;
+            --premium-gold: #f68e02;
+            --basic-gray: #64748b;
+        }
 
-<style>
-  :root {
-    --primary-orange: #f58220;
-    --dark-orange: #e68a00;
-    --header-bg: #f58220;
-    --bg-gray: #f4f6f9;
-    --card-bg: #ffffff;
-    --text-color: #222222;
-    --text-muted: #666666;
-    --border-color: #e0e0e0;
-    --green-success: #2e7d32;
-    --red-error: #c62828;
-    --warning-yellow: #f57c00;
-    --mp-blue: #009ee3;
-  }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-  * { box-sizing: border-box; font-family: 'Segoe UI', 'Montserrat', Roboto, Helvetica, Arial, sans-serif; }
-  
-  /* CORRECCIÓN DE SCROLL INFINITO Y ALTURA TOTAL */
-  html, body { 
-    margin: 0; 
-    padding: 0; 
-    background-color: var(--bg-gray); 
-    color: var(--text-color); 
-    width: 100%; 
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+        /* Bloquear scroll externo y fijar la ventana completa */
+        body, html {
+            background-color: var(--bg-color) !important;
+            color: var(--text-color) !important;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden !important;
+            position: relative;
+        }
 
-  /* OCULTAR MENSAJES NATIVOS DE BLOGGER PERO PERMITIR FUNCIONAMIENTO */
-  #ContactForm1_contact-form-error-message,
-  #ContactForm1_contact-form-success-message,
-  .contact-form-error-message,
-  .contact-form-success-message {
-      display: none !important;
-  }
+        .hidden { display: none !important; }
 
-  /* LOGIN CONTENEDOR - BLOQUE SUPERIOR PROFESIONAL */
-  .login-container { width: 100%; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 30px 15px; background: var(--bg-gray); }
-  .login-section { width: 100%; max-width: 480px; padding: 35px 25px; border: 1px solid var(--border-color); border-radius: 14px; text-align: left; background: #ffffff; box-shadow: 0 4px 25px rgba(0,0,0,0.06); margin-top: 10px; }
-  .login-section h2 { color: var(--header-bg); margin-top: 0; font-size: 26px; margin-bottom: 22px; font-weight: 800; text-align: center; }
+        .container {
+            width: 100%;
+            padding: 0 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-  /* BOTONES MEJORADOS Y ESTÉTICOS */
-  .btn-primary-custom {
-    background: linear-gradient(135deg, var(--primary-orange) 0%, var(--dark-orange) 100%);
-    color: white;
-    border: none;
-    padding: 14px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    width: 100%;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(245, 130, 32, 0.35);
-    transition: all 0.2s ease;
-  }
-  .btn-primary-custom:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245, 130, 32, 0.45); }
+        /* Pantalla de Login / Registro */
+        #auth-section {
+            width: 100%;
+            height: 100vh;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: #ffffff;
+        }
 
-  /* SECCIÓN "¿AÚN NO TENÉS CUENTA?" DESTACADA Y ESTÉTICA */
-  .unregistered-banner {
-    background: linear-gradient(135deg, #fff8f0 0%, #fff1e0 100%);
-    border: 2px solid var(--primary-orange);
-    border-radius: 12px;
-    padding: 24px 20px;
-    margin-top: 30px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(245, 130, 32, 0.08);
-  }
-  .unregistered-banner h3 { color: var(--dark-orange); margin: 0 0 10px 0; font-size: 19px; font-weight: 800; }
-  .unregistered-banner p { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 18px; }
-  
-  /* PRECIO DESTACADO DE $5000 POR MES */
-  .price-highlight {
-    display: inline-block;
-    background: var(--primary-orange);
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 15px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3);
-  }
+        .auth-card {
+            width: 100%;
+            max-width: 440px;
+            background: #ffffff;
+        }
 
-  /* DASHBOARD FULL WIDTH SIN BORDES LATERALES */
-  .dashboard-full { 
-    width: 100%; 
-    min-height: 100vh; 
-    background: #ffffff; 
-    margin: 0; 
-    padding: 0; 
-    text-align: left; 
-    overflow: visible;
-  }
-  .dashboard-header { background: #ffffff; padding: 15px 20px; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; width: 100%; }
-  
-  .header-info { text-align: left; }
-  .header-info h2 { margin: 0; font-size: 20px; color: #111; text-align: left; font-weight: 700; }
-  .header-info .date-text { font-size: 13px; color: var(--text-muted); margin-top: 4px; display: block; text-align: left; }
+        .auth-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
 
-  /* BOTÓN DE MENÚ */
-  .btn-menu-trigger { background: var(--header-bg); color: #fff; border: none; padding: 10px 14px; border-radius: 8px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 44px; height: 40px; box-shadow: 0 2px 8px rgba(245, 130, 32, 0.3); }
-  .btn-menu-trigger:hover { background: var(--dark-orange); }
+        .auth-card p.subtitle {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
 
-  /* DRAWER MENU LATERAL */
-  .drawer-content { position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background: #ffffff; z-index: 100000; transition: right 0.3s ease; box-shadow: -5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; text-align: left; }
-  .drawer-content.open { right: 0; }
-  .drawer-header { background: var(--primary-orange); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-  .drawer-header h3 { margin: 0; font-size: 18px; text-align: left; }
-  .close-drawer-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
-  
-  .drawer-menu-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; text-align: left; }
-  .drawer-menu-item { border-bottom: 1px solid var(--border-color); text-align: left; }
-  .drawer-menu-item button { width: 100%; background: none; color: #333; text-align: left; padding: 16px 20px; border-radius: 0; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 12px; border: none; cursor: pointer; }
-  .drawer-menu-item button:hover { background: #f8f9fa; color: var(--primary-orange); }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
 
-  /* TABS CON SCROLL HORIZONTAL */
-  .tabs-scroll-container { display: flex; background: #ffffff; border-bottom: 3px solid var(--header-bg); padding: 10px 15px 0 15px; gap: 8px; position: sticky; top: 0; z-index: 100; overflow-x: auto; scrollbar-width: thin; width: 100%; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-  .tabs-scroll-container::-webkit-scrollbar { height: 4px; }
-  .tabs-scroll-container::-webkit-scrollbar-thumb { background: var(--primary-orange); border-radius: 4px; }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
 
-  .tab-btn { padding: 12px 18px; background: #e9ecef; color: #495057; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .tab-btn.active { background: var(--header-bg); color: #ffffff; }
+        .form-group input {
+            width: 100%;
+            padding: 14px 45px 14px 16px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
 
-  /* CONTENIDO PRINCIPAL SIN BORDES Y CON EXPANSIÓN TOTAL */
-  .main-content-full { 
-    padding: 0; 
-    width: 100%; 
-    margin: 0; 
-    text-align: left; 
-    min-height: calc(100vh - 120px);
-    display: flex;
-    flex-direction: column;
-  }
-  .tab-content { display: none; width: 100%; text-align: left; flex: 1; }
-  .tab-content.active { display: block; }
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
 
-  /* CONTENEDORES INTERNOS CON PADDING CERO PARA ELIMINAR BORDES LATERALES */
-  .full-width-section {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 42px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
 
-  /* TARJETAS NOTICIAS */
-  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; text-align: left; padding: 20px; }
-  .news-card { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.04); text-align: left; }
-  .news-card img { width: 100%; height: 200px; object-fit: cover; }
-  .news-card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; text-align: left; }
-  .news-card-body h4 { margin: 0 0 10px 0; font-size: 17px; color: #111; text-align: left; }
-  .news-card-body p { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 15px; text-align: left; }
-  
-  .card-actions-bar { display: flex; gap: 8px; margin-top: 10px; }
-  .btn-card-primary { flex: 1; background: var(--header-bg); color: #fff; font-size: 13px; padding: 10px 12px; border-radius: 6px; border: none; font-weight: 700; cursor: pointer; }
-  .btn-card-save { background: #f8f9fa; color: #333; border: 1px solid #ccc; font-size: 13px; padding: 10px 12px; border-radius: 6px; display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: 600; }
+        .btn-primary {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
 
-  /* INPUTS */
-  .input-group { margin-bottom: 18px; text-align: left; }
-  .input-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
-  input[type="text"], input[type="password"], input[type="email"], select, textarea { width: 100%; padding: 12px 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 14.5px; outline: none; text-align: left; background: #fff; }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
 
-  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; text-align: left; }
-  .data-table th, .data-table td { padding: 14px; border: 1px solid var(--border-color); font-size: 14px; text-align: left; }
-  .data-table th { background: #f8f9fa; width: 35%; text-align: left; }
+        .auth-footer {
+            margin-top: 24px;
+            text-align: left;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
 
-  #full-news-view { display: none; background: #ffffff; padding: 15px; width: 100%; text-align: left; }
-  #full-news-view img { width: 100%; max-height: 420px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-  .chat-box { border: 1px solid var(--border-color); border-radius: 10px; background: #fff; padding: 15px; display: flex; flex-direction: column; height: 320px; margin-top: 15px; text-align: left; }
-  .chat-messages { flex-grow: 1; overflow-y: auto; padding: 10px; background: #f9f9f9; border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
-  .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; text-align: left; }
-  .chat-msg.user { background: var(--primary-orange); color: white; align-self: flex-end; }
-  .chat-msg.system { background: #e9ecef; color: #333; align-self: flex-start; }
-</style>
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-msg {
+            color: #d93838;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        /* Panel Principal con scroll interno fluido */
+        #app-section {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            z-index: 100;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Nombre del usuario en color NEGRO */
+        .brand-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111111 !important;
+            text-decoration: none;
+        }
+
+        /* Etiqueta de plan en header */
+        .header-plan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .header-plan-badge.premium {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .header-plan-badge.basico {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .user-nav-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Botón de casita */
+        .menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            color: var(--primary);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .menu-toggle:hover {
+            background: var(--primary-light);
+        }
+
+        .menu-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        #menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 998;
+            display: none;
+        }
+
+        /* Menú lateral con scroll interno extendido al 120% de altura útil */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 380px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 999;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 24px calc(24px + 20vh) 24px;
+            overflow-y: auto !important;
+        }
+
+        .sidebar-menu.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        /* Espaciado entre datos de usuario */
+        .account-details {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .account-details p {
+            margin-bottom: 12px;
+        }
+
+        .account-details strong {
+            color: var(--text-color);
+        }
+
+        .plan-pill-sidebar {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .plan-pill-sidebar.premium {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .plan-pill-sidebar.basico {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .interest-badge {
+            display: inline-block;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-color);
+            margin: 3px 4px 3px 0;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-sidebar-action {
+            width: 100%;
+            padding: 12px;
+            background: #f4f6f8;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-sidebar-action:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-upgrade-sidebar {
+            background: var(--primary);
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .btn-upgrade-sidebar:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-logout {
+            color: #d93838;
+            background: #fdf2f2;
+        }
+        .btn-logout:hover {
+            background: #fce8e8;
+        }
+
+        .account-subview {
+            display: none;
+            padding: 24px 0;
+        }
+
+        .account-subview.active {
+            display: block;
+        }
+
+        .btn-back-account {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .main-nav-tabs {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+
+        .tabs-list {
+            display: flex;
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            list-style: none;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 16px 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            transition: color 0.2s;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        /* Contenedor de contenido con scroll interno fluido */
+        .tab-content-area {
+            flex: 1;
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            padding: 40px 24px calc(40px + 40vh) 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 15px;
+            line-height: 1.5em;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .item-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 185px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .item-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .tags-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        /* Etiquetas de acceso y categoría */
+        .item-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            height: 26px;
+            line-height: 1;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 0 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .item-tag.tag-premium {
+            background: #f68e02;
+            color: #ffffff;
+        }
+
+        .item-tag.tag-basico {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .item-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            line-height: 1.35;
+        }
+
+        .item-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .btn-card-action {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-card-action:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Bloqueo / Aviso de Membresía o Upgrade a Premium */
+        .membership-lock-box {
+            background: #fffaf3;
+            border: 1px solid #fbd38d;
+            border-radius: 12px;
+            padding: 36px 24px;
+            text-align: center;
+            max-width: 580px;
+            margin: 20px auto;
+        }
+
+        .membership-lock-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        .membership-lock-box p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .btn-mp-pay {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(246, 142, 2, 0.25);
+        }
+
+        .btn-mp-pay:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Sección de Detalle Completo */
+        #detail-view-section {
+            display: none;
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        #detail-view-section.active {
+            display: block;
+        }
+
+        .detail-back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-card-full {
+            background: #ffffff;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        .detail-card-full img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .detail-card-full h2 {
+            font-size: 22px !important;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-color);
+        }
+
+        .detail-card-full p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
+
+        /* Estilos Sección Sorteos */
+        .sorteo-card-wrapper {
+            max-width: 820px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+        }
+
+        .sorteo-banner-img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .sorteo-body {
+            padding: 28px;
+        }
+
+        .sorteo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+
+        .sorteo-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .sorteo-details-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 16px 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 24px;
+        }
+
+        .sorteo-details-box p {
+            font-size: 15px;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .sorteo-details-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .empty-state-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 36px 24px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .sorteo-body {
+                padding: 20px;
+            }
+            .sorteo-title {
+                font-size: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- DRAWER MENU LATERAL -->
-<div class="drawer-content" id="drawer-content">
-  <div class="drawer-header">
-    <h3>Menú de Opciones</h3>
-    <button class="close-drawer-btn" onclick="toggleDrawer(false)"><i class="fas fa-times"></i></button>
-  </div>
-  <ul class="drawer-menu-list">
-    <li class="drawer-menu-item"><button onclick="abrirSeccionDrawer('mi-usuario')"><i class="fas fa-user-circle"></i> Mi Usuario</button></li>
-    <li class="drawer-menu-item"><button onclick="abrirSeccionDrawer('configuracion')"><i class="fas fa-cog"></i> Configuración</button></li>
-    <li class="drawer-menu-item"><button onclick="abrirSeccionDrawer('guardados')"><i class="fas fa-bookmark"></i> Guardados</button></li>
-    <li class="drawer-menu-item"><button onclick="abrirSeccionDrawer('ayuda')"><i class="fas fa-headset"></i> Ayuda / Soporte</button></li>
-    <li class="drawer-menu-item"><button onclick="logout()" style="color: var(--red-error);"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button></li>
-  </ul>
-</div>
+    <!-- ================= SECCIÓN DE INICIO DE SESIÓN ================= -->
+    <section id="auth-section">
+        <div class="container auth-card">
+            <h2>Iniciar Sesión</h2>
+            <p class="subtitle">Ingresa con tu correo electrónico y contraseña</p>
+            
+            <div id="login-error" class="error-msg">Correo o contraseña incorrectos.</div>
 
-<!-- VISTA 1: LOGIN -->
-<div class="login-container" id="login-container">
-  <div class="login-section">
-    <h2>Iniciar Sesión</h2>
-    <div class="input-group">
-      <label>Correo Electrónico</label>
-      <input type="email" id="login-email" placeholder="ejemplo@gmail.com">
-    </div>
-    <div class="input-group">
-      <label>Contraseña</label>
-      <input type="password" id="login-password" placeholder="Ingrese su contraseña">
-    </div>
-    <button type="button" class="btn-primary-custom" onclick="login()">Ingresar</button>
-    <p id="login-error" style="color:var(--red-error); margin-top: 15px; font-weight: bold; text-align: left;"></p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-user">Correo electrónico</label>
+                    <input type="text" id="login-user" required placeholder="ejemplo@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-pass">Contraseña</label>
+                    <input type="password" id="login-pass" required placeholder="Ingresa tu contraseña">
+                    <button type="button" class="toggle-password" id="toggle-pass-btn">Ver</button>
+                </div>
+                <button type="submit" class="btn-primary">Ingresar</button>
+            </form>
 
-    <div class="unregistered-banner">
-      <h3>¿Aún no tenés una cuenta?</h3>
-      <p>Accedé a contenido exclusivo y participá de sorteos por <span class="price-highlight">$5.000 / mes</span>.</p>
-      <button type="button" class="btn-primary-custom" onclick="window.location.href='/p/crear-nueva-cuenta.html'">
-        <i class="fas fa-user-plus"></i> Registrarme Ahora
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- VISTA 2: DASHBOARD COMPLETO -->
-<div class="dashboard-full" id="dashboard-container" style="display:none;">
-  <div class="dashboard-header">
-    <div class="header-info">
-      <h2>Hola, <span id="user-display-name"></span></h2>
-      <span class="date-text" id="current-date-display"></span>
-    </div>
-    <button class="btn-menu-trigger" onclick="toggleDrawer(true)" aria-label="Abrir Menú">
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
-
-  <div class="tabs-scroll-container" id="tabs-scroll-bar"></div>
-
-  <div class="main-content-full">
-    
-    <div id="tab-noticais" class="tab-content active">
-      <div class="full-width-section">
-        <!-- Elfsight Blog | Untitled Blog -->
-        <script src="https://elfsightcdn.com/platform.js" async></script>
-        <div class="elfsight-app-9682f774-d1f8-4a2f-bafb-b6ae8fccf335" data-elfsight-app-lazy></div>
-      </div>
-    </div>
-
-    <div id="tab-exclusivo" class="tab-content">
-      <div class="news-grid">
-        <div class="news-card">
-          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80" alt="Exclusivo">
-          <div class="news-card-body">
-            <h4>Informe Exclusivo: Innovación Digital 2026</h4>
-            <p>Acceso prioritario a reportes de tecnología y regulaciones vigentes...</p>
-            <div class="card-actions-bar">
-              <button class="btn-card-primary" onclick="verNoticiaCompleta('Informe Exclusivo: Innovación Digital 2026', 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80', 'Contenido reservado para suscriptores de nivel superior con desglose de normativas.', 'Exclusivo')">Leer Nota</button>
-              <button class="btn-card-save" onclick="guardarEnFavoritosDirecto('Informe Exclusivo: Innovación Digital 2026', 'Exclusivo')"><i class="far fa-bookmark"></i> Guardar</button>
+            <div class="auth-footer">
+                ¿No tienes una cuenta? <a href="https://www.empleosvacantes.com/p/crear-mi-cuenta.html" target="_blank">Crear cuenta</a>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- PESTAÑA SORTEOS -->
-    <div id="tab-sorteos" class="tab-content">
-      <div class="full-width-section" style="padding: 20px;">
-        <div style="background: linear-gradient(135deg, #fff8f0 0%, #fff1e0 100%); border: 2px solid var(--primary-orange); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;">
-          <h3 style="color: var(--dark-orange); margin-top: 0; font-size: 18px; font-weight: 800;">Haz un comentario y si tu comentario es el más popular te ganas un par de entradas</h3>
-          <p style="font-size: 14px; color: #444; margin-bottom: 0;">Deja tu opinión o comentario abajo. ¡El comentario con más interacciones se lleva las entradas!</p>
-        </div>
-
-        <!-- Elfsight Comments | Untitled Comments -->
-        <script src="https://elfsightcdn.com/platform.js" async></script>
-        <div class="elfsight-app-88478a52-c397-4b30-bbe7-52087adff91c" data-elfsight-app-lazy></div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN MI USUARIO -->
-    <div id="drawer-sec-mi-usuario" class="tab-content" style="padding: 20px;">
-      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Información Completa de Usuario</h3>
-      <table class="data-table">
-        <tr><th>Nombre Completo</th><td id="usr-data-fullname"></td></tr>
-        <tr><th>DNI / Identificación</th><td id="usr-data-dni"></td></tr>
-        <tr><th>Correo Electrónico</th><td id="usr-data-email"></td></tr>
-        <tr><th>Localidad</th><td id="usr-data-localidad"></td></tr>
-        <tr><th>Teléfono Asociado</th><td id="usr-data-phone"></td></tr>
-        <tr><th>Intereses Habilitados</th><td id="usr-data-intereses"></td></tr>
-      </table>
-
-      <button class="btn-primary-custom" onclick="toggleFormModificarDatos(true)" style="margin-top:10px; width:auto;"><i class="fas fa-edit"></i> Solicitar Modificación de Datos</button>
-
-      <div id="form-modificar-datos-wrapper" style="display:none; background:#f8f9fa; border:1px solid #ddd; padding:20px; border-radius:10px; margin-top:20px;">
-        <h4 style="margin-top:0; color:var(--dark-orange);">Seleccione el dato a modificar:</h4>
-        <div class="input-group">
-          <label>Campo a Modificar</label>
-          <select id="mod-campo-select">
-            <option value="Nombre Completo">Nombre Completo</option>
-            <option value="DNI">DNI</option>
-            <option value="Correo Electrónico">Correo Electrónico</option>
-            <option value="Localidad">Localidad</option>
-            <option value="Teléfono / WhatsApp">Teléfono / WhatsApp</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Nuevo Valor Solicitado *</label>
-          <input type="text" id="mod-nuevo-valor" placeholder="Ingrese el nuevo dato correcto">
-        </div>
-        <button class="btn-primary-custom" onclick="enviarSolicitudModificacionDatos()">Enviar Solicitud de Cambio</button>
-      </div>
-    </div>
-
-    <!-- SECCIÓN CONFIGURACIÓN -->
-    <div id="drawer-sec-configuracion" class="tab-content" style="padding: 20px;">
-      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Configuración de Suscripción y Medio de Pago</h3>
-      <table class="data-table">
-        <tr><th>Modalidad Actual</th><td id="cfg-medio-pago">Mercado Pago</td></tr>
-        <tr><th>Monto de Abono</th><td><span class="price-highlight">$5.000 / mes</span></td></tr>
-        <tr><th>Estado de Cuenta</th><td><span style="color:var(--green-success); font-weight:bold;">Suscripción Activa</span></td></tr>
-      </table>
-
-      <div style="background:#fff; border:1px solid var(--border-color); padding:20px; border-radius:10px; margin-top:20px;">
-        <h4 style="margin-top:0; color:var(--dark-orange);">Solicitar Cambio de Medio de Pago</h4>
-        <p style="font-size:13.5px; color:#555;">Si desea cambiar su débito por Mercado Pago a Transferencia Bancaria Directa (CBU/CVU), complete sus datos a continuación:</p>
+    <!-- ================= PANEL PRINCIPAL ================= -->
+    <section id="app-section" class="hidden">
         
-        <div class="input-group">
-          <label>Medio de Pago Deseado</label>
-          <select id="cfg-nuevo-medio">
-            <option value="Transferencia Bancaria Directa (CBU)">Transferencia Bancaria Directa (CBU/CVU)</option>
-            <option value="Tarjeta de Débito Alternativa">Tarjeta de Débito Alternativa</option>
-          </select>
+        <!-- Backdrop para bloquear clics exteriores -->
+        <div id="menu-backdrop"></div>
+
+        <!-- Header Superior -->
+        <header>
+            <div class="container header-content">
+                <div class="brand-logo-group">
+                    <a href="#" class="brand-logo" id="header-greeting-title">Hola, Usuario</a>
+                    <span id="header-plan-badge" class="header-plan-badge basico">Usuario Básico</span>
+                </div>
+                <div class="user-nav-area">
+                    <!-- Botón de casita -->
+                    <button class="menu-toggle" id="menu-toggle-btn" aria-label="Menú principal">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Menú Lateral Desplegable -->
+        <div class="sidebar-menu" id="sidebar-menu">
+            <div class="sidebar-header">
+                <h3>Menú de Cuenta</h3>
+                <button class="close-sidebar" id="close-sidebar-btn">&times;</button>
+            </div>
+
+            <!-- Vista Principal del Menú -->
+            <div id="sidebar-main-view">
+                <!-- Banner de Membresía -->
+                <div style="background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
+                    <p style="font-size: 13px; color: var(--text-color); line-height: 1.4;">
+                        ★ <strong>Membresía Premium:</strong> Accedé a noticias exclusivas y participá por entradas de cine a solo <strong>$990 por mes</strong>.
+                    </p>
+                </div>
+
+                <div class="account-details">
+                    <p><strong>Nombre:</strong> <span id="acc-name"></span></p>
+                    <p><strong>Apellido:</strong> <span id="acc-lastname"></span></p>
+                    <p><strong>Ubicación:</strong> <span id="acc-location"></span></p>
+                    <p><strong>Correo electrónico:</strong> <span id="acc-email"></span></p>
+                    <p><strong>Tipo de suscripción:</strong> <span id="acc-plan-badge"></span></p>
+                    <p style="margin-top: 8px;"><strong>Temas de interés:</strong><br><span id="acc-interests"></span></p>
+                    <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Mercado Pago</p>
+                    <p><strong>Próximo débito:</strong> <span id="acc-next-debit">1 de diciembre de 2026</span></p>
+                    <p><strong>Estado de la cuenta:</strong> <span id="acc-status-box"></span></p>
+                </div>
+
+                <div class="sidebar-actions">
+                    <a href="https://mpago.la/1oNLzRZ" target="_blank" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($990/mes)</a>
+                    <button class="btn-sidebar-action" id="nav-update-data">Actualizar o modificar datos</button>
+                    <button class="btn-sidebar-action" id="nav-delete-account">Eliminar cuenta</button>
+                    <button class="btn-sidebar-action btn-logout" id="btn-logout">Cerrar sesión</button>
+                </div>
+            </div>
+
+            <!-- Vista: Actualizar Datos -->
+            <div id="sidebar-update-view" class="account-subview">
+                <button class="btn-back-account" id="back-from-update">&larr; Volver atrás</button>
+                <h4 style="margin-bottom: 16px;">Actualizar Datos</h4>
+                <script src="https://elfsightcdn.com/platform.js" async></script>
+                <div class="elfsight-app-fe88d4bc-7b91-4ae9-a89c-d58164437272" data-elfsight-app-lazy></div>
+            </div>
+
+            <!-- Vista: Eliminar Cuenta -->
+            <div id="sidebar-delete-view" class="account-subview">
+                <button class="btn-back-account" id="back-from-delete">&larr; Volver atrás</button>
+                <h4 style="margin-bottom: 16px; color: #d93838;">Eliminar Cuenta</h4>
+                <script src="https://elfsightcdn.com/platform.js" async></script>
+                <div class="elfsight-app-99abec78-07a4-42a8-88cc-da6bb14bc07e" data-elfsight-app-lazy></div>
+            </div>
         </div>
-        <div class="input-group">
-          <label>Nombre del Titular de la Cuenta *</label>
-          <input type="text" id="cfg-titular-cuenta" placeholder="Ingrese nombre completo del titular">
-        </div>
-        <div class="input-group">
-          <label>DNI del Titular *</label>
-          <input type="text" id="cfg-dni-titular" placeholder="Ingrese DNI del titular">
-        </div>
-        <div class="input-group">
-          <label>CBU / CVU o Alias para Vinculación *</label>
-          <input type="text" id="cfg-cbu-alias" placeholder="Ej: 0000003100012345678901 o alias.mp">
-        </div>
-        <button class="btn-primary-custom" onclick="enviarSolicitudCambioMedioPago()">Solicitar Cambio de Medio de Pago</button>
-      </div>
-    </div>
 
-    <!-- SECCIÓN GUARDADOS -->
-    <div id="drawer-sec-guardados" class="tab-content" style="padding: 20px;">
-      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Contenidos Guardados en Favoritos</h3>
-      <div id="favoritos-container-list" class="news-grid" style="padding: 0;"></div>
-    </div>
+        <!-- Navegación de Secciones (Tabs) -->
+        <nav class="main-nav-tabs">
+            <ul class="tabs-list">
+                <li><button class="tab-btn active" data-target="tab-destacado">Destacado</button></li>
+                <li><button class="tab-btn" data-target="tab-interes">De tu interés</button></li>
+                <li><button class="tab-btn" data-target="tab-mas-visto">Lo más visto</button></li>
+                <li><button class="tab-btn" data-target="tab-sorteos">Sorteos</button></li>
+            </ul>
+        </nav>
 
-    <!-- SECCIÓN AYUDA -->
-    <div id="drawer-sec-ayuda" class="tab-content" style="padding: 20px;">
-      <h3 style="color:var(--primary-orange); margin-bottom:15px;">Centro de Ayuda y Contacto</h3>
-      <p style="font-size:14px; color:#444;">Canales oficiales de asistencia directa:</p>
-      <ul style="line-height:1.8; font-size:14px; padding-left: 20px;">
-        <li><strong>E-mail Central:</strong> contacto@prenoticia.com</li>
-        <li><strong>WhatsApp de Atención:</strong> +54 11 2167-9936</li>
-      </ul>
+        <!-- Contenido Central con scroll interno fluido -->
+        <main class="tab-content-area" id="main-content-container">
 
-      <h4 style="color:var(--dark-orange); margin-top:25px;">Chat de Asistencia en Vivo</h4>
-      <div class="chat-box">
-        <div class="chat-messages" id="chat-messages-container">
-          <div class="chat-msg system">Hola, ¿en qué podemos ayudarte hoy? Escribe tu mensaje y lo derivaremos de inmediato.</div>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <input type="text" id="chat-input-text" placeholder="Escriba su consulta..." onkeypress="if(event.key==='Enter') enviarMensajeChat()">
-          <button class="btn-card-primary" onclick="enviarMensajeChat()" style="width: 50px;"><i class="fas fa-paper-plane"></i></button>
-        </div>
-      </div>
-    </div>
+            <!-- TAB 1: DESTACADO -->
+            <div id="tab-destacado" class="tab-pane active">
+                <h2 class="section-title">Destacado</h2>
+                <p class="section-desc">Las noticias principales del día y contenidos exclusivos seleccionados para nuestra comunidad.</p>
+                <div class="cards-grid" id="destacado-grid"></div>
+            </div>
 
-    <!-- LECTOR DE NOTICIA -->
-    <div id="full-news-view" style="padding: 20px;">
-      <button class="btn-primary-custom" onclick="volverDesdeLectorCompleto()" style="margin-bottom: 15px; width: auto; background: #333; box-shadow: none;"><i class="fas fa-arrow-left"></i> Volver</button>
-      <img id="full-news-img" src="" alt="Noticia">
-      <h2 id="full-news-title" style="color:#111;"></h2>
-      <p id="full-news-body" style="font-size:15px; line-height:1.7; color:#333;"></p>
-    </div>
+            <!-- TAB 2: DE TU INTERÉS -->
+            <div id="tab-interes" class="tab-pane">
+                <h2 class="section-title">De tu interés</h2>
+                <p class="section-desc">Noticias filtradas automáticamente según las categorías y etiquetas configuradas en tu perfil.</p>
+                <div class="cards-grid" id="interes-grid"></div>
+            </div>
 
-  </div>
-</div>
+            <!-- TAB 3: LO MÁS VISTO -->
+            <div id="tab-mas-visto" class="tab-pane">
+                <h2 class="section-title">Lo más visto</h2>
+                <p class="section-desc">Las notas con mayor lectura y repercusión entre los miembros del portal.</p>
+                <div class="cards-grid" id="mas-visto-grid"></div>
+            </div>
 
-<!-- ================================================================= -->
-<!-- MOTOR DE ENVÍO FORZADO DE BLOGGER (IFRAME OCULTO + FORMULARIO REAL) -->
-<!-- ================================================================= -->
-<iframe name="hidden_iframe_blogger" id="hidden_iframe_blogger" style="display:none;" onload="if(window.enviandoBlogger) { alert('¡Inscripción enviada exitosamente a su correo!'); window.enviandoBlogger=false; }"></iframe>
+            <!-- TAB 4: SORTEOS -->
+            <div id="tab-sorteos" class="tab-pane">
+                <h2 class="section-title">Sorteos Exclusivos</h2>
+                <p class="section-desc">Participá por beneficios y entradas especiales reservadas para nuestros suscriptores Premium.</p>
+                <div id="sorteos-content-wrapper"></div>
+            </div>
 
-<div style="display:none !important; visibility:hidden !important; opacity:0 !important; height:0; overflow:hidden;">
-  <form id="blogger-submit-hack" action="https://prenoticia.com/contact/post" method="post" target="hidden_iframe_blogger">
-    <input type="hidden" name="actionType" value="sendMessage">
-    <input type="hidden" name="archiveMonth" value="">
-    <input type="hidden" name="archiveYear" value="">
-    <input type="text" id="hack-name" name="name" value="">
-    <input type="text" id="hack-email" name="email" value="">
-    <textarea id="hack-message" name="email-message"></textarea>
-  </form>
-</div>
+            <!-- VISTA DE DETALLE COMPLETO -->
+            <div id="detail-view-section">
+                <button class="detail-back-btn" id="btn-back-to-list">&larr; Volver atrás</button>
+                <div class="detail-card-full" id="detail-content-box"></div>
+            </div>
 
-<script>
-const users = {
-  "luciacarpio20@gmail.com": {
-    email: "luciacarpio20@gmail.com",
-    pass: "osotobi20",
-    nombreCompleto: "María Lucía Carpio Peralta",
-    nombreSaludo: "Maria Lucia",
-    dni: "38.123.456",
-    localidad: "Liniers, CABA",
-    telefono: "+54 11 2167-9936",
-    intereses: ["Noticais", "Exclusivo", "Sorteos"]
-  },
-  "mauricioacostacom@gmail.com": {
-    email: "mauricioacostacom@gmail.com",
-    pass: "choquedetetas333",
-    nombreCompleto: "Mauricio David Acosta Danaher",
-    nombreSaludo: "Mauricio David",
-    dni: "32.987.654",
-    localidad: "Liniers, CABA",
-    telefono: "+54 11 2167-9936",
-    intereses: ["Noticais", "Exclusivo", "Sorteos"]
-  }
-};
+        </main>
+    </section>
 
-const articulosRepositorio = [
-  { id: 1, titulo: 'Actualizaciones en Registros Digitales 2026', tipo: 'Noticais', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'El proceso de modernización abarca la integración de firmas digitales, automatización de expedientes y atención prioritaria para suscriptores.' },
-  { id: 2, titulo: 'Informe Exclusivo: Innovación Digital 2026', tipo: 'Exclusivo', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80', cuerpo: 'Contenido reservado para suscriptores de nivel superior con desglose de normativas.' }
-];
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        (function() {
+            const MP_LINK = "https://mpago.la/1oNLzRZ";
+            const SESSION_KEY = "portal_miembros_session_v3";
 
-let currentUser = null;
-let listaFavoritosMemoria = [];
-window.enviandoBlogger = false;
+            // =========================================================================
+            // PERSISTENCIA BLINDADA DE SESIÓN (localStorage + sessionStorage + Cookies)
+            // =========================================================================
+            function guardarSesion(email) {
+                if (!email) return;
+                const valor = String(email).trim().toLowerCase();
+                try { localStorage.setItem(SESSION_KEY, valor); } catch (e) {}
+                try { sessionStorage.setItem(SESSION_KEY, valor); } catch (e) {}
+                try {
+                    const fechaExpiracion = new Date();
+                    fechaExpiracion.setTime(fechaExpiracion.getTime() + (30 * 24 * 60 * 60 * 1000));
+                    document.cookie = `${SESSION_KEY}=${encodeURIComponent(valor)}; expires=${fechaExpiracion.toUTCString()}; path=/; SameSite=Lax`;
+                } catch (e) {}
+            }
 
-window.addEventListener("load", () => {
-  const hoy = new Date();
-  const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById("current-date-display").textContent = hoy.toLocaleDateString('es-AR', opciones);
+            function obtenerSesion() {
+                let valor = null;
+                try { valor = localStorage.getItem(SESSION_KEY); } catch (e) {}
+                if (!valor) {
+                    try { valor = sessionStorage.getItem(SESSION_KEY); } catch (e) {}
+                }
+                if (!valor) {
+                    try {
+                        const cookies = document.cookie ? document.cookie.split(';') : [];
+                        for (let i = 0; i < cookies.length; i++) {
+                            const c = cookies[i].trim();
+                            if (c.indexOf(SESSION_KEY + '=') === 0) {
+                                valor = decodeURIComponent(c.substring(SESSION_KEY.length + 1));
+                                break;
+                            }
+                        }
+                    } catch (e) {}
+                }
+                if (valor) {
+                    guardarSesion(valor);
+                }
+                return valor;
+            }
 
-  const activeUserEmail = localStorage.getItem("active_session_email");
-  if (activeUserEmail && users[activeUserEmail]) {
-    currentUser = users[activeUserEmail];
-    cargarDashboard(currentUser);
-  }
-});
+            function borrarSesion() {
+                try {
+                    localStorage.removeItem(SESSION_KEY);
+                    localStorage.removeItem('empleos_vacantes_member_email_v2');
+                } catch (e) {}
+                try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+                try {
+                    document.cookie = `${SESSION_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax`;
+                } catch (e) {}
+            }
 
-function login() {
-  const emailInput = document.getElementById("login-email").value.trim().toLowerCase();
-  const passInput = document.getElementById("login-password").value.trim();
-  const errorEl = document.getElementById("login-error");
+            // =========================================================================
+            // BASE DE DATOS DE USUARIOS
+            // tipoUsuario: "premium" | "basico"
+            // estadoMembresia: "habilitado" | "no_abonado" | "vencido"
+            // =========================================================================
+            const usuariosDB = [
+                {
+                    usuario: "mauricioacostacom@gmail.com",
+                    contrasena: "auto333",
+                    nombre: "Mauricio David",
+                    apellido: "Acosta Danaher",
+                    ubicacion: "Capital Federal",
+                    tipoUsuario: "premium",
+                    intereses: ["cine", "tecnología", "economía", "actualidad", "espectáculos", "beneficios"],
+                    estadoMembresia: "habilitado",
+                    mesesAdeudados: 0,
+                    montoDeuda: 0
+                },
+                {
+                    usuario: "maximoantonioacosta@hotmail.com",
+                    contrasena: "casa0534",
+                    nombre: "Máximo Antonio",
+                    apellido: "Acosta",
+                    ubicacion: "Buenos Aires",
+                    tipoUsuario: "premium",
+                    intereses: ["actualidad", "economía"],
+                    estadoMembresia: "habilitado",
+                    mesesAdeudados: 0,
+                    montoDeuda: 0
+                },
+                {
+                    usuario: "zamiramartinez38@gmail.com",
+                    contrasena: "romeo1998",
+                    nombre: "Gabriela",
+                    apellido: "Martinez",
+                    ubicacion: "Buenos Aires",
+                    tipoUsuario: "basico",
+                    intereses: ["cine", "espectáculos", "beneficios"],
+                    estadoMembresia: "habilitado",
+                    mesesAdeudados: 0,
+                    montoDeuda: 990
+                }
+            ];
 
-  if (users[emailInput] && users[emailInput].pass === passInput) {
-    errorEl.textContent = "";
-    currentUser = users[emailInput];
-    localStorage.setItem("active_session_email", emailInput);
-    cargarDashboard(currentUser);
-  } else {
-    errorEl.textContent = "Credenciales incorrectas.";
-  }
-}
+            let currentUser = null;
 
-function cargarDashboard(user) {
-  document.getElementById("login-container").style.display = "none";
-  document.getElementById("dashboard-container").style.display = "block";
-  document.getElementById("user-display-name").textContent = user.nombreSaludo;
+            // =========================================================================
+            // BASE DE DATOS UNIFICADA DE NOTICIAS CON ETIQUETAS Y NIVEL DE ACCESO
+            // acceso: "basico" (visible para todos) | "premium" (solo usuarios premium)
+            // secciones: ["destacado", "mas_visto"]
+            // =========================================================================
+            const noticiasData = [
+                {
+                    id: 101,
+                    title: "Godzilla Minus Zero llega a los cines: todos los detalles del estreno más esperado del año",
+                    category: "cine",
+                    categoryName: "Cine",
+                    tags: ["cine", "espectáculos", "actualidad", "beneficios"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg",
+                    desc: "Análisis exclusivo sobre la nueva superproducción japonesa que revoluciona la taquilla mundial y funciones especiales en Argentina.",
+                    fullText: "La esperada continuación del universo cinematográfico de Toho desembarca en las salas argentinas con funciones en formato tradicional y salas especiales. En este informe exclusivo para miembros Premium repasamos las claves de su producción, el impacto en la taquilla internacional y cómo aprovechar los beneficios disponibles en complejos Cinemark Hoyts."
+                },
+                {
+                    id: 102,
+                    title: "Nuevos beneficios y descuentos en supermercados y comercios durante noviembre",
+                    category: "beneficios",
+                    categoryName: "Beneficios",
+                    tags: ["beneficios", "economía", "actualidad"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=600&q=80",
+                    desc: "Repasamos las promociones bancarias y rebajas vigentes en cadenas de consumo masivo de CABA y GBA.",
+                    fullText: "Las principales cadenas de supermercados y billeteras virtuales lanzaron un esquema de descuentos escalonados para la segunda quincena de noviembre. Conocé los días de ahorro en compras presenciales y online, los topes de reintegro vigentes y cómo combinar promociones."
+                },
+                {
+                    id: 103,
+                    title: "Informe especial: proyección económica y tendencias financieras para el cierre de 2026",
+                    category: "economía",
+                    categoryName: "Economía",
+                    tags: ["economía", "actualidad", "tecnología"],
+                    acceso: "premium",
+                    secciones: ["destacado"],
+                    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
+                    desc: "Claves del mercado local, tasas de interés y comportamiento del consumo según los últimos relevamientos.",
+                    fullText: "Analistas del sector financiero detallan las variables centrales que marcarán el cierre del último trimestre del año. Este informe exclusivo para suscriptores Premium reúne los datos clave sobre evolución de precios, crédito al consumo y oportunidades de ahorro."
+                },
+                {
+                    id: 104,
+                    title: "Las plataformas digitales y herramientas de IA que transforman el trabajo diario",
+                    category: "tecnología",
+                    categoryName: "Tecnología",
+                    tags: ["tecnología", "actualidad"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80",
+                    desc: "Un recorrido práctico por las aplicaciones más utilizadas para optimizar tiempos y productividad.",
+                    fullText: "La adopción de asistentes inteligentes y herramientas colaborativas en la nube continúa creciendo en Argentina. Te mostramos cuáles son las plataformas gratuitas y de pago más eficientes para organizar proyectos, redactar documentos y automatizar tareas repetitivas."
+                },
+                {
+                    id: 105,
+                    title: "Agenda cultural y estrenos de cine de la semana en Buenos Aires",
+                    category: "espectáculos",
+                    categoryName: "Espectáculos",
+                    tags: ["espectáculos", "cine", "beneficios"],
+                    acceso: "basico",
+                    secciones: ["mas_visto"],
+                    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80",
+                    desc: "Cartelera completa, horarios destacados y recomendaciones para disfrutar el fin de semana.",
+                    fullText: "La cartelera porteña renueva su programación con estrenos internacionales, ciclos de cine independiente y funciones nocturnas en los principales complejos de la Ciudad de Buenos Aires."
+                },
+                {
+                    id: 106,
+                    title: "Guía exclusiva: cómo acceder a preventas VIP y funciones privadas de cine",
+                    category: "cine",
+                    categoryName: "Cine",
+                    tags: ["cine", "beneficios", "espectáculos"],
+                    acceso: "premium",
+                    secciones: ["mas_visto"],
+                    image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
+                    desc: "Todo lo que necesitás saber para participar por entradas preferenciales en complejos seleccionados.",
+                    fullText: "Los miembros Premium del portal cuentan con acceso prioritario a sorteos de entradas en ubicaciones centrales y funciones especiales. Revisá las condiciones de participación y mantené tus notificaciones activas."
+                }
+            ];
 
-  document.getElementById("usr-data-fullname").textContent = user.nombreCompleto;
-  document.getElementById("usr-data-dni").textContent = user.dni;
-  document.getElementById("usr-data-email").textContent = user.email;
-  document.getElementById("usr-data-localidad").textContent = user.localidad;
-  document.getElementById("usr-data-phone").textContent = user.telefono;
-  document.getElementById("usr-data-intereses").textContent = user.intereses.join(", ");
+            function initApp() {
+                function capitalizarTexto(texto) {
+                    return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+                }
 
-  construirPestañasScrollHorizontales(user.intereses);
-}
+                function calcularProximoDebito() {
+                    const now = new Date();
+                    let mes = now.getMonth() + 1;
+                    let anio = now.getFullYear();
+                    if (mes > 11) {
+                        mes = 0;
+                        anio++;
+                    }
+                    const mesesNombres = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+                    return `1 de ${mesesNombres[mes]} de ${anio}`;
+                }
 
-function construirPestañasScrollHorizontales(interesesUsuario) {
-  const scrollBar = document.getElementById("tabs-scroll-bar");
-  scrollBar.innerHTML = "";
+                function esUsuarioPremium(user) {
+                    if (!user) return false;
+                    return user.tipoUsuario === "premium" && user.estadoMembresia === "habilitado";
+                }
 
-  interesesUsuario.forEach((interes, idx) => {
-    const idTab = "tab-" + interes.toLowerCase();
-    const btn = document.createElement("button");
-    btn.className = "tab-btn" + (idx === 0 ? " active" : "");
-    btn.id = "btn-" + idTab;
-    btn.innerHTML = `<i class="fas fa-tag"></i> ${interes}`;
-    btn.onclick = () => openTab(idTab);
-    scrollBar.appendChild(btn);
-  });
+                function cargarDatosUsuario(user) {
+                    currentUser = user;
+                    const isPremium = esUsuarioPremium(user);
 
-  if (interesesUsuario.length > 0) {
-    openTab("tab-" + interesesUsuario[0].toLowerCase());
-  }
-}
+                    // Actualizar saludo superior (nombre en negro)
+                    const greetingEl = document.getElementById('header-greeting-title');
+                    if (greetingEl) greetingEl.textContent = `Hola, ${user.nombre}`;
 
-function openTab(tabId) {
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    // Actualizar etiqueta de usuario básico / premium en header
+                    const headerPlanBadge = document.getElementById('header-plan-badge');
+                    if (headerPlanBadge) {
+                        if (isPremium) {
+                            headerPlanBadge.className = 'header-plan-badge premium';
+                            headerPlanBadge.textContent = '★ Usuario Premium';
+                        } else {
+                            headerPlanBadge.className = 'header-plan-badge basico';
+                            headerPlanBadge.textContent = 'Usuario Básico';
+                        }
+                    }
 
-  const targetTab = document.getElementById(tabId);
-  const targetBtn = document.getElementById('btn-' + tabId);
+                    // Actualizar datos en el menú lateral
+                    const nameEl = document.getElementById('acc-name');
+                    const lastNameEl = document.getElementById('acc-lastname');
+                    const locEl = document.getElementById('acc-location');
+                    const emailEl = document.getElementById('acc-email');
+                    const debitEl = document.getElementById('acc-next-debit');
+                    const planBadgeEl = document.getElementById('acc-plan-badge');
+                    const upgradeSidebarBtn = document.getElementById('sidebar-upgrade-btn');
 
-  if (targetTab) targetTab.classList.add('active');
-  if (targetBtn) targetBtn.classList.add('active');
+                    if (nameEl) nameEl.textContent = user.nombre;
+                    if (lastNameEl) lastNameEl.textContent = user.apellido;
+                    if (locEl) locEl.textContent = user.ubicacion;
+                    if (emailEl) emailEl.textContent = user.usuario;
+                    if (debitEl) debitEl.textContent = calcularProximoDebito();
 
-  volverDesdeLectorCompleto();
-}
+                    if (planBadgeEl) {
+                        if (isPremium) {
+                            planBadgeEl.innerHTML = `<span class="plan-pill-sidebar premium">★ Usuario Premium</span>`;
+                        } else {
+                            planBadgeEl.innerHTML = `<span class="plan-pill-sidebar basico">Usuario Básico</span>`;
+                        }
+                    }
 
-function toggleDrawer(open) {
-  const content = document.getElementById("drawer-content");
-  if (open) {
-    content.classList.add("open");
-  } else {
-    content.classList.remove("open");
-  }
-}
+                    if (upgradeSidebarBtn) {
+                        if (isPremium) {
+                            upgradeSidebarBtn.classList.add('hidden');
+                        } else {
+                            upgradeSidebarBtn.classList.remove('hidden');
+                        }
+                    }
 
-function abrirSeccionDrawer(seccionId) {
-  toggleDrawer(false);
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    // Cargar temas de interés
+                    const interestsContainer = document.getElementById('acc-interests');
+                    if (interestsContainer) {
+                        interestsContainer.innerHTML = '';
+                        user.intereses.forEach(interes => {
+                            const badge = document.createElement('span');
+                            badge.className = 'interest-badge';
+                            badge.textContent = capitalizarTexto(interes);
+                            interestsContainer.appendChild(badge);
+                        });
+                    }
 
-  document.getElementById("drawer-sec-" + seccionId).classList.add('active');
-  volverDesdeLectorCompleto();
-}
+                    // Actualizar estado de cuenta
+                    const statusBox = document.getElementById('acc-status-box');
+                    if (statusBox) {
+                        if (!isPremium) {
+                            statusBox.innerHTML = `<span style="color: #64748b; font-weight: 600;">Plan Básico activo (Acceso limitado)</span>`;
+                        } else if (user.estadoMembresia === "vencido" || user.mesesAdeudados > 0) {
+                            statusBox.innerHTML = `<span style="color: #d93838; font-weight: 600;">Membresía vencida / Pago pendiente</span>`;
+                        } else {
+                            statusBox.innerHTML = `<span style="color: #0d8a3e; font-weight: 600;">Suscripción Premium al día</span>`;
+                        }
+                    }
 
-function verNoticiaCompleta(titulo, imgUrl, cuerpo, tipo) {
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  const fullView = document.getElementById('full-news-view');
-  document.getElementById('full-news-title').textContent = titulo;
-  document.getElementById('full-news-img').src = imgUrl;
-  document.getElementById('full-news-body').textContent = cuerpo;
-  fullView.style.display = 'block';
-}
+                    renderContent();
+                }
 
-function volverDesdeLectorCompleto() {
-  document.getElementById('full-news-view').style.display = 'none';
-}
+                // Toggle ver/ocultar contraseña
+                const togglePassBtn = document.getElementById('toggle-pass-btn');
+                const loginPassInput = document.getElementById('login-pass');
+                if (togglePassBtn && loginPassInput) {
+                    togglePassBtn.addEventListener('click', () => {
+                        if (loginPassInput.type === 'password') {
+                            loginPassInput.type = 'text';
+                            togglePassBtn.textContent = 'Ocultar';
+                        } else {
+                            loginPassInput.type = 'password';
+                            togglePassBtn.textContent = 'Ver';
+                        }
+                    });
+                }
 
-function guardarEnFavoritosDirecto(titulo, tipo) {
-  if (!listaFavoritosMemoria.some(f => f.titulo === titulo)) {
-    listaFavoritosMemoria.push({ titulo, tipo });
-    renderizarFavoritosEnDrawer();
-    alert("¡Artículo guardado en Favoritos!");
-  } else {
-    alert("El artículo ya se encuentra guardado.");
-  }
-}
+                const authSection = document.getElementById('auth-section');
+                const appSection = document.getElementById('app-section');
+                const loginForm = document.getElementById('login-form');
+                const loginUser = document.getElementById('login-user');
+                const loginError = document.getElementById('login-error');
 
-function renderizarFavoritosEnDrawer() {
-  const container = document.getElementById("favoritos-container-list");
-  container.innerHTML = "";
-  if (listaFavoritosMemoria.length === 0) {
-    container.innerHTML = `<p style="grid-column:1/-1; color:#666;">No posees contenidos guardados aún.</p>`;
-    return;
-  }
-  listaFavoritosMemoria.forEach(f => {
-    const card = document.createElement("div");
-    card.className = "news-card";
-    card.innerHTML = `
-      <div class="news-card-body">
-        <h4>${f.titulo}</h4>
-        <p><strong>Categoría:</strong> ${f.tipo}</p>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
+                function restaurarSesionSiExiste() {
+                    const savedUserEmail = obtenerSesion();
+                    if (savedUserEmail) {
+                        const foundSavedUser = usuariosDB.find(u => u.usuario.toLowerCase() === savedUserEmail.toLowerCase());
+                        if (foundSavedUser) {
+                            authSection.classList.add('hidden');
+                            appSection.classList.remove('hidden');
+                            cargarDatosUsuario(foundSavedUser);
+                            return true;
+                        } else {
+                            borrarSesion();
+                        }
+                    }
+                    return false;
+                }
 
-function toggleFormModificarDatos(show) {
-  document.getElementById("form-modificar-datos-wrapper").style.display = show ? "block" : "none";
-}
+                restaurarSesionSiExiste();
+                window.addEventListener('pageshow', function() {
+                    if (!currentUser) {
+                        restaurarSesionSiExiste();
+                    }
+                });
 
-function enviarSolicitudModificacionDatos() {
-  const campo = document.getElementById("mod-campo-select").value;
-  const nuevoVal = document.getElementById("mod-nuevo-valor").value.trim();
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const userVal = loginUser.value.trim().toLowerCase();
+                        const passVal = loginPassInput.value.trim();
 
-  if (!nuevoVal) {
-    alert("Ingrese el nuevo valor.");
-    return;
-  }
+                        const matchedUser = usuariosDB.find(u => 
+                            (u.usuario.toLowerCase() === userVal || u.nombre.toLowerCase() === userVal) && 
+                            u.contrasena === passVal
+                        );
 
-  dispararFormularioBloggerSilencioso("SOLICITUD DE MODIFICACIÓN DE DATOS DE USUARIO", `Usuario: ${currentUser.nombreCompleto}\nCorreo: ${currentUser.email}\nCampo a Modificar: ${campo}\nNuevo Valor: ${nuevoVal}`);
-  alert("Solicitud enviada. Nos pondremos en contacto.");
-  toggleFormModificarDatos(false);
-}
+                        if (matchedUser) {
+                            loginError.style.display = 'none';
+                            guardarSesion(matchedUser.usuario);
+                            authSection.classList.add('hidden');
+                            appSection.classList.remove('hidden');
+                            cargarDatosUsuario(matchedUser);
+                        } else {
+                            loginError.style.display = 'block';
+                        }
+                    });
+                }
 
-function enviarSolicitudCambioMedioPago() {
-  const nuevoMedio = document.getElementById("cfg-nuevo-medio").value;
-  const titular = document.getElementById("cfg-titular-cuenta").value.trim();
-  const dni = document.getElementById("cfg-dni-titular").value.trim();
-  const cbu = document.getElementById("cfg-cbu-alias").value.trim();
+                const btnLogout = document.getElementById('btn-logout');
+                if (btnLogout) {
+                    btnLogout.addEventListener('click', () => {
+                        borrarSesion();
+                        currentUser = null;
+                        appSection.classList.add('hidden');
+                        authSection.classList.remove('hidden');
+                        loginForm.reset();
+                        loginError.style.display = 'none';
+                        closeMenu();
+                    });
+                }
 
-  if (!titular || !dni || !cbu) {
-    alert("Complete todos los campos solicitados.");
-    return;
-  }
+                const menuToggleBtn = document.getElementById('menu-toggle-btn');
+                const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+                const sidebarMenu = document.getElementById('sidebar-menu');
+                const menuBackdrop = document.getElementById('menu-backdrop');
+                const sidebarMainView = document.getElementById('sidebar-main-view');
+                const sidebarUpdateView = document.getElementById('sidebar-update-view');
+                const sidebarDeleteView = document.getElementById('sidebar-delete-view');
 
-  dispararFormularioBloggerSilencioso("SOLICITUD DE CAMBIO DE MEDIO DE PAGO", `Usuario: ${currentUser.nombreCompleto}\nCorreo: ${currentUser.email}\nNuevo Medio: ${nuevoMedio}\nTitular: ${titular}\nDNI Titular: ${dni}\nCBU/Alias: ${cbu}`);
-  alert("Solicitud enviada correctamente.");
-}
+                function openMenu() {
+                    if (sidebarMenu) sidebarMenu.classList.add('active');
+                    if (menuBackdrop) menuBackdrop.style.display = 'block';
+                    if (sidebarMainView) sidebarMainView.classList.remove('hidden');
+                    if (sidebarUpdateView) sidebarUpdateView.classList.remove('active');
+                    if (sidebarDeleteView) sidebarDeleteView.classList.remove('active');
+                }
 
-function enviarMensajeChat() {
-  const txt = document.getElementById("chat-input-text").value.trim();
-  if (!txt) return;
+                function closeMenu() {
+                    if (sidebarMenu) sidebarMenu.classList.remove('active');
+                    if (menuBackdrop) menuBackdrop.style.display = 'none';
+                }
 
-  const container = document.getElementById("chat-messages-container");
-  container.innerHTML += `<div class="chat-msg user">${txt}</div>`;
-  document.getElementById("chat-input-text").value = "";
+                if (menuToggleBtn) menuToggleBtn.addEventListener('click', openMenu);
+                if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeMenu);
+                if (menuBackdrop) menuBackdrop.addEventListener('click', closeMenu);
 
-  dispararFormularioBloggerSilencioso("CONSULTA DE CHAT EN VIVO DE AYUDA", `Usuario: ${currentUser.nombreCompleto}\nCorreo: ${currentUser.email}\n Mensaje: ${txt}`);
+                const navUpdateData = document.getElementById('nav-update-data');
+                const navDeleteAccount = document.getElementById('nav-delete-account');
+                const backFromUpdate = document.getElementById('back-from-update');
+                const backFromDelete = document.getElementById('back-from-delete');
 
-  setTimeout(() => {
-    container.innerHTML += `<div class="chat-msg system">Hemos recibido tu consulta. Te responderemos a la brevedad a tu correo.</div>`;
-    container.scrollTop = container.scrollHeight;
-  }, 800);
-}
+                if (navUpdateData) {
+                    navUpdateData.addEventListener('click', () => {
+                        if (sidebarMainView) sidebarMainView.classList.add('hidden');
+                        if (sidebarUpdateView) sidebarUpdateView.classList.add('active');
+                    });
+                }
 
-function dispararFormularioBloggerSilencioso(asunto, detalle) {
-  document.getElementById("hack-name").value = currentUser.nombreCompleto;
-  document.getElementById("hack-email").value = currentUser.email;
-  document.getElementById("hack-message").value = `${asunto}\n-------------------------------\n${detalle}`;
+                if (navDeleteAccount) {
+                    navDeleteAccount.addEventListener('click', () => {
+                        if (sidebarMainView) sidebarMainView.classList.add('hidden');
+                        if (sidebarDeleteView) sidebarDeleteView.classList.add('active');
+                    });
+                }
 
-  try {
-    document.getElementById("blogger-submit-hack").submit();
-  } catch (e) {}
-}
+                if (backFromUpdate) {
+                    backFromUpdate.addEventListener('click', () => {
+                        if (sidebarUpdateView) sidebarUpdateView.classList.remove('active');
+                        if (sidebarMainView) sidebarMainView.classList.remove('hidden');
+                    });
+                }
 
-function logout() {
-  currentUser = null;
-  localStorage.removeItem("active_session_email");
-  document.getElementById("dashboard-container").style.display = "none";
-  document.getElementById("login-container").style.display = "flex";
-}
-</script>
+                if (backFromDelete) {
+                    backFromDelete.addEventListener('click', () => {
+                        if (sidebarDeleteView) sidebarDeleteView.classList.remove('active');
+                        if (sidebarMainView) sidebarMainView.classList.remove('hidden');
+                    });
+                }
 
+                const tabBtns = document.querySelectorAll('.tab-btn');
+                const tabPanes = document.querySelectorAll('.tab-pane');
+
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const targetId = btn.getAttribute('data-target');
+                        document.getElementById('detail-view-section').classList.remove('active');
+
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        tabPanes.forEach(p => {
+                            if (p.id !== 'detail-view-section') p.classList.remove('active');
+                        });
+
+                        btn.classList.add('active');
+                        const targetPane = document.getElementById(targetId);
+                        if (targetPane) targetPane.classList.add('active');
+                        
+                        const container = document.getElementById('main-content-container');
+                        if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                });
+
+                function coincideConIntereses(item) {
+                    if (!currentUser || !currentUser.intereses || currentUser.intereses.length === 0) return true;
+                    const itemTags = item.tags || [item.category.toLowerCase()];
+                    return currentUser.intereses.some(interes => {
+                        const intLower = interes.toLowerCase().trim();
+                        return item.category.toLowerCase().includes(intLower) || 
+                               itemTags.some(tag => tag.toLowerCase().includes(intLower));
+                    });
+                }
+
+                function crearTarjetaNoticia(item) {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.addEventListener('click', () => openDetailView(item.id));
+
+                    const badgeAcceso = item.acceso === "premium"
+                        ? `<span class="item-tag tag-premium">★ Exclusivo Premium</span>`
+                        : `<span class="item-tag tag-basico">Acceso Básico</span>`;
+
+                    card.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="item-card-body">
+                            <div class="tags-container">
+                                ${badgeAcceso}
+                                <span class="item-tag">🏷️ ${item.categoryName}</span>
+                            </div>
+                            <h4>${item.title}</h4>
+                            <p>${item.desc}</p>
+                            <button class="btn-card-action" type="button">Leer noticia</button>
+                        </div>
+                    `;
+                    return card;
+                }
+
+                function renderGrid(gridElement, listaNoticias) {
+                    if (!gridElement) return;
+                    gridElement.innerHTML = '';
+                    if (listaNoticias.length === 0) {
+                        gridElement.style.display = 'block';
+                        gridElement.innerHTML = `<div class="empty-state-box">No hay noticias disponibles en esta sección para tus categorías seleccionadas.</div>`;
+                        return;
+                    }
+                    gridElement.style.display = 'grid';
+                    listaNoticias.forEach(item => {
+                        gridElement.appendChild(crearTarjetaNoticia(item));
+                    });
+                }
+
+                function renderSorteos() {
+                    const sorteosWrapper = document.getElementById('sorteos-content-wrapper');
+                    if (!sorteosWrapper || !currentUser) return;
+
+                    const isPremium = esUsuarioPremium(currentUser);
+
+                    if (!isPremium) {
+                        sorteosWrapper.innerHTML = `
+                            <div class="sorteo-card-wrapper">
+                                <img src="https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg" alt="Godzilla Minus Zero" class="sorteo-banner-img">
+                                <div class="sorteo-body">
+                                    <span class="sorteo-badge">★ Exclusivo Usuario Premium</span>
+                                    <h3 class="sorteo-title">Participá por un par de entradas para ver Godzilla Minus Zero</h3>
+                                    <div class="sorteo-details-box">
+                                        <p><strong>Cine:</strong> Cinemark Abasto</p>
+                                        <p><strong>Función:</strong> Sábado 21 de noviembre a las 22:00 hrs.</p>
+                                        <p><strong>Ubicación:</strong> Butacas AK y AI (centro al medio)</p>
+                                    </div>
+                                    <div class="membership-lock-box" style="margin: 0; max-width: 100%;">
+                                        <h3>Contenido exclusivo para miembros Premium</h3>
+                                        <p>Para acceder a este contenido y participar del sorteo, mejorá tu suscripción a Premium.</p>
+                                        <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Abonar con Mercado Pago</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    sorteosWrapper.innerHTML = `
+                        <div class="sorteo-card-wrapper">
+                            <img src="https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg" alt="Godzilla Minus Zero" class="sorteo-banner-img">
+                            <div class="sorteo-body">
+                                <span class="sorteo-badge">★ Sorteo Exclusivo Premium</span>
+                                <h3 class="sorteo-title">Participá por un par de entradas para ver Godzilla Minus Zero</h3>
+                                <div class="sorteo-details-box">
+                                    <p><strong>Cine:</strong> Cinemark Abasto</p>
+                                    <p><strong>Fecha y hora:</strong> Sábado 21 de noviembre a las 22:00 hrs.</p>
+                                    <p><strong>Ubicación:</strong> Butacas AK y AI, centro al medio</p>
+                                </div>
+                                <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 20px;">Completá el formulario con tus datos de miembro Premium para quedar registrado en el sorteo:</p>
+                                <div id="elfsight-sorteo-slot">
+                                    <!-- Elfsight Subscription Form | Untitled Subscription Form -->
+                                    <div class="elfsight-app-d6c0152e-61ab-4aa3-bd31-a89240cd197b" data-elfsight-app-lazy></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // Cargar o reinicializar script de Elfsight si es necesario
+                    if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
+                        const scriptEl = document.createElement('script');
+                        scriptEl.src = "https://elfsightcdn.com/platform.js";
+                        scriptEl.async = true;
+                        document.body.appendChild(scriptEl);
+                    }
+                }
+
+                function renderContent() {
+                    if (!currentUser) return;
+
+                    const destacadoGrid = document.getElementById('destacado-grid');
+                    const interesGrid = document.getElementById('interes-grid');
+                    const masVistoGrid = document.getElementById('mas-visto-grid');
+
+                    const noticiasDestacadas = noticiasData.filter(n => n.secciones.includes("destacado"));
+                    const noticiasDeInteres = noticiasData.filter(n => coincideConIntereses(n));
+                    const noticiasMasVistas = noticiasData.filter(n => n.secciones.includes("mas_visto"));
+
+                    renderGrid(destacadoGrid, noticiasDestacadas);
+                    renderGrid(interesGrid, noticiasDeInteres);
+                    renderGrid(masVistoGrid, noticiasMasVistas);
+                    renderSorteos();
+                }
+
+                const detailViewSection = document.getElementById('detail-view-section');
+                const detailContentBox = document.getElementById('detail-content-box');
+                const btnBackToList = document.getElementById('btn-back-to-list');
+
+                window.openDetailView = function(id) {
+                    if (!currentUser) return;
+
+                    const item = noticiasData.find(n => n.id === id);
+                    if (!item) return;
+
+                    const isPremium = esUsuarioPremium(currentUser);
+                    tabPanes.forEach(p => p.classList.remove('active'));
+
+                    if (detailContentBox) {
+                        const badgeAcceso = item.acceso === "premium"
+                            ? `<span class="item-tag tag-premium">★ Exclusivo Premium</span>`
+                            : `<span class="item-tag tag-basico">Acceso Básico</span>`;
+
+                        // Si la noticia es exclusivo premium y el usuario es básico, mostrar bloqueo con botón de Mercado Pago
+                        if (item.acceso === "premium" && !isPremium) {
+                            detailContentBox.innerHTML = `
+                                <img src="${item.image}" alt="${item.title}">
+                                <div class="tags-container" style="margin-bottom: 14px;">
+                                    ${badgeAcceso}
+                                    <span class="item-tag">🏷️ ${item.categoryName}</span>
+                                </div>
+                                <h2>${item.title}</h2>
+                                <p>${item.desc}</p>
+                                <div class="membership-lock-box" style="margin-top: 24px;">
+                                    <h3>Contenido exclusivo para miembros Premium</h3>
+                                    <p>Para acceder a este contenido mejora tu suscripción a premium.</p>
+                                    <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Abonar con Mercado Pago</a>
+                                </div>
+                            `;
+                        } else {
+                            detailContentBox.innerHTML = `
+                                <img src="${item.image}" alt="${item.title}">
+                                <div class="tags-container" style="margin-bottom: 14px;">
+                                    ${badgeAcceso}
+                                    <span class="item-tag">🏷️ ${item.categoryName}</span>
+                                </div>
+                                <h2>${item.title}</h2>
+                                <p>${item.fullText}</p>
+                            `;
+                        }
+                    }
+
+                    if (detailViewSection) {
+                        detailViewSection.classList.add('active');
+                        const container = document.getElementById('main-content-container');
+                        if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                };
+
+                if (btnBackToList) {
+                    btnBackToList.addEventListener('click', () => {
+                        if (detailViewSection) detailViewSection.classList.remove('active');
+                        const activeTabBtn = document.querySelector('.tab-btn.active');
+                        if (activeTabBtn) {
+                            const targetId = activeTabBtn.getAttribute('data-target');
+                            const targetPane = document.getElementById(targetId);
+                            if (targetPane) targetPane.classList.add('active');
+                        }
+                        const container = document.getElementById('main-content-container');
+                        if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", initApp);
+            } else {
+                initApp();
+            }
+        })();
+    </script>
 </body>
 </html>
