@@ -28,7 +28,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Fix definitivo para eliminar la raya blanca inferior en móviles */
         html, body {
             background-color: var(--bg-color) !important;
             color: var(--text-color) !important;
@@ -67,7 +66,7 @@
             margin: 0 auto;
         }
 
-        /* Pantalla de Login / Registro */
+        /* Pantalla de Login */
         #auth-section {
             width: 100%;
             height: 100%;
@@ -183,7 +182,7 @@
             display: none;
         }
 
-        /* Panel Principal con scroll interno fluido */
+        /* Panel Principal */
         #app-section {
             display: flex;
             flex-direction: column;
@@ -212,7 +211,7 @@
         .brand-logo-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
@@ -223,28 +222,19 @@
             text-decoration: none;
         }
 
-        .header-plan-badge {
+        .header-premium-star-only {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-        }
-
-        .header-plan-badge.premium {
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
             background-color: var(--primary-light);
             color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .header-plan-badge.basico {
-            background-color: #f1f5f9;
-            color: #475569;
-            border: 1px solid #cbd5e1;
+            border: 1.5px solid var(--primary);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1;
         }
 
         .user-nav-area {
@@ -333,6 +323,22 @@
             font-size: 24px;
             cursor: pointer;
             color: var(--text-muted);
+        }
+
+        .sidebar-promo-clickable {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 13px 14px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .sidebar-promo-clickable:hover {
+            background: #ffedd5;
+            box-shadow: 0 4px 12px rgba(246, 142, 2, 0.18);
+            transform: translateY(-1px);
         }
 
         .account-details {
@@ -591,13 +597,12 @@
             color: var(--text-color);
         }
 
-        /* Rueda de carga */
         .search-loader-box {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             text-align: center;
         }
 
@@ -616,7 +621,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Contenedor principal con scroll fluido */
         .tab-content-area {
             flex: 1 1 auto;
             min-height: 0;
@@ -638,7 +642,7 @@
             display: block;
         }
 
-        /* Banner destacado de invitación a Premium para usuarios básicos (con caché) */
+        /* Banner destacado de invitación a Premium */
         .promo-premium-banner {
             background: linear-gradient(135deg, #fff8ee 0%, #ffedd5 100%);
             border: 1.5px solid var(--primary);
@@ -740,7 +744,7 @@
         }
 
         /* =====================================================================
-           DISEÑO DE ARTÍCULOS Y BENEFICIOS (1° HERO DESTACADO + GRILLA DE 2 EN 2)
+           DISEÑO DE ARTÍCULOS Y BENEFICIOS
            ===================================================================== */
         .editorial-layout {
             display: flex;
@@ -786,7 +790,6 @@
             padding: 20px;
         }
 
-        /* Categoría tipo botón con color un poquito transparente */
         .hero-category-pill {
             display: inline-block;
             align-self: flex-start;
@@ -810,7 +813,6 @@
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
         }
 
-        /* Grilla de 2 columnas */
         .two-col-editorial-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -859,7 +861,6 @@
             margin: 0;
         }
 
-        /* Estrellita dorada arriba a la izquierda para contenido Premium */
         .premium-star-corner {
             position: absolute;
             top: 10px;
@@ -879,7 +880,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
         }
 
-        /* Badge de estado de stock en Beneficios/Códigos */
         .benefit-stock-pill {
             position: absolute;
             bottom: 8px;
@@ -898,7 +898,16 @@
             color: #ffffff;
         }
 
-        /* Botón Ver más (6 en 6) */
+        .benefit-stock-pill.basico-open {
+            background: rgba(46, 125, 50, 0.92);
+            color: #ffffff;
+        }
+
+        .benefit-stock-pill.assigned-win {
+            background: rgba(246, 142, 2, 0.95);
+            color: #ffffff;
+        }
+
         .load-more-wrapper {
             margin-top: 26px;
             text-align: center;
@@ -1003,7 +1012,6 @@
             margin-bottom: 18px;
         }
 
-        /* Efecto degradado que borra el contenido para usuarios Básicos en notas/beneficios Premium */
         .paywall-fade-wrapper {
             position: relative;
             margin-top: 8px;
@@ -1065,6 +1073,7 @@
             cursor: pointer;
             transition: background-color 0.2s;
             box-shadow: 0 4px 12px rgba(246, 142, 2, 0.25);
+            text-align: center;
         }
 
         .btn-mp-pay:hover {
@@ -1090,7 +1099,62 @@
             margin-bottom: 0 !important;
         }
 
-        /* Caja de solicitud de código de descuento exclusivo */
+        /* Temporizador Regresivo de Sorteos / Beneficios */
+        .countdown-timer-banner {
+            background: #111111;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            border: 1.5px solid var(--primary);
+        }
+
+        .countdown-timer-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .countdown-blocks {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .countdown-unit {
+            background: #222222;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 8px 12px;
+            min-width: 62px;
+        }
+
+        .countdown-unit span.num {
+            display: block;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .countdown-unit span.lbl {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            color: #a3a3a3;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        /* Caja de solicitud de código / sorteo */
         .coupon-claim-box {
             background: #fffaf3;
             border: 1.5px solid #fbd38d;
@@ -1132,13 +1196,35 @@
             border-color: var(--primary);
         }
 
-        .coupon-code-revealed {
-            background: #ffffff;
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 22px 18px;
+        /* Caja de Asignación Exclusiva / Ganador con Código y QR */
+        .exclusive-assigned-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #2e7d32;
+            border-radius: 14px;
+            padding: 24px 20px;
+            margin: 22px 0;
             text-align: center;
-            margin-top: 12px;
+            box-shadow: 0 8px 24px rgba(46, 125, 50, 0.12);
+        }
+
+        .exclusive-assigned-badge {
+            display: inline-block;
+            background: #2e7d32;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .exclusive-assigned-box h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #14532d;
+            margin-bottom: 8px;
         }
 
         .coupon-code-value {
@@ -1147,32 +1233,161 @@
             font-weight: 800;
             letter-spacing: 1px;
             color: #111111;
-            background: #fff6ea;
-            padding: 10px 18px;
+            background: #ffffff;
+            padding: 12px 20px;
             border-radius: 8px;
             display: inline-block;
             margin: 12px 0;
             user-select: all;
-            border: 1px solid #fbd38d;
+            border: 2px dashed #2e7d32;
+            word-break: break-all;
         }
 
         .btn-copy-code {
-            background: var(--primary);
+            background: #2e7d32;
             color: #ffffff;
             border: none;
-            padding: 11px 22px;
+            padding: 12px 22px;
             font-size: 14px;
             font-weight: 700;
             border-radius: 8px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             transition: background 0.2s;
         }
 
         .btn-copy-code:hover {
-            background: var(--primary-hover);
+            background: #1b5e20;
+        }
+
+        .qr-ticket-container {
+            background: #ffffff;
+            border: 1.5px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 16px auto 0 auto;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qr-ticket-container img {
+            width: 210px;
+            height: 210px;
+            object-fit: contain;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 8px;
+            background: #ffffff;
+            cursor: zoom-in;
+        }
+
+        .qr-actions-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-qr-action {
+            flex: 1;
+            min-width: 130px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-qr-enlarge {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .btn-qr-download {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Modal Pantalla Completa para Escanear QR en el Cine */
+        .qr-fullscreen-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.94);
+            z-index: 200000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .qr-fullscreen-modal.active {
+            display: flex;
+        }
+
+        .qr-fullscreen-card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 16px;
+            max-width: 420px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .qr-fullscreen-card img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .btn-close-qr-fullscreen {
+            background: #c62828;
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 800;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .coupon-pending-cache-box {
+            background: #eff6ff;
+            border: 1.5px solid #93c5fd;
+            border-radius: 12px;
+            padding: 24px 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .coupon-pending-cache-box h3 {
+            color: #1e40af;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
         }
 
         .coupon-exhausted-box {
@@ -1201,7 +1416,7 @@
         }
 
         /* =====================================================================
-           PANTALLA DE PASE A USUARIO PREMIUM (WIZARD ADAPTADO DEL FORMULARIO)
+           PANTALLA DE PASE A USUARIO PREMIUM
            ===================================================================== */
         #upgrade-wizard-overlay {
             display: none;
@@ -1442,6 +1657,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .btn-submit-mp:hover {
@@ -1466,7 +1682,7 @@
             padding: 20px;
         }
 
-        /* MODAL ELEGANTE SUPERPUESTO (ALERTAS Y CONFIRMACIÓN DE CANCELACIÓN) */
+        /* MODAL ELEGANTE SUPERPUESTO */
         .custom-alert-backdrop {
             display: none;
             position: fixed;
@@ -1623,7 +1839,7 @@
 </head>
 <body>
 
-    <!-- MODAL ELEGANTE SUPERPUESTO (ALERTAS Y CONFIRMACIÓN DE CANCELACIÓN) -->
+    <!-- MODAL ELEGANTE SUPERPUESTO -->
     <div class="custom-alert-backdrop" id="custom-modal-backdrop">
         <div class="custom-alert-card" id="custom-modal-card">
             <i class="fas fa-exclamation-circle modal-icon" id="modal-icon-element"></i>
@@ -1635,44 +1851,55 @@
         </div>
     </div>
 
-    <!-- FORMULARIO OCULTO NATIVO DE BLOGGER PARA ENVÍO SILENCIOSO DE EMAILS -->
-    <div style="display:none !important; visibility:hidden !important; height:0 !important; overflow:hidden !important;">
+    <!-- MODAL PANTALLA COMPLETA PARA ESCANEAR QR EN EL CINE -->
+    <div class="qr-fullscreen-modal" id="qr-fullscreen-modal">
+        <div class="qr-fullscreen-card">
+            <span class="exclusive-assigned-badge">Entrada Digital Oficial</span>
+            <h3 style="font-size: 18px; font-weight: 800; color: #111111; margin: 0;">Presentá este QR en el ingreso al cine</h3>
+            <img id="qr-fullscreen-img" src="" alt="Código QR de Entrada">
+            <p style="font-size: 13px; color: #555555; margin: 0;">Subí el brillo de la pantalla para facilitar la lectura del escáner.</p>
+            <button type="button" class="btn-close-qr-fullscreen" id="btn-close-qr-fullscreen">
+                <i class="fas fa-times"></i> Cerrar QR
+            </button>
+        </div>
+    </div>
+
+    <!-- FORMULARIO NATIVO DE BLOGGER OCULTO PARA ENVÍO DIRECTO DE EMAILS -->
+    <div style="display:none !important; visibility:hidden !important; height:0 !important; overflow:hidden !important;" aria-hidden="true">
         <form name="contact-form" id="contact-form" onsubmit="return false;">
-            <input type="hidden" id="ContactForm1_contact-form-name" name="name" value="" />
-            <input type="hidden" id="ContactForm1_contact-form-email" name="email" value="" />
+            <input id="ContactForm1_contact-form-name" name="name" type="text" value="" />
+            <input id="ContactForm1_contact-form-email" name="email" type="text" value="" />
             <textarea id="ContactForm1_contact-form-email-message" name="email-message"></textarea>
-            <input type="button" id="ContactForm1_contact-form-submit" value="Send" />
+            <input id="ContactForm1_contact-form-submit" type="button" value="Send" />
         </form>
+        <iframe name="blogger_silent_target" id="blogger_silent_target" style="display:none;"></iframe>
     </div>
 
     <!-- ================= PANTALLA DE PASE DE USUARIO BÁSICO A PREMIUM ================= -->
     <div id="upgrade-wizard-overlay">
         <div class="wizard-card-root">
 
-            <!-- OVERLAY DE CARGA Y REDIRECCIÓN SILENCIOSA -->
             <div id="redirect-overlay">
                 <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #f58220; margin-bottom: 20px;"></i>
                 <h3 style="color: #f58220; font-size: 1.2rem; margin: 0 0 10px 0; text-transform: uppercase;">Procesando Pase a Premium...</h3>
-                <p id="redirect-overlay-txt" style="font-size: 0.95rem; color: #555; max-width: 380px;">Actualizando tus datos de suscripción y abriendo la pasarela de pago segura...</p>
+                <p id="redirect-overlay-txt" style="font-size: 0.95rem; color: #555; max-width: 380px;">Registrando tu suscripción y abriendo la aplicación de Mercado Pago...</p>
             </div>
 
-            <!-- BANNER INFORMATIVO -->
             <div class="banner-beneficios-alta">
                 <h3><i class="fas fa-star"></i> Pase a Miembro Premium</h3>
                 <p>Estás pasando tu cuenta básica a <strong>Usuario Premium</strong> por solo <strong>$2.990 / mes</strong> (precio congelado por 6 meses). Accedé a <strong>notas completas</strong>, <strong>códigos de descuento exclusivos</strong> y <strong>sorteos especiales</strong>.</p>
             </div>
 
-            <!-- INDICADOR DE PASOS WIZARD -->
             <div class="wizard-steps-indicator">
                 <div class="step-dot active" id="dot-1">1</div>
                 <div class="step-dot" id="dot-2">2</div>
                 <div class="step-dot" id="dot-3">3</div>
             </div>
 
-            <!-- PASO 1: DATOS PERSONALES -->
+            <!-- PASO 1 -->
             <div class="wizard-step-panel active-step" id="step-panel-1">
                 <h4 style="color: #e68a00; font-size: 13px; text-transform: uppercase; margin-bottom: 18px; letter-spacing: 0.5px;">Paso 1: Confirmá tus Datos para Activar Premium</h4>
-                
+
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div class="wiz-input-group" style="flex:1; min-width: 220px;">
                         <label>Nombre *</label>
@@ -1716,7 +1943,7 @@
                 </div>
             </div>
 
-            <!-- PASO 2: SELECCIÓN DE INTERESES PREFERENCIALES -->
+            <!-- PASO 2 -->
             <div class="wizard-step-panel" id="step-panel-2">
                 <h4 style="color: #e68a00; font-size: 13px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">Paso 2: Personalizá tus Intereses Premium</h4>
                 <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Seleccioná los temas y beneficios exclusivos que más te interesan:</p>
@@ -1744,24 +1971,25 @@
                 </div>
             </div>
 
-            <!-- PASO 3: CONFIRMACIÓN Y ACTIVACIÓN -->
+            <!-- PASO 3 -->
             <div class="wizard-step-panel" id="step-panel-3">
                 <h4 style="color: #e68a00; font-size: 13px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px;">Paso 3: Resumen y Activación de Membresía Premium</h4>
-                
+
                 <div style="background: #fff3e0; padding: 18px; border-radius: 10px; border: 1px solid #ffe0b2; margin-bottom: 22px; font-size: 14px; line-height: 1.65;">
                     <strong>Resumen del Cambio de Plan:</strong><br>
                     • <strong>Titular:</strong> <span id="resumen_titular">-</span><br>
                     • <strong>Correo de cuenta:</strong> <span id="resumen_email">-</span><br>
                     • <strong>Nuevo Plan:</strong> ★ Miembro Premium<br>
+                    • <strong>Medio de Pago:</strong> Débito Automático Mercado Pago<br>
                     • <strong>Abono Mensual:</strong> $2.990 / mes (precio congelado por 6 meses, cancelás cuando quieras)
                 </div>
 
                 <p style="font-size: 13.5px; color: #555; line-height: 1.55; margin-bottom: 22px;">
-                    Al confirmar, registraremos tu solicitud de pase a <strong>Usuario Premium</strong> y se abrirá la pasarela de pago segura para completar tu suscripción mensual.
+                    Al confirmar, registraremos tu solicitud de pase a <strong>Usuario Premium</strong> y abriremos Mercado Pago en una ventana externa segura para completar tu suscripción mensual sin bloqueos de conexión.
                 </p>
 
                 <button type="button" class="btn-submit-mp" id="wiz-submit-upgrade-btn">
-                    <i class="fas fa-lock"></i> Confirmar y Pagar con Mercado Pago ($2.990/mes)
+                    <i class="fas fa-lock"></i> Confirmar y Abrir Mercado Pago ($2.990/mes)
                 </button>
 
                 <div class="nav-buttons-container">
@@ -1782,7 +2010,7 @@
         <div class="container auth-card">
             <h2>Iniciar Sesión</h2>
             <p class="subtitle">Ingresa con tu correo electrónico y contraseña</p>
-            
+
             <div id="login-error" class="error-msg">Correo o contraseña incorrectos.</div>
 
             <form id="login-form">
@@ -1799,15 +2027,14 @@
             </form>
 
             <div class="auth-footer">
-                ¿No tienes una cuenta? <a href="https://www.empleosvacantes.com/p/crear-mi-cuenta.html" target="_blank">Crear cuenta</a>
+                ¿No tienes una cuenta? <a href="https://www.empleosvacantes.com/p/crear-mi-cuenta.html" target="_blank" rel="noopener noreferrer">Crear cuenta</a>
             </div>
         </div>
     </section>
 
     <!-- ================= PANEL PRINCIPAL ================= -->
     <section id="app-section" class="hidden">
-        
-        <!-- Backdrop para bloquear clics exteriores -->
+
         <div id="menu-backdrop"></div>
 
         <!-- Header Superior -->
@@ -1815,7 +2042,7 @@
             <div class="container header-content">
                 <div class="brand-logo-group">
                     <a href="#" class="brand-logo" id="header-greeting-title">Hola, Usuario</a>
-                    <span id="header-plan-badge" class="header-plan-badge basico">Usuario Básico</span>
+                    <span id="header-premium-star" class="header-premium-star-only hidden" title="Miembro Premium">★</span>
                 </div>
                 <div class="user-nav-area">
                     <button class="header-icon-btn" id="menu-toggle-btn" aria-label="Menú principal" title="Menú de cuenta">
@@ -1835,9 +2062,8 @@
                 <button class="close-sidebar" id="close-sidebar-btn">&times;</button>
             </div>
 
-            <!-- Vista Principal del Menú -->
             <div id="sidebar-main-view">
-                <div id="sidebar-promo-box" style="background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
+                <div id="sidebar-promo-box" class="sidebar-promo-clickable" role="button" tabindex="0" title="Hacé clic para pasar a Membresía Premium">
                     <p style="font-size: 13px; color: var(--text-color); line-height: 1.45;">
                         ★ <strong>Membresía Premium:</strong> Accedé a todas las noticias completas, códigos de descuento exclusivos y sorteos especiales por solo <strong>$2.990 al mes</strong>.
                     </p>
@@ -1850,9 +2076,9 @@
                     <p><strong>Correo electrónico:</strong> <span id="acc-email"></span></p>
                     <p><strong>Tipo de suscripción:</strong> <span id="acc-plan-badge"></span></p>
                     <p style="margin-top: 8px;"><strong>Temas de interés:</strong><br><span id="acc-interests"></span></p>
-                    
+
                     <div id="premium-billing-details">
-                        <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Débito Automático</p>
+                        <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Débito Automático Mercado Pago</p>
                         <p><strong>Próximo débito:</strong> <span id="acc-next-debit">1 de diciembre de 2026</span></p>
                     </div>
 
@@ -1860,19 +2086,14 @@
                 </div>
 
                 <div class="sidebar-actions">
-                    <!-- Botón para básicos: abre el wizard de pase a Premium -->
                     <button type="button" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($2.990/mes)</button>
-                    
-                    <!-- Botón para Premium: cambiar a Básico -->
                     <button class="btn-sidebar-action hidden" id="nav-downgrade-basic">Cambiar a plan Básico</button>
-                    
                     <button class="btn-sidebar-action" id="nav-update-data">Actualizar o modificar datos</button>
                     <button class="btn-sidebar-action" id="nav-delete-account">Eliminar cuenta</button>
                     <button class="btn-sidebar-action btn-logout" id="btn-logout">Cerrar sesión</button>
                 </div>
             </div>
 
-            <!-- Vista: Cambiar a Plan Básico -->
             <div id="sidebar-downgrade-view" class="account-subview">
                 <button class="btn-back-account" id="back-from-downgrade">&larr; Volver atrás</button>
                 <h4 style="margin-bottom: 16px;">Cambiar a Plan Básico</h4>
@@ -1880,7 +2101,6 @@
                 <div class="elfsight-app-fe88d4bc-7b91-4ae9-a89c-d58164437272" data-elfsight-app-lazy></div>
             </div>
 
-            <!-- Vista: Actualizar Datos -->
             <div id="sidebar-update-view" class="account-subview">
                 <button class="btn-back-account" id="back-from-update">&larr; Volver atrás</button>
                 <h4 style="margin-bottom: 16px;">Actualizar Datos</h4>
@@ -1888,7 +2108,6 @@
                 <div class="elfsight-app-fe88d4bc-7b91-4ae9-a89c-d58164437272" data-elfsight-app-lazy></div>
             </div>
 
-            <!-- Vista: Eliminar Cuenta -->
             <div id="sidebar-delete-view" class="account-subview">
                 <button class="btn-back-account" id="back-from-delete">&larr; Volver atrás</button>
                 <h4 style="margin-bottom: 16px; color: #d93838;">Eliminar Cuenta</h4>
@@ -1918,10 +2137,9 @@
             </form>
         </div>
 
-        <!-- Contenido Central con scroll interno fluido -->
+        <!-- Contenido Central -->
         <main class="tab-content-area" id="main-content-container">
 
-            <!-- AVISO DESTACADO DE MEMBRESÍA PREMIUM PARA USUARIOS BÁSICOS (CON CACHÉ POR HORAS) -->
             <div id="basic-promo-banner-container" class="hidden"></div>
 
             <!-- TAB 1: DESTACADO -->
@@ -1932,7 +2150,7 @@
                 <div id="destacado-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
-            <!-- TAB 2: DE TU INTERÉS (ORDEN CRONOLÓGICO SEGÚN CATEGORÍAS DEL USUARIO) -->
+            <!-- TAB 2: DE TU INTERÉS -->
             <div id="tab-interes" class="tab-pane">
                 <h2 class="section-title">De tu interés</h2>
                 <p class="section-desc">Noticias ordenadas cronológicamente según las categorías y etiquetas configuradas en tu perfil.</p>
@@ -1940,7 +2158,7 @@
                 <div id="interes-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
-            <!-- TAB 3: LO MÁS VISTO (ORDEN MANUAL CONFIGURABLE POR ordenMasVisto) -->
+            <!-- TAB 3: LO MÁS VISTO -->
             <div id="tab-mas-visto" class="tab-pane">
                 <h2 class="section-title">Lo más visto</h2>
                 <p class="section-desc">Las notas más destacadas y leídas seleccionadas para los miembros del portal.</p>
@@ -1948,10 +2166,10 @@
                 <div id="mas-visto-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
-            <!-- TAB 4: BENEFICIOS (SORTEOS Y CÓDIGOS DE DESCUENTO EXCLUSIVOS PREMIUM) -->
+            <!-- TAB 4: BENEFICIOS -->
             <div id="tab-beneficios" class="tab-pane">
-                <h2 class="section-title">Beneficios Exclusivos</h2>
-                <p class="section-desc">Códigos de descuento exclusivos y sorteos especiales reservados para nuestros suscriptores Premium.</p>
+                <h2 class="section-title">Beneficios y Sorteos</h2>
+                <p class="section-desc">Códigos de descuento, promociones vigentes y sorteos especiales para miembros del portal.</p>
                 <div id="beneficios-content-wrapper"></div>
             </div>
 
@@ -1965,7 +2183,7 @@
                 <div id="search-results-container"></div>
             </div>
 
-            <!-- VISTA DE DETALLE COMPLETO (NOTICIAS Y BENEFICIOS) -->
+            <!-- VISTA DE DETALLE COMPLETO -->
             <div id="detail-view-section">
                 <button class="detail-back-btn" id="btn-back-to-list">&larr; Volver atrás</button>
                 <div class="detail-card-full" id="detail-content-box"></div>
@@ -1980,7 +2198,147 @@
             const LINK_MERCADO_PAGO_SUSCRIPCION = "https://mpago.la/2GaBY8W";
             const SESSION_KEY = "portal_miembros_session_v4";
             const PROMO_DISMISS_KEY = "portal_miembros_promo_dismissed_until_v1";
+            const CLAIMS_CACHE_KEY = "portal_miembros_beneficios_canjeados_permanente_v1";
             const PROMO_COOLDOWN_HOURS = 6;
+
+            // =========================================================================
+            // PANEL DE ASIGNACIÓN MANUAL POR USUARIO Y BENEFICIO
+            // Editá este objeto cuando quieras asignar manualmente a un usuario:
+            // - codigoAsignado: código exclusivo vigente que se le mostrará con botón Copiar
+            // - esGanador: true si ganó el concurso/sorteo o se le aprobó el beneficio
+            // - mensajeGanador: texto personalizado para el ganador
+            // - qrImagenUrl: URL de la imagen QR (si es entrada de cine, habilita agrandar y descargar)
+            // =========================================================================
+            const asignacionesManualesPorUsuario = {
+                "mauricioacostacom@gmail.com": {
+                    601: {
+                        esGanador: true,
+                        codigoAsignado: "ln-ei-22-2psziqg44738tx9",
+                        mensajeGanador: "¡Felicitaciones! Tu solicitud fue aprobada y este es tu código exclusivo vigente:"
+                    },
+                    501: {
+                        esGanador: true,
+                        codigoAsignado: "CINE-VIP-AK-AI-2026",
+                        mensajeGanador: "¡Sos ganador/a del par de entradas para ver Godzilla Minus Zero en Cinemark Abasto (Butacas AK y AI)!",
+                        qrImagenUrl: "https://api.qrserver.com/v1/create-qr-code/?size=450x450&data=CINEMARK-ABASTO-GODZILLA-VIP-AK-AI-2026"
+                    }
+                },
+                "luciacarpio20@gmail.com": {
+                    // Ejemplo listo para activar cuando le asignes manualmente el código de McDonald's (ID 604):
+                    // 604: {
+                    //     esGanador: true,
+                    //     codigoAsignado: "MCXLNMMA4Y",
+                    //     mensajeGanador: "¡Felicitaciones! Fuiste seleccionado/a. Tu código vigente de 20% OFF en McDonald's es:"
+                    // }
+                }
+            };
+
+            function obtenerAsignacionManual(emailUsuario, beneficioId) {
+                if (!emailUsuario) return null;
+                const mapaUsuario = asignacionesManualesPorUsuario[String(emailUsuario).trim().toLowerCase()];
+                if (!mapaUsuario) return null;
+                return mapaUsuario[beneficioId] || null;
+            }
+
+            // =========================================================================
+            // CACHÉ PERMANENTE DE CANJES Y SOLICITUDES POR USUARIO
+            // =========================================================================
+            function obtenerCacheCanjes() {
+                try {
+                    const raw = localStorage.getItem(CLAIMS_CACHE_KEY);
+                    return raw ? JSON.parse(raw) : {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function guardarSolicitudEnCachePermanente(emailUsuario, beneficioId, datosSolicitud) {
+                if (!emailUsuario || !beneficioId) return;
+                const cache = obtenerCacheCanjes();
+                const emailKey = String(emailUsuario).trim().toLowerCase();
+                if (!cache[emailKey]) cache[emailKey] = {};
+                cache[emailKey][String(beneficioId)] = {
+                    ...datosSolicitud,
+                    fechaSolicitud: new Date().toISOString()
+                };
+                try {
+                    localStorage.setItem(CLAIMS_CACHE_KEY, JSON.stringify(cache));
+                } catch (e) {}
+            }
+
+            function obtenerSolicitudCacheada(emailUsuario, beneficioId) {
+                if (!emailUsuario || !beneficioId) return null;
+                const cache = obtenerCacheCanjes();
+                const emailKey = String(emailUsuario).trim().toLowerCase();
+                if (!cache[emailKey]) return null;
+                return cache[emailKey][String(beneficioId)] || null;
+            }
+
+            // =========================================================================
+            // APERTURA SEGURA DE MERCADO PAGO (EVITA "MERCADO PAGO RECHAZÓ LA CONEXIÓN")
+            // =========================================================================
+            function abrirMercadoPagoExterno(url) {
+                if (!url) return;
+                const win = window.open(url, '_blank', 'noopener,noreferrer');
+                if (!win || win.closed || typeof win.closed === 'undefined') {
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+
+            // =========================================================================
+            // ENVÍO REAL AL FORMULARIO DE BLOGGER (CONTACTO) SIN RECARGAR LA PÁGINA
+            // =========================================================================
+            function enviarNotificacionEmailSilenciosa(nombreRemitente, emailRemitente, cuerpoMensaje) {
+                try {
+                    // 1. Intentar disparar el widget oficial ContactForm1 de Blogger si está montado en la plantilla
+                    const bloggerName = document.getElementById('ContactForm1_contact-form-name');
+                    const bloggerEmail = document.getElementById('ContactForm1_contact-form-email');
+                    const bloggerMsg = document.getElementById('ContactForm1_contact-form-email-message');
+                    const bloggerSubmit = document.getElementById('ContactForm1_contact-form-submit');
+
+                    if (bloggerName) bloggerName.value = nombreRemitente;
+                    if (bloggerEmail) bloggerEmail.value = emailRemitente;
+                    if (bloggerMsg) bloggerMsg.value = cuerpoMensaje;
+
+                    if (bloggerSubmit && typeof bloggerSubmit.click === 'function') {
+                        bloggerSubmit.click();
+                    }
+
+                    // 2. Envío de respaldo directo al endpoint oficial de contacto de Blogger
+                    const blogIdMeta = document.querySelector('meta[name="blogId"], link[rel="service.post"]');
+                    let blogId = "";
+                    if (blogIdMeta) {
+                        const content = blogIdMeta.getAttribute('content') || blogIdMeta.getAttribute('href') || "";
+                        const match = content.match(/(\d{15,25})/);
+                        if (match) blogId = match[1];
+                    }
+
+                    if (blogId) {
+                        const formData = new URLSearchParams();
+                        formData.append('name', nombreRemitente);
+                        formData.append('email', emailRemitente);
+                        formData.append('message', cuerpoMensaje);
+                        formData.append('blogID', blogId);
+
+                        fetch('/contact-form.do', {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                            },
+                            body: formData.toString()
+                        }).catch(() => {});
+                    }
+                } catch (err) {
+                    console.log("Notificación enviada.");
+                }
+            }
 
             // =========================================================================
             // PERSISTENCIA BLINDADA DE SESIÓN
@@ -2031,9 +2389,6 @@
                 } catch (e) {}
             }
 
-            // =========================================================================
-            // CACHÉ PARA AVISO DE SUSCRIPCIÓN PREMIUM EN USUARIOS BÁSICOS
-            // =========================================================================
             function ocultarPromoPorHoras(userEmail) {
                 const key = `${PROMO_DISMISS_KEY}_${userEmail.toLowerCase()}`;
                 const until = Date.now() + (PROMO_COOLDOWN_HOURS * 60 * 60 * 1000);
@@ -2108,6 +2463,7 @@
             let currentUser = null;
             let lastActiveViewId = "tab-destacado";
             let searchTimeoutId = null;
+            let activeCountdownInterval = null;
 
             const visibleCounts = {
                 destacado: 11,
@@ -2117,8 +2473,6 @@
 
             // =========================================================================
             // BASE DE DATOS UNIFICADA DE NOTICIAS
-            // - fechaPublicacion: define el orden cronológico en "De tu interés"
-            // - ordenMasVisto: define el orden manual en "Lo más visto" (1 = más arriba)
             // =========================================================================
             const noticiasData = [
                 {
@@ -2340,136 +2694,36 @@
                         "Las ubicaciones seleccionadas corresponden a filas centrales con visión óptima de pantalla y sonido, pensadas para brindar la mejor experiencia en sala.",
                         "Mantené tus datos actualizados en el menú de cuenta para recibir la confirmación inmediata en caso de resultar ganador."
                     ]
-                },
-                {
-                    id: 112,
-                    title: "Claves para ahorrar en el pago de servicios del hogar y telefonía móvil",
-                    category: "economía",
-                    categoryName: "Economía",
-                    tags: ["economía", "beneficios", "actualidad", "servicios", "ahorro"],
-                    acceso: "basico",
-                    secciones: ["destacado", "mas_visto"],
-                    fechaPublicacion: "2026-11-10T18:00:00",
-                    ordenMasVisto: 12,
-                    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=80",
-                    desc: "Estrategias simples para revisar abonos mensuales, solicitar bonificaciones y aprovechar reintegros.",
-                    paragraphs: [
-                        "Revisar periódicamente el detalle de las facturas de internet, telefonía celular y suscripciones digitales permite detectar aumentos fuera de promoción y renegociar tarifas.",
-                        "Las compañías de telecomunicaciones suelen otorgar bonificaciones de entre el 30% y el 50% por seis meses a los clientes que solicitan actualización de plan comercial.",
-                        "Asimismo, adherir los servicios al débito automático de billeteras digitales con campañas de reintegro mensual suma un ahorro adicional sin trámites complejos.",
-                        "Organizar los vencimientos en una planilla mensual evita recargos por mora y mejora el control del presupuesto familiar."
-                    ]
-                },
-                {
-                    id: 113,
-                    title: "Los mejores destinos para una escapada de fin de semana cerca de Buenos Aires",
-                    category: "actualidad",
-                    categoryName: "Actualidad",
-                    tags: ["actualidad", "turismo", "beneficios", "escapadas"],
-                    acceso: "premium",
-                    secciones: ["destacado", "mas_visto"],
-                    fechaPublicacion: "2026-11-09T11:25:00",
-                    ordenMasVisto: 13,
-                    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80",
-                    desc: "Pueblos rurales, lagunas y paseos ribereños a menos de dos horas de viaje para desconectar de la rutina.",
-                    paragraphs: [
-                        "A menos de 150 kilómetros de la Ciudad de Buenos Aires existen múltiples opciones ideales para una escapada de día completo o fin de semana con propuestas gastronómicas y naturaleza.",
-                        "Entre los destinos favoritos se destacan las caminatas por la costanera de Chascomús, los paseos en lancha por el Delta de Tigre y las parrillas de campo en pueblos tradicionales.",
-                        "Viajar temprano por la mañana permite aprovechar mejor la jornada, evitar congestiones en los accesos principales y disfrutar de actividades al aire libre.",
-                        "En este especial detallamos rutas recomendadas, costos estimados de peajes y opciones de recreación para toda la familia."
-                    ]
-                },
-                {
-                    id: 114,
-                    title: "Novedades en billeteras virtuales: qué rendimiento ofrecen hoy los saldos diarios",
-                    category: "tecnología",
-                    categoryName: "Tecnología",
-                    tags: ["tecnología", "economía", "finanzas", "billeteras"],
-                    acceso: "basico",
-                    secciones: ["destacado", "mas_visto"],
-                    fechaPublicacion: "2026-11-08T15:50:00",
-                    ordenMasVisto: 14,
-                    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80",
-                    desc: "Comparativa actualizada de tasas anuales, disponibilidad inmediata y beneficios en comercios.",
-                    paragraphs: [
-                        "Las cuentas remuneradas de las principales billeteras digitales continúan siendo una de las herramientas más utilizadas para hacer rendir el dinero de uso cotidiano.",
-                        "A diferencia de un plazo fijo tradicional, estos instrumentos acreditan rendimientos todos los días hábiles manteniendo el saldo disponible las 24 horas para transferencias o pagos con QR.",
-                        "Comparar la tasa nominal anual vigente en cada aplicación ayuda a elegir la alternativa más conveniente según el perfil de gastos de cada usuario.",
-                        "También es recomendable activar la verificación en dos pasos para proteger el acceso a todas las cuentas financieras desde el teléfono móvil."
-                    ]
-                },
-                {
-                    id: 115,
-                    title: "Estrenos en plataformas de streaming: las series y películas más vistas del mes",
-                    category: "espectáculos",
-                    categoryName: "Espectáculos",
-                    tags: ["espectáculos", "cine", "tecnología", "series"],
-                    acceso: "basico",
-                    secciones: ["destacado", "mas_visto"],
-                    fechaPublicacion: "2026-11-07T20:15:00",
-                    ordenMasVisto: 15,
-                    image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=900&q=80",
-                    desc: "Un repaso por los thrillers, documentales y producciones nacionales que lideran los rankings.",
-                    paragraphs: [
-                        "Las principales plataformas de streaming renovaron sus catálogos con miniseries de suspenso, documentales deportivos y producciones argentinas que rápidamente escalaron al top 10.",
-                        "Entre los títulos más comentados por la audiencia sobresalen los relatos basados en hechos reales y las continuaciones de sagas de ciencia ficción.",
-                        "Para aprovechar mejor las suscripciones, muchos usuarios optan por rotar plataformas según los lanzamientos principales de cada trimestre.",
-                        "Te presentamos una selección curada con sinopsis y duración de cada título recomendado para maratonear."
-                    ]
-                },
-                {
-                    id: 116,
-                    title: "Consejos prácticos para mantener el auto en óptimas condiciones antes del verano",
-                    category: "actualidad",
-                    categoryName: "Actualidad",
-                    tags: ["actualidad", "autos", "mantenimiento", "seguridad"],
-                    acceso: "premium",
-                    secciones: ["destacado", "mas_visto"],
-                    fechaPublicacion: "2026-11-06T09:00:00",
-                    ordenMasVisto: 16,
-                    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
-                    desc: "Revisión de fluidos, presión de neumáticos, batería y aire acondicionado para viajar tranquilo.",
-                    paragraphs: [
-                        "Con la llegada de las temperaturas más altas y los viajes en ruta, realizar un chequeo preventivo del vehículo resulta clave para evitar inconvenientes mecánicos.",
-                        "Los talleres especializados sugieren controlar el nivel y estado del aceite del motor, el líquido refrigerante, el líquido de frenos y el correcto funcionamiento del electroventilador.",
-                        "También es fundamental verificar la presión de los neumáticos en frío, incluyendo la rueda de auxilio, y comprobar el desgaste de las escobillas limpiaparabrisas.",
-                        "Una revisión a tiempo prolonga la vida útil de los componentes y garantiza mayor seguridad en cada trayecto."
-                    ]
-                },
-                {
-                    id: 117,
-                    title: "Beneficios exclusivos en gastronomía y cafeterías de especialidad en CABA",
-                    category: "beneficios",
-                    categoryName: "Beneficios",
-                    tags: ["beneficios", "espectáculos", "actualidad", "gastronomía"],
-                    acceso: "premium",
-                    secciones: ["destacado", "mas_visto"],
-                    fechaPublicacion: "2026-11-05T13:10:00",
-                    ordenMasVisto: 17,
-                    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80",
-                    desc: "Descubrí los locales adheridos con descuentos en meriendas, brunchs y cenas durante toda la semana.",
-                    paragraphs: [
-                        "El circuito gastronómico porteño suma nuevas propuestas con promociones especiales para desayunos, meriendas y salidas nocturnas en barrios como Palermo, Belgrano, Caballito y Devoto.",
-                        "Cafeterías de especialidad y panaderías artesanales ofrecen combos promocionales con rebajas de hasta el 25% abonando con medios digitales seleccionados.",
-                        "Durante los fines de semana, los menús de brunch continúan posicionándose como una de las opciones más elegidas para compartir en pareja o con amigos.",
-                        "Conocé los horarios recomendados para evitar demoras y aprovechar los beneficios vigentes."
-                    ]
                 }
             ];
 
             // =========================================================================
-            // BASE DE DATOS DE BENEFICIOS (CÓDIGOS DE DESCUENTO EXCLUSIVOS + SORTEOS)
-            // Control de stock por script:
-            // - cupoTotal: cantidad máxima de códigos disponibles
-            // - entregados: cantidad ya entregada (si entregados >= cupoTotal o agotado: true, se muestra como Agotado)
+            // BASE DE DATOS DE BENEFICIOS Y SORTEOS
+            // - SoloParaBasicos: true -> habilitado para usuarios básicos sin bloqueo
+            // - fechaCierreSorteo: fecha y hora manual para el temporizador regresivo
+            // - tiempoRevisionMinutos: si se define, indica al usuario volver en X minutos
             // =========================================================================
             const beneficiosData = [
+                {
+                    id: 604,
+                    tipoBeneficio: "sorteo_codigo",
+                    soloParaBasicos: true,
+                    acceso: "basico",
+                    title: "20% de descuento en McDonald's — Sorteo Especial para Miembros",
+                    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
+                    codigoReferencia: "MCXLNMMA4Y",
+                    vigencia: "Vigente hasta el 31/12/2026",
+                    fechaCierreSorteo: "2026-11-17T23:59:00",
+                    fechaCierreTexto: "hoy 17 de noviembre a las 11:59 hrs",
+                    tiempoRevisionMinutos: 5,
+                    desc: "20% de descuento en McDonald's vigente hasta el 31/12/2026 ¡De descuento sobre el total de la factura en App McDonald's! ¡Ingresá el código en la App de McDonald's y obtené tu beneficio! Máximo 2 códigos por mes. Sujeto a términos y condiciones de App McDonald's.",
+                    paragraphs: [
+                        "20% de descuento en McDonald's vigente hasta el 31/12/2026 ¡De descuento sobre el total de la factura en App McDonald's!.",
+                        "¡Ingresá el código en la App de McDonald's y obtené tu beneficio! Máximo 2 códigos por mes. Sujeto a términos y condiciones de App McDonald's.",
+                        "Completá tu solicitud con tu nombre, apellido y correo electrónico para participar del sorteo de códigos. Una vez enviada la solicitud, volvé a ingresar en un lapso de 5 minutos para verificar si resultaste ganador y visualizar tu código asignado."
+                    ]
+                },
                 {
                     id: 601,
                     tipoBeneficio: "codigo",
@@ -2479,6 +2733,8 @@
                     acceso: "premium",
                     codigoDescuento: "ln-ei-22-2psziqg44738tx9",
                     vigencia: "Del 18/09/2026 al 31/12/2026",
+                    fechaCierreSorteo: "2026-11-17T23:59:00",
+                    fechaCierreTexto: "hoy 17 de noviembre a las 11:59 hrs",
                     cupoTotal: 50,
                     entregados: 18,
                     agotado: false,
@@ -2486,7 +2742,7 @@
                     paragraphs: [
                         "Beneficio exclusivo para miembros Premium: accedé a un 10% OFF en tus compras en sucursales adheridas de Carrefour y tienda online.",
                         "Vigencia de la promoción: válida desde el 18/09/2026 hasta el 31/12/2026 inclusive.",
-                        "Para obtener tu código personal, completá tus datos de verificación en el formulario inferior y el sistema validará la disponibilidad en segundos."
+                        "Para solicitar tu código personal, completá tus datos de verificación en el formulario inferior."
                     ]
                 },
                 {
@@ -2498,6 +2754,8 @@
                     acceso: "premium",
                     codigoDescuento: "PRENOTICIA-CAFE25-VIP",
                     vigencia: "Del 01/11/2026 al 31/12/2026",
+                    fechaCierreSorteo: "2026-11-20T23:59:00",
+                    fechaCierreTexto: "20 de noviembre a las 23:59 hrs",
                     cupoTotal: 40,
                     entregados: 14,
                     agotado: false,
@@ -2505,25 +2763,7 @@
                     paragraphs: [
                         "Presentando tu código exclusivo en caja obtenés un 25% de descuento directo en cafetería, pastelería artesanal y opciones de brunch.",
                         "Válido de lunes a domingo sin tope de compra en locales adheridos de Capital Federal.",
-                        "Completá tus datos debajo para validar el cupo disponible y copiar tu código."
-                    ]
-                },
-                {
-                    id: 603,
-                    tipoBeneficio: "codigo",
-                    title: "30% OFF en Indumentaria Urbana y Calzado Deportivo (Cupo Limitado)",
-                    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80",
-                    secondImage: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=80",
-                    acceso: "premium",
-                    codigoDescuento: "MODA30-PREMIUM-2026",
-                    vigencia: "Hasta agotar stock de 30 códigos",
-                    cupoTotal: 30,
-                    entregados: 30,
-                    agotado: true,
-                    desc: "Cupón promocional del 30% de descuento en tiendas online seleccionadas de indumentaria y calzado.",
-                    paragraphs: [
-                        "Promoción especial con cupo limitado de 30 códigos promocionales para compras online en marcas seleccionadas.",
-                        "Este beneficio cuenta con entrega controlada por usuario Premium registrado."
+                        "Completá tus datos debajo para solicitar tu código exclusivo."
                     ]
                 },
                 {
@@ -2535,11 +2775,13 @@
                     cine: "Cinemark Abasto",
                     fechaHora: "Sábado 21 de noviembre a las 22:00 hrs.",
                     ubicacion: "Butacas AK y AI (centro al medio)",
+                    fechaCierreSorteo: "2026-11-20T20:00:00",
+                    fechaCierreTexto: "20 de noviembre a las 20:00 hrs",
                     acceso: "premium",
                     desc: "Viví el estreno más impactante del año en ubicaciones centrales preferenciales reservadas exclusivamente para miembros Premium.",
                     paragraphs: [
                         "Sorteamos un par de entradas ubicadas en el sector central de la sala (Butacas AK y AI) para disfrutar de Godzilla Minus Zero en Cinemark Abasto el sábado 21 de noviembre a las 22:00 horas.",
-                        "El premio incluye las dos localidades digitales listas para ingresar directamente a la sala sin hacer fila en boletería.",
+                        "El premio incluye las dos localidades digitales con código QR listas para ingresar directamente a la sala sin hacer fila en boletería.",
                         "Exclusivo para suscriptores con membresía Premium activa al momento del sorteo."
                     ],
                     hasForm: true
@@ -2553,19 +2795,21 @@
                     cine: "Complejos Cinemark Hoyts adheridos (CABA y GBA)",
                     fechaHora: "Válido de jueves a domingo en funciones seleccionadas",
                     ubicacion: "Sector central preferencial + Pochoclos grandes y 2 bebidas",
+                    fechaCierreSorteo: "2026-11-22T22:00:00",
+                    fechaCierreTexto: "22 de noviembre a las 22:00 hrs",
                     acceso: "premium",
                     desc: "Participá por una experiencia completa de cine para dos personas con entradas y combo gastronómico incluido.",
                     paragraphs: [
                         "Premiamos a nuestra comunidad Premium con un pase doble para disfrutar de la película en cartelera que elijas junto con un combo grande de pochoclos y dos bebidas.",
-                        "Los ganadores recibirán los códigos de canje directamente en su correo electrónico registrado en el portal.",
-                        "Completá tu inscripción con tus datos de miembro Premium para quedar automáticamente habilitado."
+                        "Los ganadores recibirán sus entradas digitales con QR directamente en su perfil del portal.",
+                        "Completá tu inscripción con tus datos para quedar automáticamente habilitado."
                     ],
                     hasForm: true
                 }
             ];
 
             // =========================================================================
-            // SISTEMA DE MODAL PERSONALIZADO (ALERTAS Y CONFIRMACIÓN DE CANCELACIÓN)
+            // MODAL PERSONALIZADO Y VISOR QR PANTALLA COMPLETA
             // =========================================================================
             function mostrarModalPersonalizado(titulo, mensaje, opciones = {}) {
                 const backdrop = document.getElementById('custom-modal-backdrop');
@@ -2624,26 +2868,118 @@
                 backdrop.style.display = 'flex';
             }
 
-            // =========================================================================
-            // ENVÍO SILENCIOSO DE NOTIFICACIONES POR EMAIL (BLOGGER / RESPALDO)
-            // =========================================================================
-            function enviarNotificacionEmailSilenciosa(nombreRemitente, emailRemitente, cuerpoMensaje) {
-                try {
-                    const nameField = document.getElementById('ContactForm1_contact-form-name');
-                    const emailField = document.getElementById('ContactForm1_contact-form-email');
-                    const msgField = document.getElementById('ContactForm1_contact-form-email-message');
-                    const submitBtn = document.getElementById('ContactForm1_contact-form-submit');
-
-                    if (nameField) nameField.value = nombreRemitente;
-                    if (emailField) emailField.value = emailRemitente;
-                    if (msgField) msgField.value = cuerpoMensaje;
-                    if (submitBtn) submitBtn.click();
-                } catch (err) {
-                    console.log("Notificación procesada en segundo plano.");
+            window.abrirQrPantallaCompleta = function(qrUrl) {
+                const modal = document.getElementById('qr-fullscreen-modal');
+                const img = document.getElementById('qr-fullscreen-img');
+                if (modal && img && qrUrl) {
+                    img.src = qrUrl;
+                    modal.classList.add('active');
                 }
+            };
+
+            window.descargarImagenQr = function(qrUrl, nombreArchivo) {
+                if (!qrUrl) return;
+                fetch(qrUrl)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const urlBlob = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = urlBlob;
+                        a.download = nombreArchivo || 'Entrada-QR-Prenoticia.png';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(urlBlob);
+                    })
+                    .catch(() => {
+                        window.open(qrUrl, '_blank', 'noopener,noreferrer');
+                    });
+            };
+
+            window.copiarAlPortapapeles = function(texto, btnEl) {
+                if (!texto) return;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(texto).then(() => {
+                        if (btnEl) {
+                            const orig = btnEl.innerHTML;
+                            btnEl.innerHTML = '<i class="fas fa-check"></i> ¡Código copiado!';
+                            setTimeout(() => { btnEl.innerHTML = orig; }, 2200);
+                        }
+                    });
+                } else {
+                    const temp = document.createElement('textarea');
+                    temp.value = texto;
+                    document.body.appendChild(temp);
+                    temp.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(temp);
+                    if (btnEl) {
+                        const orig = btnEl.innerHTML;
+                        btnEl.innerHTML = '<i class="fas fa-check"></i> ¡Código copiado!';
+                        setTimeout(() => { btnEl.innerHTML = orig; }, 2200);
+                    }
+                }
+            };
+
+            // =========================================================================
+            // TEMPORIZADOR REGRESIVO EDITABLE POR BENEFICIO
+            // =========================================================================
+            function iniciarTemporizadorBeneficio(fechaISO, containerId, textoCierre) {
+                if (activeCountdownInterval) {
+                    clearInterval(activeCountdownInterval);
+                    activeCountdownInterval = null;
+                }
+                const el = document.getElementById(containerId);
+                if (!el || !fechaISO) return;
+
+                const targetTime = new Date(fechaISO).getTime();
+                if (isNaN(targetTime)) return;
+
+                function actualizar() {
+                    const now = Date.now();
+                    const diff = targetTime - now;
+
+                    if (diff <= 0) {
+                        el.innerHTML = `
+                            <div class="countdown-timer-label">
+                                <i class="fas fa-hourglass-end"></i> El plazo para solicitar este beneficio finalizó (${textoCierre || ''})
+                            </div>
+                        `;
+                        if (activeCountdownInterval) clearInterval(activeCountdownInterval);
+                        return;
+                    }
+
+                    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    el.innerHTML = `
+                        <div class="countdown-timer-label">
+                            <i class="fas fa-clock"></i> Tiempo para solicitar el beneficio — Finaliza ${textoCierre || ''}
+                        </div>
+                        <div class="countdown-blocks">
+                            <div class="countdown-unit"><span class="num">${String(dias).padStart(2, '0')}</span><span class="lbl">Días</span></div>
+                            <div class="countdown-unit"><span class="num">${String(horas).padStart(2, '0')}</span><span class="lbl">Horas</span></div>
+                            <div class="countdown-unit"><span class="num">${String(minutos).padStart(2, '0')}</span><span class="lbl">Min</span></div>
+                            <div class="countdown-unit"><span class="num">${String(segundos).padStart(2, '0')}</span><span class="lbl">Seg</span></div>
+                        </div>
+                    `;
+                }
+
+                actualizar();
+                activeCountdownInterval = setInterval(actualizar, 1000);
             }
 
             function initApp() {
+                const btnCloseQrFullscreen = document.getElementById('btn-close-qr-fullscreen');
+                const qrFullscreenModal = document.getElementById('qr-fullscreen-modal');
+                if (btnCloseQrFullscreen && qrFullscreenModal) {
+                    btnCloseQrFullscreen.addEventListener('click', () => {
+                        qrFullscreenModal.classList.remove('active');
+                    });
+                }
+
                 function capitalizarTexto(texto) {
                     return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
                 }
@@ -2762,7 +3098,6 @@
                     closeMenu();
                     if (!upgradeWizardOverlay) return;
 
-                    // Pre-completar datos del usuario básico conectado
                     if (currentUser) {
                         const regNombre = document.getElementById('reg_nombre');
                         const regApellido = document.getElementById('reg_apellido');
@@ -2774,7 +3109,6 @@
                         if (regLocalidad) regLocalidad.value = currentUser.ubicacion || '';
                         if (regEmail) regEmail.value = currentUser.usuario || '';
 
-                        // Pre-seleccionar sus intereses actuales
                         interesesWizardSeleccionados = [];
                         document.querySelectorAll('#wiz-interests-grid .btn-interest-tag').forEach(tagEl => {
                             const val = tagEl.getAttribute('data-value');
@@ -2787,6 +3121,9 @@
                             }
                         });
                     }
+
+                    const overlay = document.getElementById('redirect-overlay');
+                    if (overlay) overlay.style.display = 'none';
 
                     pasoWizardActual = 1;
                     irAlPasoWizard(1);
@@ -2808,7 +3145,6 @@
                     );
                 }
 
-                // Listeners del Wizard
                 document.querySelectorAll('#wiz-interests-grid .btn-interest-tag').forEach(tagEl => {
                     tagEl.addEventListener('click', () => {
                         const val = tagEl.getAttribute('data-value');
@@ -2867,7 +3203,7 @@
                         mensajeEmail += `Localidad: ${loc}\n`;
                         mensajeEmail += `Correo Electrónico de Cuenta: ${email}\n`;
                         mensajeEmail += `Teléfono WhatsApp: ${tel}\n`;
-                        mensajeEmail += `Plan Solicitado: Miembro Premium ($2.990/mes - 6 meses precio fijo)\n`;
+                        mensajeEmail += `Plan Solicitado: Miembro Premium ($2.990/mes - Débito Automático Mercado Pago)\n`;
                         mensajeEmail += `Intereses Seleccionados: ${interesesWizardSeleccionados.join(', ')}\n`;
                         mensajeEmail += `Fecha de Solicitud: ${new Date().toLocaleDateString("es-AR")} ${new Date().toLocaleTimeString("es-AR")}`;
 
@@ -2877,28 +3213,23 @@
                             localStorage.setItem("upgrade_premium_pendiente_confirmacion", "true");
                         } catch (e) {}
 
+                        // Abrir Mercado Pago en pestaña/app externa para evitar rechazo de conexión en iframe
+                        abrirMercadoPagoExterno(LINK_MERCADO_PAGO_SUSCRIPCION);
+
                         setTimeout(() => {
-                            window.location.href = LINK_MERCADO_PAGO_SUSCRIPCION;
-                        }, 1200);
+                            if (overlay) overlay.style.display = 'none';
+                            if (upgradeWizardOverlay) upgradeWizardOverlay.classList.remove('active');
+                            mostrarModalPersonalizado(
+                                "Suscripción Iniciada en Mercado Pago",
+                                `Abrimos Mercado Pago en una ventana externa segura para completar tu adhesión al <strong>Débito Automático de $2.990/mes</strong>.<br><br>Si tu navegador bloqueó la ventana emergente, <a href="${LINK_MERCADO_PAGO_SUSCRIPCION}" target="_blank" rel="noopener noreferrer" style="color:#f68e02; font-weight:700; text-decoration:underline;">hacé clic acá para abrir Mercado Pago</a>.`,
+                                { esExito: true, textoBotonPrincipal: "Volver al Portal" }
+                            );
+                        }, 1100);
                     });
                 }
 
-                // Detección al regresar del pago
-                const urlParams = new URLSearchParams(window.location.search);
-                const regresaDeMP = urlParams.get("payment_id") || urlParams.get("status") || urlParams.get("preapproval_id");
-                const banderaUpgrade = localStorage.getItem("upgrade_premium_pendiente_confirmacion");
-
-                if (regresaDeMP || banderaUpgrade === "true") {
-                    try { localStorage.removeItem("upgrade_premium_pendiente_confirmacion"); } catch (e) {}
-                    mostrarModalPersonalizado(
-                        "¡Solicitud de Pase a Premium Recibida!",
-                        "Estamos activando tu suscripción Premium y en unos minutos tendrás habilitados todos los beneficios exclusivos, códigos de descuento y sorteos.",
-                        { esExito: true, textoBotonPrincipal: "Continuar al Portal" }
-                    );
-                }
-
                 // =====================================================================
-                // RENDERIZADO DE BANNER DESTACADO PARA USUARIOS BÁSICOS (CON CACHÉ)
+                // RENDERIZADO DE BANNER DESTACADO PARA USUARIOS BÁSICOS
                 // =====================================================================
                 function renderBasicPromoBanner() {
                     const bannerContainer = document.getElementById('basic-promo-banner-container');
@@ -2949,14 +3280,13 @@
                     const greetingEl = document.getElementById('header-greeting-title');
                     if (greetingEl) greetingEl.textContent = `Hola, ${user.nombre}`;
 
-                    const headerPlanBadge = document.getElementById('header-plan-badge');
-                    if (headerPlanBadge) {
+                    // En usuarios básicos quitar "Usuario Básico"; en Premium dejar solamente la estrella
+                    const headerPremiumStar = document.getElementById('header-premium-star');
+                    if (headerPremiumStar) {
                         if (isPremium) {
-                            headerPlanBadge.className = 'header-plan-badge premium';
-                            headerPlanBadge.textContent = '★ Usuario Premium';
+                            headerPremiumStar.classList.remove('hidden');
                         } else {
-                            headerPlanBadge.className = 'header-plan-badge basico';
-                            headerPlanBadge.textContent = 'Usuario Básico';
+                            headerPremiumStar.classList.add('hidden');
                         }
                     }
 
@@ -3035,6 +3365,14 @@
 
                     renderBasicPromoBanner();
                     renderContent();
+                }
+
+                // Clic en la caja de Membresía Premium del menú lateral para abrir formulario de pase a Premium
+                const sidebarPromoBox = document.getElementById('sidebar-promo-box');
+                if (sidebarPromoBox) {
+                    sidebarPromoBox.addEventListener('click', () => {
+                        window.abrirWizardPremium();
+                    });
                 }
 
                 // Toggle ver/ocultar contraseña
@@ -3387,13 +3725,24 @@
                         : '';
 
                     let stockBadge = '';
-                    if (tipo === 'beneficio' && item.tipoBeneficio === 'codigo') {
-                        const estaAgotado = item.agotado || (item.entregados >= item.cupoTotal);
-                        if (estaAgotado) {
-                            stockBadge = `<span class="benefit-stock-pill agotado">Agotado</span>`;
-                        } else {
-                            const disponibles = Math.max(0, item.cupoTotal - item.entregados);
-                            stockBadge = `<span class="benefit-stock-pill">${disponibles} disponibles</span>`;
+                    if (tipo === 'beneficio') {
+                        const asignacion = currentUser ? obtenerAsignacionManual(currentUser.usuario, item.id) : null;
+                        const solicitudPrevia = currentUser ? obtenerSolicitudCacheada(currentUser.usuario, item.id) : null;
+
+                        if (asignacion && (asignacion.codigoAsignado || asignacion.esGanador)) {
+                            stockBadge = `<span class="benefit-stock-pill assigned-win">★ Asignado</span>`;
+                        } else if (solicitudPrevia) {
+                            stockBadge = `<span class="benefit-stock-pill">Solicitado</span>`;
+                        } else if (item.soloParaBasicos) {
+                            stockBadge = `<span class="benefit-stock-pill basico-open">Sorteo Abierto</span>`;
+                        } else if (item.tipoBeneficio === 'codigo') {
+                            const estaAgotado = item.agotado || (item.entregados >= item.cupoTotal);
+                            if (estaAgotado) {
+                                stockBadge = `<span class="benefit-stock-pill agotado">Agotado</span>`;
+                            } else {
+                                const disponibles = Math.max(0, item.cupoTotal - item.entregados);
+                                stockBadge = `<span class="benefit-stock-pill">${disponibles} disponibles</span>`;
+                            }
                         }
                     }
 
@@ -3456,9 +3805,6 @@
                     }
                 }
 
-                // =========================================================================
-                // SECCIÓN BENEFICIOS (CÓDIGOS DE DESCUENTO + SORTEOS DE A DOS EN DOS)
-                // =========================================================================
                 function renderBeneficios() {
                     const beneficiosWrapper = document.getElementById('beneficios-content-wrapper');
                     if (!beneficiosWrapper || !currentUser) return;
@@ -3486,16 +3832,13 @@
                     const masVistoGrid = document.getElementById('mas-visto-grid');
                     const masVistoMore = document.getElementById('mas-visto-more-container');
 
-                    // 1. Destacado
                     const noticiasDestacadas = noticiasData.filter(n => n.secciones.includes("destacado"));
 
-                    // 2. De tu interés: filtradas según categorías del usuario y ordenadas cronológicamente (más reciente primero)
                     const noticiasDeInteres = noticiasData
                         .filter(n => coincideConIntereses(n))
                         .slice()
                         .sort((a, b) => new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion));
 
-                    // 3. Lo más visto: ordenadas manualmente según ordenMasVisto (1, 2, 3...)
                     const noticiasMasVistas = noticiasData
                         .filter(n => n.secciones.includes("mas_visto"))
                         .slice()
@@ -3508,7 +3851,66 @@
                 }
 
                 // =========================================================================
-                // VISTA DE DETALLE (NOTICIAS Y BENEFICIOS: CÓDIGOS DE DESCUENTO Y SORTEOS)
+                // GENERADOR DE BLOQUE DE ASIGNACIÓN MANUAL (CÓDIGO VIGENTE / GANADOR / QR)
+                // =========================================================================
+                function construirBloqueAsignacionManualHTML(asignacion) {
+                    if (!asignacion || (!asignacion.codigoAsignado && !asignacion.esGanador)) return '';
+
+                    const tituloEstado = asignacion.esGanador
+                        ? "¡Felicitaciones! Resultaste Ganador/a"
+                        : "Tu Beneficio Exclusivo Está Vigente";
+
+                    const subtituloEstado = asignacion.mensajeGanador
+                        || "El código vigente exclusivamente para usted es el siguiente:";
+
+                    let codigoHTML = '';
+                    if (asignacion.codigoAsignado) {
+                        const safeCode = asignacion.codigoAsignado.replace(/'/g, "\\'");
+                        codigoHTML = `
+                            <div style="margin: 12px 0;">
+                                <div style="font-size: 13px; font-weight: 700; color: #166534;">El código vigente exclusivamente para usted es:</div>
+                                <div class="coupon-code-value">${asignacion.codigoAsignado}</div>
+                                <div>
+                                    <button type="button" class="btn-copy-code" onclick="window.copiarAlPortapapeles('${safeCode}', this)">
+                                        <i class="fas fa-copy"></i> Copiar código en portapapeles
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    let qrHTML = '';
+                    if (asignacion.qrImagenUrl) {
+                        const safeQr = asignacion.qrImagenUrl.replace(/'/g, "\\'");
+                        qrHTML = `
+                            <div class="qr-ticket-container">
+                                <span style="font-size: 13px; font-weight: 800; color: #111111;">Tu Entrada Digital con Código QR</span>
+                                <img src="${asignacion.qrImagenUrl}" alt="Código QR de Entrada" onclick="window.abrirQrPantallaCompleta('${safeQr}')" title="Tocá para agrandar en pantalla completa">
+                                <div class="qr-actions-row">
+                                    <button type="button" class="btn-qr-action btn-qr-enlarge" onclick="window.abrirQrPantallaCompleta('${safeQr}')">
+                                        <i class="fas fa-expand"></i> Agrandar QR
+                                    </button>
+                                    <button type="button" class="btn-qr-action btn-qr-download" onclick="window.descargarImagenQr('${safeQr}', 'Entrada-Cine-Prenoticia.png')">
+                                        <i class="fas fa-download"></i> Descargar QR
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    return `
+                        <div class="exclusive-assigned-box">
+                            <span class="exclusive-assigned-badge">★ Asignación Confirmada</span>
+                            <h3>${tituloEstado}</h3>
+                            <p style="font-size: 15px; color: #14532d; margin-bottom: 10px;">${subtituloEstado}</p>
+                            ${codigoHTML}
+                            ${qrHTML}
+                        </div>
+                    `;
+                }
+
+                // =========================================================================
+                // VISTA DE DETALLE (NOTICIAS Y BENEFICIOS)
                 // =========================================================================
                 const detailViewSection = document.getElementById('detail-view-section');
                 const detailContentBox = document.getElementById('detail-content-box');
@@ -3516,6 +3918,11 @@
 
                 window.openDetailView = function(id, tipo = 'noticia') {
                     if (!currentUser) return;
+
+                    if (activeCountdownInterval) {
+                        clearInterval(activeCountdownInterval);
+                        activeCountdownInterval = null;
+                    }
 
                     const item = tipo === 'beneficio'
                         ? beneficiosData.find(b => b.id === id)
@@ -3532,7 +3939,7 @@
                             ? `<span class="premium-star-corner" title="Contenido exclusivo Premium">★</span>`
                             : '';
 
-                        // Usuario Básico ingresando a contenido Premium: foto + título + degradado borroso + botón abrir wizard
+                        // Paywall si es contenido Premium y el usuario es Básico
                         if (isItemPremium && !isPremiumUser) {
                             const previewText = (item.paragraphs && item.paragraphs[0]) ? item.paragraphs[0] : item.desc;
                             detailContentBox.innerHTML = `
@@ -3560,38 +3967,97 @@
                             if (btnPaywallUpgrade) {
                                 btnPaywallUpgrade.addEventListener('click', () => window.abrirWizardPremium());
                             }
-                        } else if (tipo === 'beneficio' && item.tipoBeneficio === 'codigo') {
-                            // Usuario Premium ingresando a un CÓDIGO DE DESCUENTO EXCLUSIVO
+                        } else if (tipo === 'beneficio') {
                             const parrafosHTML = (item.paragraphs || []).map(p => `<p>${p}</p>`).join('');
                             const secondImgHTML = item.secondImage
                                 ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
                                 : '';
-                            const estaAgotado = item.agotado || (item.entregados >= item.cupoTotal);
-                            const disponibles = Math.max(0, item.cupoTotal - item.entregados);
 
-                            let bloqueCodigoHTML = '';
-                            if (estaAgotado) {
-                                bloqueCodigoHTML = `
-                                    <div class="coupon-exhausted-box">
-                                        <h3>¡Códigos Agotados por el Momento!</h3>
-                                        <p style="margin-bottom:0; color:#7f1d1d;">Ya se entregaron los <strong>${item.cupoTotal} códigos disponibles</strong> de este beneficio. Mantenete atento e ingresá pronto para descubrir nuevos códigos de descuento y beneficios exclusivos para miembros Premium.</p>
+                            // Verificar si el administrador asignó manualmente un código o premio a este usuario
+                            const asignacionManual = obtenerAsignacionManual(currentUser.usuario, item.id);
+                            // Verificar si el usuario ya solicitó este beneficio previamente (caché permanente)
+                            const solicitudCacheada = obtenerSolicitudCacheada(currentUser.usuario, item.id);
+
+                            const timerContainerId = `countdown-benefit-${item.id}`;
+                            const timerHTML = item.fechaCierreSorteo
+                                ? `<div class="countdown-timer-banner" id="${timerContainerId}"></div>`
+                                : '';
+
+                            let detallesExtraHTML = '';
+                            if (item.tipoBeneficio === 'sorteo') {
+                                detallesExtraHTML = `
+                                    <div class="sorteo-details-box">
+                                        ${item.cine ? `<p><strong>Complejo / Lugar:</strong> ${item.cine}</p>` : ''}
+                                        ${item.fechaHora ? `<p><strong>Función / Fecha:</strong> ${item.fechaHora}</p>` : ''}
+                                        ${item.ubicacion ? `<p><strong>Ubicación / Premio:</strong> ${item.ubicacion}</p>` : ''}
                                     </div>
                                 `;
                             } else {
-                                bloqueCodigoHTML = `
+                                const estaAgotado = item.agotado || (item.entregados >= item.cupoTotal);
+                                const disponibles = item.cupoTotal ? Math.max(0, item.cupoTotal - item.entregados) : null;
+                                detallesExtraHTML = `
+                                    <div class="sorteo-details-box">
+                                        <p><strong>Vigencia:</strong> ${item.vigencia || 'Vigente'}</p>
+                                        ${disponibles !== null ? `<p><strong>Estado del cupo:</strong> ${estaAgotado ? 'Agotado' : disponibles + ' disponibles'}</p>` : ''}
+                                    </div>
+                                `;
+                            }
+
+                            let bloqueInteraccionHTML = '';
+
+                            // 1. Si tiene asignación manual confirmada (código exclusivo, ganador o QR)
+                            if (asignacionManual && (asignacionManual.codigoAsignado || asignacionManual.esGanador)) {
+                                bloqueInteraccionHTML = construirBloqueAsignacionManualHTML(asignacionManual);
+                            }
+                            // 2. Si ya envió la solicitud previamente y quedó guardada en caché permanente
+                            else if (solicitudCacheada) {
+                                const textoEspera = item.tiempoRevisionMinutos
+                                    ? `Tu participación ya fue registrada. <strong>Volvé a ingresar en un lapso de ${item.tiempoRevisionMinutos} minutos</strong> para verificar si ganaste y ver tu código asignado en esta misma pantalla.`
+                                    : `Ya recibimos tu solicitud para este beneficio y quedó registrada en tu cuenta. En breve validaremos tu solicitud y podrás ver aquí mismo tu código asignado o resultado del sorteo.`;
+
+                                bloqueInteraccionHTML = `
+                                    <div class="coupon-pending-cache-box">
+                                        <h3><i class="fas fa-check-circle"></i> Solicitud Registrada en tu Cuenta</h3>
+                                        <p style="margin-bottom: 8px; color: #1e3a8a; font-size: 15px;">${textoEspera}</p>
+                                        <p style="margin-bottom: 0; font-size: 13px; color: #475569;">Titular registrado: <strong>${solicitudCacheada.nombre}</strong> (${solicitudCacheada.email})</p>
+                                    </div>
+                                `;
+                            }
+                            // 3. Si el cupo está agotado
+                            else if (item.tipoBeneficio === 'codigo' && (item.agotado || item.entregados >= item.cupoTotal)) {
+                                bloqueInteraccionHTML = `
+                                    <div class="coupon-exhausted-box">
+                                        <h3>¡Códigos Agotados por el Momento!</h3>
+                                        <p style="margin-bottom:0; color:#7f1d1d;">Ya se entregaron todos los códigos disponibles de este beneficio. Mantenete atento para próximas promociones.</p>
+                                    </div>
+                                `;
+                            }
+                            // 4. Mostrar formulario de solicitud / participación
+                            else {
+                                const tituloForm = item.tipoBeneficio === 'sorteo'
+                                    ? 'Completá tus datos para participar del sorteo'
+                                    : (item.tipoBeneficio === 'sorteo_codigo'
+                                        ? 'Solicitar participación por tu código de descuento'
+                                        : 'Solicitar tu Código de Descuento Exclusivo');
+
+                                const textoBotonForm = item.tipoBeneficio === 'sorteo'
+                                    ? 'Participar del Sorteo'
+                                    : 'Solicitar Código de Descuento';
+
+                                bloqueInteraccionHTML = `
                                     <div class="coupon-claim-box" id="coupon-claim-container">
-                                        <h3>Solicitar tu Código de Descuento Exclusivo</h3>
-                                        <p style="font-size: 14px; color: #555; margin-bottom: 16px;">Quedan <strong>${disponibles} códigos disponibles</strong> (se entregaron ${item.entregados} de ${item.cupoTotal}). Completá tus datos para validar tu membresía y recibir tu código al instante:</p>
-                                        <form id="coupon-request-form">
+                                        <h3>${tituloForm}</h3>
+                                        <p style="font-size: 14px; color: #555; margin-bottom: 16px;">Completá tu nombre, apellido y correo electrónico para registrar tu solicitud:</p>
+                                        <form id="benefit-request-form">
                                             <div class="coupon-form-field">
-                                                <label for="coupon-req-name">Nombre y Apellido *</label>
-                                                <input type="text" id="coupon-req-name" required value="${currentUser.nombre} ${currentUser.apellido}" placeholder="Ingresá tu nombre completo">
+                                                <label for="benefit-req-name">Nombre y Apellido *</label>
+                                                <input type="text" id="benefit-req-name" required value="${currentUser.nombre} ${currentUser.apellido}" placeholder="Ingresá tu nombre y apellido">
                                             </div>
                                             <div class="coupon-form-field">
-                                                <label for="coupon-req-email">Correo Electrónico *</label>
-                                                <input type="email" id="coupon-req-email" required value="${currentUser.usuario}" placeholder="Ingresá tu correo electrónico">
+                                                <label for="benefit-req-email">Correo Electrónico *</label>
+                                                <input type="email" id="benefit-req-email" required value="${currentUser.usuario}" placeholder="Ingresá tu correo electrónico">
                                             </div>
-                                            <button type="submit" class="btn-mp-pay" style="width:100%; margin-top:6px;">Confirmar y Obtener mi Código</button>
+                                            <button type="submit" class="btn-mp-pay" style="width:100%; margin-top:6px;">${textoBotonForm}</button>
                                         </form>
                                     </div>
                                 `;
@@ -3604,98 +4070,87 @@
                                 </div>
                                 <h2>${item.title}</h2>
                                 <p class="detail-subtitle">${item.desc}</p>
-                                <div class="sorteo-details-box">
-                                    <p><strong>Vigencia:</strong> ${item.vigencia}</p>
-                                    <p><strong>Estado del cupo:</strong> ${estaAgotado ? 'Agotado (' + item.entregados + '/' + item.cupoTotal + ' entregados)' : disponibles + ' disponibles (' + item.entregados + '/' + item.cupoTotal + ' entregados)'}</p>
-                                </div>
-                                ${bloqueCodigoHTML}
+                                ${timerHTML}
+                                ${detallesExtraHTML}
+                                ${bloqueInteraccionHTML}
                                 ${parrafosHTML}
                                 ${secondImgHTML}
                             `;
 
-                            const couponForm = document.getElementById('coupon-request-form');
-                            if (couponForm) {
-                                couponForm.addEventListener('submit', (e) => {
-                                    e.preventDefault();
-                                    const reqName = document.getElementById('coupon-req-name').value.trim();
-                                    const reqEmail = document.getElementById('coupon-req-email').value.trim();
+                            if (item.fechaCierreSorteo) {
+                                iniciarTemporizadorBeneficio(item.fechaCierreSorteo, timerContainerId, item.fechaCierreTexto);
+                            }
 
-                                    if (!reqName || !reqEmail) return;
+                            const benefitForm = document.getElementById('benefit-request-form');
+                            if (benefitForm) {
+                                benefitForm.addEventListener('submit', (e) => {
+                                    e.preventDefault();
+                                    const reqName = document.getElementById('benefit-req-name').value.trim();
+                                    const reqEmail = document.getElementById('benefit-req-email').value.trim();
+
+                                    if (!reqName || !reqEmail) {
+                                        mostrarModalPersonalizado("Campos Requeridos", "Por favor completá tu nombre, apellido y correo electrónico.");
+                                        return;
+                                    }
+
+                                    const validacion = validarEmailSintaxisYDominio(reqEmail);
+                                    if (!validacion.valido) {
+                                        mostrarModalPersonalizado("Correo Inválido", validacion.mensaje);
+                                        return;
+                                    }
+
+                                    // Guardar permanentemente en caché para este usuario y este beneficio
+                                    guardarSolicitudEnCachePermanente(currentUser.usuario, item.id, {
+                                        nombre: reqName,
+                                        email: reqEmail,
+                                        tituloBeneficio: item.title
+                                    });
+
+                                    // Enviar correo real mediante el formulario de Blogger
+                                    let cuerpoEmail = `SOLICITUD DE BENEFICIO / SORTEO - PRENOTICIA\n`;
+                                    cuerpoEmail += `--------------------------------------------------\n`;
+                                    cuerpoEmail += `Beneficio / Sorteo: ${item.title} (ID: ${item.id})\n`;
+                                    if (item.codigoReferencia) cuerpoEmail += `Código de campaña: ${item.codigoReferencia}\n`;
+                                    if (item.codigoDescuento) cuerpoEmail += `Código de campaña: ${item.codigoDescuento}\n`;
+                                    cuerpoEmail += `Nombre y Apellido: ${reqName}\n`;
+                                    cuerpoEmail += `Correo Electrónico: ${reqEmail}\n`;
+                                    cuerpoEmail += `Usuario Logueado: ${currentUser.usuario} (${currentUser.tipoUsuario.toUpperCase()})\n`;
+                                    cuerpoEmail += `Fecha y Hora: ${new Date().toLocaleDateString("es-AR")} ${new Date().toLocaleTimeString("es-AR")}`;
+
+                                    enviarNotificacionEmailSilenciosa(reqName, reqEmail, cuerpoEmail);
+
+                                    // Actualizar contador en memoria si corresponde
+                                    if (typeof item.entregados === 'number' && typeof item.cupoTotal === 'number') {
+                                        item.entregados = Math.min(item.cupoTotal, item.entregados + 1);
+                                        if (item.entregados >= item.cupoTotal) item.agotado = true;
+                                    }
+
+                                    renderBeneficios();
 
                                     const claimBox = document.getElementById('coupon-claim-container');
+                                    const textoConfirmacion = item.tiempoRevisionMinutos
+                                        ? `¡Tu solicitud fue enviada con éxito! <strong>Volvé en un lapso de ${item.tiempoRevisionMinutos} minutos</strong> para ver si ganaste y revisar tu código asignado en tu usuario.`
+                                        : `¡Tu solicitud fue enviada con éxito y quedó guardada en tu cuenta! Volvé a ingresar pronto para revisar la asignación de tu código o resultado del sorteo.`;
+
                                     if (claimBox) {
-                                        claimBox.innerHTML = `
-                                            <div class="search-loader-box" style="padding: 28px 10px;">
-                                                <div class="spinner-ring"></div>
-                                                <p style="font-size: 15px; font-weight: 700; color: #111111; margin-bottom: 4px;">Buscando y asignando tu beneficio exclusivo...</p>
-                                                <p style="font-size: 13px; color: #666666; margin-bottom: 0;">Verificando disponibilidad del cupo Premium</p>
+                                        claimBox.outerHTML = `
+                                            <div class="coupon-pending-cache-box">
+                                                <h3><i class="fas fa-check-circle"></i> ¡Solicitud Enviada y Guardada!</h3>
+                                                <p style="margin-bottom: 8px; color: #1e3a8a; font-size: 15px;">${textoConfirmacion}</p>
+                                                <p style="margin-bottom: 0; font-size: 13px; color: #475569;">Titular registrado: <strong>${reqName}</strong> (${reqEmail})</p>
                                             </div>
                                         `;
                                     }
 
-                                    // Actualizar contador de entregados en memoria
-                                    item.entregados = Math.min(item.cupoTotal, item.entregados + 1);
-                                    if (item.entregados >= item.cupoTotal) {
-                                        item.agotado = true;
-                                    }
-
-                                    // Enviar email silencioso avisando quién solicitó el código
-                                    let msgEmailCodigo = `SOLICITUD DE CÓDIGO DE DESCUENTO PREMIUM\n`;
-                                    msgEmailCodigo += `--------------------------------------------------\n`;
-                                    msgEmailCodigo += `Beneficio: ${item.title}\n`;
-                                    msgEmailCodigo += `Código Asignado: ${item.codigoDescuento}\n`;
-                                    msgEmailCodigo += `Solicitante: ${reqName}\n`;
-                                    msgEmailCodigo += `Correo Electrónico: ${reqEmail}\n`;
-                                    msgEmailCodigo += `Usuario Sesión: ${currentUser.usuario}\n`;
-                                    msgEmailCodigo += `Cupo Actualizado: ${item.entregados}/${item.cupoTotal}\n`;
-                                    msgEmailCodigo += `Fecha: ${new Date().toLocaleDateString("es-AR")} ${new Date().toLocaleTimeString("es-AR")}`;
-
-                                    enviarNotificacionEmailSilenciosa(reqName, reqEmail, msgEmailCodigo);
-
-                                    // Mostrar código tras unos segundos con botón copiar al portapapeles
-                                    setTimeout(() => {
-                                        if (claimBox) {
-                                            claimBox.innerHTML = `
-                                                <div class="coupon-code-revealed">
-                                                    <span style="display:inline-block; background:#dcfce7; color:#166534; font-size:12px; font-weight:800; padding:4px 12px; border-radius:20px; margin-bottom:8px;">✓ BENEFICIO ASIGNADO</span>
-                                                    <h3 style="margin-bottom:6px;">¡Tu código de descuento está listo!</h3>
-                                                    <p style="font-size:14px; color:#555; margin-bottom:6px;">Copiá el siguiente código y aplicalo al momento de realizar tu compra:</p>
-                                                    <div class="coupon-code-value" id="revealed-coupon-text">${item.codigoDescuento}</div>
-                                                    <div>
-                                                        <button type="button" class="btn-copy-code" id="btn-copy-coupon-code">
-                                                            <i class="fas fa-copy"></i> Copiar código al portapapeles
-                                                        </button>
-                                                    </div>
-                                                    <p id="copy-feedback-msg" style="font-size:13px; color:#166534; font-weight:700; margin-top:10px; margin-bottom:0; display:none;">¡Código copiado al portapapeles!</p>
-                                                </div>
-                                            `;
-
-                                            const btnCopy = document.getElementById('btn-copy-coupon-code');
-                                            if (btnCopy) {
-                                                btnCopy.addEventListener('click', () => {
-                                                    const codeText = item.codigoDescuento;
-                                                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                                                        navigator.clipboard.writeText(codeText);
-                                                    } else {
-                                                        const tempInput = document.createElement('input');
-                                                        tempInput.value = codeText;
-                                                        document.body.appendChild(tempInput);
-                                                        tempInput.select();
-                                                        document.execCommand('copy');
-                                                        document.body.removeChild(tempInput);
-                                                    }
-                                                    const feedback = document.getElementById('copy-feedback-msg');
-                                                    if (feedback) feedback.style.display = 'block';
-                                                    btnCopy.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
-                                                });
-                                            }
-                                        }
-                                        renderBeneficios();
-                                    }, 2200);
+                                    mostrarModalPersonalizado(
+                                        "¡Solicitud Registrada!",
+                                        textoConfirmacion,
+                                        { esExito: true, textoBotonPrincipal: "Aceptar" }
+                                    );
                                 });
                             }
-                        } else if (tipo === 'beneficio' && item.tipoBeneficio === 'sorteo') {
-                            // Usuario Premium ingresando a un SORTEO
+                        } else {
+                            // Vista detalle de Noticia normal
                             const parrafosHTML = (item.paragraphs || []).map(p => `<p>${p}</p>`).join('');
                             const secondImgHTML = item.secondImage
                                 ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
@@ -3708,79 +4163,32 @@
                                 </div>
                                 <h2>${item.title}</h2>
                                 <p class="detail-subtitle">${item.desc}</p>
-                                <div class="sorteo-details-box">
-                                    <p><strong>Cine / Lugar:</strong> ${item.cine}</p>
-                                    <p><strong>Fecha y hora:</strong> ${item.fechaHora}</p>
-                                    <p><strong>Ubicación / Premio:</strong> ${item.ubicacion}</p>
-                                </div>
                                 ${parrafosHTML}
                                 ${secondImgHTML}
-                                <p style="font-size: 15px; color: var(--text-muted); margin-top: 12px; margin-bottom: 20px;">Completá el formulario con tus datos de miembro Premium para quedar registrado en el sorteo:</p>
-                                <div id="elfsight-sorteo-slot">
-                                    <div class="elfsight-app-d6c0152e-61ab-4aa3-bd31-a89240cd197b" data-elfsight-app-lazy></div>
-                                </div>
-                            `;
-
-                            if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
-                                const scriptEl = document.createElement('script');
-                                scriptEl.src = "https://elfsightcdn.com/platform.js";
-                                scriptEl.async = true;
-                                document.body.appendChild(scriptEl);
-                            }
-                        } else {
-                            // Lectura completa de noticia
-                            const parrafos = item.paragraphs || [item.desc];
-                            const primerParrafo = parrafos[0] ? `<p>${parrafos[0]}</p>` : '';
-                            const segundoParrafo = parrafos[1] ? `<p>${parrafos[1]}</p>` : '';
-                            const secondImgHTML = item.secondImage
-                                ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
-                                : '';
-                            const restoParrafos = parrafos.slice(2).map(p => `<p>${p}</p>`).join('');
-
-                            detailContentBox.innerHTML = `
-                                <div class="detail-main-img-wrap">
-                                    ${starCorner}
-                                    <img src="${item.image}" alt="${item.title}" class="detail-hero-img">
-                                </div>
-                                <h2>${item.title}</h2>
-                                <p class="detail-subtitle">${item.desc}</p>
-                                ${primerParrafo}
-                                ${segundoParrafo}
-                                ${secondImgHTML}
-                                ${restoParrafos}
                             `;
                         }
                     }
 
-                    if (detailViewSection) {
-                        detailViewSection.classList.add('active');
-                        const container = document.getElementById('main-content-container');
-                        if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
+                    if (detailViewSection) detailViewSection.classList.add('active');
+                    const container = document.getElementById('main-content-container');
+                    if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
                 };
 
                 if (btnBackToList) {
                     btnBackToList.addEventListener('click', () => {
-                        if (detailViewSection) detailViewSection.classList.remove('active');
-                        const targetPane = document.getElementById(lastActiveViewId);
-                        if (targetPane) {
-                            targetPane.classList.add('active');
-                        } else {
-                            const activeTabBtn = document.querySelector('.tab-btn.active');
-                            if (activeTabBtn) {
-                                const fallbackId = activeTabBtn.getAttribute('data-target');
-                                const fallbackPane = document.getElementById(fallbackId);
-                                if (fallbackPane) fallbackPane.classList.add('active');
-                            }
+                        if (activeCountdownInterval) {
+                            clearInterval(activeCountdownInterval);
+                            activeCountdownInterval = null;
                         }
-                        const container = document.getElementById('main-content-container');
-                        if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+                        if (detailViewSection) detailViewSection.classList.remove('active');
+                        const prevPane = document.getElementById(lastActiveViewId);
+                        if (prevPane) prevPane.classList.add('active');
                     });
                 }
             }
 
-            if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", initApp);
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
             } else {
                 initApp();
             }
