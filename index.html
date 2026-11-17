@@ -1,8 +1,8 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portal de Miembros</title>
     <style>
         :root {
@@ -24,21 +24,27 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Bloquear scroll externo y fijar la ventana completa */
-        body, html {
+        /* Fix definitivo para eliminar la raya blanca inferior en móviles (100dvh + min-height: 0) */
+        html, body {
             background-color: var(--bg-color) !important;
             color: var(--text-color) !important;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            height: 100dvh;
+            width: 100%;
             overflow: hidden !important;
-            position: relative;
+            overscroll-behavior: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         .hidden { display: none !important; }
 
         .container {
             width: 100%;
-            padding: 0 24px;
+            padding: 0 20px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -46,12 +52,14 @@
         /* Pantalla de Login / Registro */
         #auth-section {
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            height: 100dvh;
             padding: 40px 24px;
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             position: absolute;
             top: 0;
             left: 0;
@@ -157,13 +165,15 @@
             display: none;
         }
 
-        /* Panel Principal con scroll interno fluido */
+        /* Panel Principal con scroll interno fluido sin franja blanca inferior */
         #app-section {
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            height: 100dvh;
+            width: 100%;
             overflow: hidden;
+            background: #ffffff;
         }
 
         header {
@@ -178,7 +188,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 70px;
+            height: 68px;
         }
 
         .brand-logo-group {
@@ -188,7 +198,6 @@
             flex-wrap: wrap;
         }
 
-        /* Nombre del usuario en color NEGRO */
         .brand-logo {
             font-size: 20px;
             font-weight: 700;
@@ -196,7 +205,6 @@
             text-decoration: none;
         }
 
-        /* Etiqueta de plan en header */
         .header-plan-badge {
             display: inline-flex;
             align-items: center;
@@ -227,7 +235,6 @@
             gap: 8px;
         }
 
-        /* Botones de casita y lupa en el header */
         .header-icon-btn {
             background: none;
             border: none;
@@ -257,29 +264,31 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.4);
             z-index: 998;
             display: none;
         }
 
-        /* Menú lateral con scroll interno extendido al 120% de altura útil */
+        /* Menú lateral */
         .sidebar-menu {
             position: fixed;
             top: 0;
             right: -380px;
             width: 380px;
             max-width: 90vw;
-            height: 100vh;
+            height: 100%;
+            height: 100dvh;
             background: #ffffff;
             z-index: 999;
             box-shadow: -5px 0 25px rgba(0,0,0,0.1);
             transition: right 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
-            padding: 24px 24px calc(24px + 20vh) 24px;
+            padding: 24px 24px 80px 24px;
             overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
         }
 
         .sidebar-menu.active {
@@ -308,7 +317,6 @@
             color: var(--text-muted);
         }
 
-        /* Espaciado entre datos de usuario */
         .account-details {
             font-size: 14px;
             color: var(--text-muted);
@@ -374,7 +382,7 @@
             font-weight: 600;
             color: var(--text-color);
             cursor: pointer;
-            text-align: left;
+            text-align: left !important;
             transition: background 0.2s;
             text-decoration: none;
             display: block;
@@ -385,37 +393,30 @@
             background: #e2e8f0;
         }
 
+        /* Alineado a la izquierda igual que el resto */
         .btn-upgrade-sidebar {
             background: var(--primary);
             color: #ffffff;
-            text-align: center;
+            text-align: left !important;
         }
 
         .btn-upgrade-sidebar:hover {
             background: var(--primary-hover);
         }
 
-        .btn-downgrade-sidebar {
-            background: #fff6ea;
-            color: #b45309;
-            border: 1px solid #fbd38d;
-        }
-
-        .btn-downgrade-sidebar:hover {
-            background: #ffedd5;
-        }
-
         .btn-logout {
             color: #d93838;
             background: #fdf2f2;
+            text-align: left !important;
         }
+
         .btn-logout:hover {
             background: #fce8e8;
         }
 
         .account-subview {
             display: none;
-            padding: 24px 0;
+            padding: 12px 0;
         }
 
         .account-subview.active {
@@ -438,25 +439,30 @@
         .main-nav-tabs {
             background: #ffffff;
             border-bottom: 1px solid var(--border-color);
-            padding: 0 24px;
+            padding: 0 20px;
             flex-shrink: 0;
             z-index: 90;
         }
 
         .tabs-list {
             display: flex;
-            gap: 32px;
+            gap: 28px;
             max-width: 1400px;
             margin: 0 auto;
             list-style: none;
             overflow-x: auto;
             overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabs-list::-webkit-scrollbar {
+            display: none;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            padding: 16px 0;
+            padding: 15px 0;
             font-size: 15px;
             font-weight: 600;
             color: var(--text-muted);
@@ -473,14 +479,14 @@
         .tab-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 3px;
             background-color: var(--primary);
         }
 
-        /* Buscador deslizante debajo de las pestañas de navegación */
+        /* Buscador deslizante */
         .search-drawer {
             background: #fffaf3;
             border-bottom: 0 solid var(--border-color);
@@ -489,12 +495,12 @@
             transition: max-height 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.35s ease, border-bottom-width 0.35s ease;
             flex-shrink: 0;
             z-index: 85;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
         .search-drawer.open {
             max-height: 130px;
-            padding: 16px 24px;
+            padding: 14px 20px;
             border-bottom-width: 1px;
         }
 
@@ -534,7 +540,7 @@
             background-color: var(--primary);
             color: #ffffff;
             border: none;
-            padding: 12px 22px;
+            padding: 12px 20px;
             font-size: 14px;
             font-weight: 700;
             border-radius: 8px;
@@ -568,7 +574,7 @@
             color: var(--text-color);
         }
 
-        /* Rueda de carga de búsqueda */
+        /* Rueda de carga */
         .search-loader-box {
             display: flex;
             flex-direction: column;
@@ -593,15 +599,18 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Contenedor de contenido con scroll interno fluido */
+        /* Contenedor principal con scroll fluido */
         .tab-content-area {
-            flex: 1;
+            flex: 1 1 auto;
+            min-height: 0;
             overflow-y: auto !important;
             overflow-x: hidden;
-            padding: 40px 24px calc(40px + 40vh) 24px;
+            -webkit-overflow-scrolling: touch;
+            padding: 28px 20px 90px 20px;
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
+            background: #ffffff;
         }
 
         .tab-pane {
@@ -612,147 +621,398 @@
             display: block;
         }
 
+        /* Banner destacado de invitación a Premium para usuarios básicos (con caché) */
+        .promo-premium-banner {
+            background: linear-gradient(135deg, #fff8ee 0%, #ffedd5 100%);
+            border: 1.5px solid var(--primary);
+            border-radius: 14px;
+            padding: 20px 22px;
+            margin-bottom: 26px;
+            box-shadow: 0 6px 20px rgba(246, 142, 2, 0.12);
+            position: relative;
+        }
+
+        .promo-premium-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .promo-premium-pill {
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .promo-premium-banner h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #111111;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .promo-premium-banner p {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+
+        .promo-premium-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-promo-accept {
+            background-color: var(--primary);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 11px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(246, 142, 2, 0.25);
+            transition: background-color 0.2s;
+        }
+
+        .btn-promo-accept:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-promo-dismiss {
+            background: #ffffff;
+            color: #555555;
+            border: 1px solid #cbd5e1;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-promo-dismiss:hover {
+            background: #f1f5f9;
+            color: #111111;
+        }
+
         .section-title {
             font-size: 24px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .section-desc {
             color: var(--text-muted);
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             font-size: 15px;
             line-height: 1.5em;
         }
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
+        /* =====================================================================
+           DISEÑO DE ARTÍCULOS Y SORTEOS (1° HERO DESTACADO + GRILLA DE 2 EN 2)
+           SOLO FOTO + TÍTULO + ESTRELLA DORADA ARRIBA A LA IZQUIERDA SI ES PREMIUM
+           ===================================================================== */
+        .editorial-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
         }
 
-        .item-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+        /* Artículo Hero Principal (el 1°) */
+        .hero-editorial-card {
+            position: relative;
+            width: 100%;
+            height: 290px;
+            border-radius: 10px;
             overflow: hidden;
+            cursor: pointer;
+            background: #1a1a1a;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .hero-editorial-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-editorial-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .hero-editorial-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .hero-editorial-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0.08) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .hero-category-pill {
+            display: inline-block;
+            align-self: flex-start;
+            background-color: var(--primary);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .hero-editorial-overlay h3 {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin: 0;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Grilla de 2 columnas (siempre de a dos en dos, incluso en celulares) */
+        .two-col-editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .mini-editorial-card {
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: #ffffff;
+            transition: transform 0.2s ease;
         }
 
-        .item-card:hover {
+        .mini-editorial-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
         }
 
-        .item-card img {
+        .mini-card-img-wrap {
+            position: relative;
             width: 100%;
-            height: 185px;
-            object-fit: cover;
+            aspect-ratio: 16 / 10;
+            border-radius: 6px;
+            overflow: hidden;
             background: #f0f0f0;
+            margin-bottom: 9px;
         }
 
-        .item-card-body {
-            padding: 20px;
+        .mini-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .mini-editorial-card:hover .mini-card-img-wrap img {
+            transform: scale(1.04);
+        }
+
+        .mini-editorial-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111111;
+            line-height: 1.32;
+            margin: 0;
+        }
+
+        /* Estrellita dorada arriba a la izquierda para contenido Premium */
+        .premium-star-corner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 5;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(17, 17, 17, 0.82);
+            border: 1.5px solid #fbbf24;
+            color: #fbbf24;
             display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .tags-container {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        /* Etiquetas de acceso y categoría */
-        .item-tag {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            height: 26px;
+            font-size: 15px;
             line-height: 1;
-            background: var(--primary-light);
-            color: var(--primary);
-            font-size: 12px;
-            font-weight: 600;
-            padding: 0 11px;
-            border-radius: 20px;
-            white-space: nowrap;
-            vertical-align: middle;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
         }
 
-        .item-tag.tag-premium {
-            background: #f68e02;
+        /* Botón Ver más (6 en 6) */
+        .load-more-wrapper {
+            margin-top: 26px;
+            text-align: center;
+        }
+
+        .btn-load-more {
+            background-color: #ffffff;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 32px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .btn-load-more:hover {
+            background-color: var(--primary);
             color: #ffffff;
         }
 
-        .item-tag.tag-basico {
-            background: #f1f5f9;
-            color: #475569;
+        /* =====================================================================
+           VISTA DE DETALLE DE ARTÍCULO / SORTEO + PAYWALL CON DEGRADADO
+           ===================================================================== */
+        #detail-view-section {
+            display: none;
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 900px;
+            width: 100%;
         }
 
-        .item-card h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-color);
-            line-height: 1.35;
+        #detail-view-section.active {
+            display: block;
         }
 
-        .item-card p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            line-height: 1.5;
-            flex: 1;
-        }
-
-        .btn-card-action {
-            background-color: var(--primary);
-            color: white;
+        .detail-back-btn {
+            background: none;
             border: none;
-            padding: 10px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 6px;
+            color: var(--primary);
+            font-weight: 700;
             cursor: pointer;
-            text-align: center;
-            transition: background 0.2s;
+            font-size: 15px;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn-card-action:hover {
-            background-color: var(--primary-hover);
+        .detail-card-full {
+            background: #ffffff;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            position: relative;
         }
 
-        /* Bloqueo / Aviso de Membresía o Upgrade a Premium */
+        .detail-main-img-wrap {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .detail-card-full img.detail-hero-img {
+            width: 100%;
+            max-height: 430px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .detail-second-img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 22px 0;
+            display: block;
+        }
+
+        .detail-card-full h2 {
+            font-size: 25px !important;
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        .detail-subtitle {
+            font-size: 17px !important;
+            font-weight: 500;
+            color: #333333 !important;
+            line-height: 1.55 !important;
+            margin-bottom: 20px !important;
+        }
+
+        .detail-card-full p {
+            font-size: 16px;
+            color: #374151;
+            line-height: 1.78;
+            margin-bottom: 18px;
+        }
+
+        /* Efecto degradado que borra el contenido para usuarios Básicos en notas/sorteos Premium */
+        .paywall-fade-wrapper {
+            position: relative;
+            margin-top: 8px;
+        }
+
+        .paywall-blurred-preview {
+            max-height: 135px;
+            overflow: hidden;
+            user-select: none;
+            pointer-events: none;
+            filter: blur(2.5px);
+            opacity: 0.55;
+            position: relative;
+        }
+
+        .paywall-gradient-overlay {
+            position: relative;
+            margin-top: -115px;
+            padding-top: 95px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.96) 52%, #ffffff 100%);
+            z-index: 10;
+        }
+
         .membership-lock-box {
             background: #fffaf3;
-            border: 1px solid #fbd38d;
-            border-radius: 12px;
-            padding: 36px 24px;
+            border: 1.5px solid #fbd38d;
+            border-radius: 14px;
+            padding: 32px 22px;
             text-align: center;
-            max-width: 620px;
-            margin: 24px auto;
+            max-width: 640px;
+            margin: 0 auto 24px auto;
+            box-shadow: 0 8px 24px rgba(246, 142, 2, 0.1);
         }
 
         .membership-lock-box h3 {
             font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            font-weight: 800;
+            margin-bottom: 10px;
             color: var(--text-color);
         }
 
         .membership-lock-box p {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            line-height: 1.6;
+            font-size: 15px !important;
+            color: var(--text-muted) !important;
+            margin-bottom: 22px !important;
+            line-height: 1.6 !important;
         }
 
         .btn-mp-pay {
@@ -772,113 +1032,6 @@
             background-color: var(--primary-hover);
         }
 
-        /* Sección de Detalle Completo */
-        #detail-view-section {
-            display: none;
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 1000px;
-            width: 100%;
-        }
-
-        #detail-view-section.active {
-            display: block;
-        }
-
-        .detail-back-btn {
-            background: none;
-            border: none;
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 15px;
-            margin-bottom: 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .detail-card-full {
-            background: #ffffff;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-
-        .detail-card-full img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .detail-card-full h2 {
-            font-size: 24px !important;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-color);
-            line-height: 1.3;
-        }
-
-        .detail-subtitle {
-            font-size: 17px !important;
-            font-weight: 500;
-            color: #333333 !important;
-            line-height: 1.55 !important;
-            margin-bottom: 20px !important;
-        }
-
-        .detail-card-full p {
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.75;
-            margin-bottom: 18px;
-        }
-
-        /* Estilos Sección Sorteos */
-        .sorteo-card-wrapper {
-            max-width: 820px;
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-        }
-
-        .sorteo-banner-img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .sorteo-body {
-            padding: 28px;
-        }
-
-        .sorteo-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--primary);
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin-bottom: 14px;
-            text-transform: uppercase;
-        }
-
-        .sorteo-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-color);
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
         .sorteo-details-box {
             background: var(--primary-light);
             border-left: 4px solid var(--primary);
@@ -888,14 +1041,14 @@
         }
 
         .sorteo-details-box p {
-            font-size: 15px;
-            color: var(--text-color);
-            line-height: 1.6;
-            margin-bottom: 6px;
+            font-size: 15px !important;
+            color: var(--text-color) !important;
+            line-height: 1.6 !important;
+            margin-bottom: 6px !important;
         }
 
         .sorteo-details-box p:last-child {
-            margin-bottom: 0;
+            margin-bottom: 0 !important;
         }
 
         .empty-state-box {
@@ -907,15 +1060,42 @@
             color: var(--text-muted);
         }
 
-        @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
+        @media (min-width: 769px) {
+            .hero-editorial-card {
+                height: 410px;
             }
-            .sorteo-body {
-                padding: 20px;
+            .hero-editorial-overlay h3 {
+                font-size: 28px;
             }
-            .sorteo-title {
-                font-size: 20px;
+            .two-col-editorial-grid {
+                gap: 24px;
+            }
+            .mini-editorial-card h4 {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .tab-content-area {
+                padding: 20px 16px 80px 16px;
+            }
+            .hero-editorial-card {
+                height: 245px;
+            }
+            .hero-editorial-overlay {
+                padding: 16px;
+            }
+            .hero-editorial-overlay h3 {
+                font-size: 19px;
+            }
+            .two-col-editorial-grid {
+                gap: 14px;
+            }
+            .mini-editorial-card h4 {
+                font-size: 14px;
             }
             .search-drawer.open {
                 padding: 12px 16px;
@@ -969,11 +1149,9 @@
                     <span id="header-plan-badge" class="header-plan-badge basico">Usuario Básico</span>
                 </div>
                 <div class="user-nav-area">
-                    <!-- Botón de casita -->
                     <button class="header-icon-btn" id="menu-toggle-btn" aria-label="Menú principal" title="Menú de cuenta">
                         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
                     </button>
-                    <!-- Botón de lupita a la derecha de la casita -->
                     <button class="header-icon-btn" id="search-toggle-btn" aria-label="Buscar noticias" title="Buscar">
                         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                     </button>
@@ -990,10 +1168,10 @@
 
             <!-- Vista Principal del Menú -->
             <div id="sidebar-main-view">
-                <!-- Banner de Membresía -->
-                <div style="background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
-                    <p style="font-size: 13px; color: var(--text-color); line-height: 1.4;">
-                        ★ <strong>Membresía Premium:</strong> Accedé a noticias completas y participá por entradas de cine a solo <strong>$990 por mes</strong>.
+                <!-- Banner de Membresía en Sidebar (solo visible para usuarios básicos) -->
+                <div id="sidebar-promo-box" style="background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
+                    <p style="font-size: 13px; color: var(--text-color); line-height: 1.45;">
+                        ★ <strong>Membresía Premium:</strong> Accedé a todas las noticias completas, sorteos exclusivos y beneficios especiales por solo <strong>$2.990 al mes</strong>.
                     </p>
                 </div>
 
@@ -1005,7 +1183,6 @@
                     <p><strong>Tipo de suscripción:</strong> <span id="acc-plan-badge"></span></p>
                     <p style="margin-top: 8px;"><strong>Temas de interés:</strong><br><span id="acc-interests"></span></p>
                     
-                    <!-- Solo visible para usuarios Premium -->
                     <div id="premium-billing-details">
                         <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Mercado Pago</p>
                         <p><strong>Próximo débito:</strong> <span id="acc-next-debit">1 de diciembre de 2026</span></p>
@@ -1015,11 +1192,11 @@
                 </div>
 
                 <div class="sidebar-actions">
-                    <!-- Botón para básicos: mejorar a Premium -->
-                    <a href="https://mpago.la/1oNLzRZ" target="_blank" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($990/mes)</a>
+                    <!-- Botón para básicos: mejorar a Premium alineado a la izquierda y con el nuevo link y valor -->
+                    <a href="https://mpago.la/2GaBY8W" target="_blank" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($2.990/mes)</a>
                     
-                    <!-- Botón para Premium: cambiar a Básico (ubicado arriba del de actualizar o modificar datos) -->
-                    <button class="btn-sidebar-action btn-downgrade-sidebar hidden" id="nav-downgrade-basic">Cambiar a plan Básico</button>
+                    <!-- Botón para Premium: cambiar a Básico con exactamente el mismo diseño y color que Actualizar o modificar datos -->
+                    <button class="btn-sidebar-action hidden" id="nav-downgrade-basic">Cambiar a plan Básico</button>
                     
                     <button class="btn-sidebar-action" id="nav-update-data">Actualizar o modificar datos</button>
                     <button class="btn-sidebar-action" id="nav-delete-account">Eliminar cuenta</button>
@@ -1027,7 +1204,7 @@
                 </div>
             </div>
 
-            <!-- Vista: Cambiar a Plan Básico (exactamente igual a la de modificar datos) -->
+            <!-- Vista: Cambiar a Plan Básico -->
             <div id="sidebar-downgrade-view" class="account-subview">
                 <button class="btn-back-account" id="back-from-downgrade">&larr; Volver atrás</button>
                 <h4 style="margin-bottom: 16px;">Cambiar a Plan Básico</h4>
@@ -1062,7 +1239,7 @@
             </ul>
         </nav>
 
-        <!-- Buscador deslizante ubicado justo debajo de "Destacado, De tu interés, Lo más visto y Sorteos" -->
+        <!-- Buscador deslizante -->
         <div class="search-drawer" id="search-drawer">
             <form class="search-drawer-inner" id="search-form">
                 <div class="search-input-wrap">
@@ -1076,25 +1253,31 @@
         <!-- Contenido Central con scroll interno fluido -->
         <main class="tab-content-area" id="main-content-container">
 
+            <!-- AVISO DESTACADO DE MEMBRESÍA PREMIUM PARA USUARIOS BÁSICOS (CON CACHÉ POR HORAS) -->
+            <div id="basic-promo-banner-container" class="hidden"></div>
+
             <!-- TAB 1: DESTACADO -->
             <div id="tab-destacado" class="tab-pane active">
                 <h2 class="section-title">Destacado</h2>
                 <p class="section-desc">Las noticias principales del día y contenidos exclusivos seleccionados para nuestra comunidad.</p>
-                <div class="cards-grid" id="destacado-grid"></div>
+                <div id="destacado-grid"></div>
+                <div id="destacado-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
             <!-- TAB 2: DE TU INTERÉS -->
             <div id="tab-interes" class="tab-pane">
                 <h2 class="section-title">De tu interés</h2>
                 <p class="section-desc">Noticias filtradas automáticamente según las categorías y etiquetas configuradas en tu perfil.</p>
-                <div class="cards-grid" id="interes-grid"></div>
+                <div id="interes-grid"></div>
+                <div id="interes-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
             <!-- TAB 3: LO MÁS VISTO -->
             <div id="tab-mas-visto" class="tab-pane">
                 <h2 class="section-title">Lo más visto</h2>
                 <p class="section-desc">Las notas con mayor lectura y repercusión entre los miembros del portal.</p>
-                <div class="cards-grid" id="mas-visto-grid"></div>
+                <div id="mas-visto-grid"></div>
+                <div id="mas-visto-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
             <!-- TAB 4: SORTEOS -->
@@ -1114,7 +1297,7 @@
                 <div id="search-results-container"></div>
             </div>
 
-            <!-- VISTA DE DETALLE COMPLETO -->
+            <!-- VISTA DE DETALLE COMPLETO (NOTICIAS Y SORTEOS) -->
             <div id="detail-view-section">
                 <button class="detail-back-btn" id="btn-back-to-list">&larr; Volver atrás</button>
                 <div class="detail-card-full" id="detail-content-box"></div>
@@ -1126,11 +1309,13 @@
     <!-- ================= JAVASCRIPT ================= -->
     <script>
         (function() {
-            const MP_LINK = "https://mpago.la/1oNLzRZ";
+            const MP_LINK = "https://mpago.la/2GaBY8W";
             const SESSION_KEY = "portal_miembros_session_v4";
+            const PROMO_DISMISS_KEY = "portal_miembros_promo_dismissed_until_v1";
+            const PROMO_COOLDOWN_HOURS = 6; // Se vuelve a mostrar automáticamente tras 6 horas
 
             // =========================================================================
-            // PERSISTENCIA BLINDADA DE SESIÓN (localStorage + sessionStorage + Cookies)
+            // PERSISTENCIA BLINDADA DE SESIÓN
             // =========================================================================
             function guardarSesion(email) {
                 if (!email) return;
@@ -1162,9 +1347,7 @@
                         }
                     } catch (e) {}
                 }
-                if (valor) {
-                    guardarSesion(valor);
-                }
+                if (valor) guardarSesion(valor);
                 return valor;
             }
 
@@ -1181,9 +1364,27 @@
             }
 
             // =========================================================================
+            // CACHÉ PARA AVISO DE SUSCRIPCIÓN PREMIUM EN USUARIOS BÁSICOS
+            // =========================================================================
+            function ocultarPromoPorHoras(userEmail) {
+                const key = `${PROMO_DISMISS_KEY}_${userEmail.toLowerCase()}`;
+                const until = Date.now() + (PROMO_COOLDOWN_HOURS * 60 * 60 * 1000);
+                try { localStorage.setItem(key, String(until)); } catch (e) {}
+            }
+
+            function debeMostrarPromo(userEmail) {
+                const key = `${PROMO_DISMISS_KEY}_${userEmail.toLowerCase()}`;
+                try {
+                    const until = Number(localStorage.getItem(key) || 0);
+                    if (until && Date.now() < until) {
+                        return false;
+                    }
+                } catch (e) {}
+                return true;
+            }
+
+            // =========================================================================
             // BASE DE DATOS DE USUARIOS
-            // tipoUsuario: "premium" | "basico"
-            // estadoMembresia: "habilitado" | "no_abonado" | "vencido"
             // =========================================================================
             const usuariosDB = [
                 {
@@ -1208,7 +1409,7 @@
                     intereses: ["cine", "tecnología", "economía", "actualidad", "espectáculos", "beneficios"],
                     estadoMembresia: "habilitado",
                     mesesAdeudados: 1,
-                    montoDeuda: 990,
+                    montoDeuda: 2990
                 },
                 {
                     usuario: "maximoantonioacosta@hotmail.com",
@@ -1232,7 +1433,7 @@
                     intereses: ["cine", "espectáculos", "beneficios"],
                     estadoMembresia: "habilitado",
                     mesesAdeudados: 0,
-                    montoDeuda: 990
+                    montoDeuda: 2990
                 }
             ];
 
@@ -1240,15 +1441,109 @@
             let lastActiveViewId = "tab-destacado";
             let searchTimeoutId = null;
 
+            // Control de cantidad visible por pestaña (primero 11 artículos: 1 grande + 10 de a dos; luego +6 de a dos)
+            const visibleCounts = {
+                destacado: 11,
+                interes: 11,
+                mas_visto: 11
+            };
+
             // =========================================================================
-            // BASE DE DATOS UNIFICADA DE NOTICIAS CON ETIQUETAS Y NIVEL DE ACCESO
-            // acceso: "basico" | "premium"
-            // Nota: Los usuarios básicos solo pueden ver título + subtítulo de todas las notas
-            // y para leer el cuerpo completo deben mejorar su cuenta a Premium.
+            // BASE DE DATOS UNIFICADA DE NOTICIAS (CON MÚLTIPLES PÁRRAFOS Y SEGUNDA IMAGEN)
             // =========================================================================
             const noticiasData = [
                 {
                     id: 101,
+                    title: "Supermercados liquidan camperas desde $6.000 y con hasta 50% de descuento",
+                    category: "beneficios",
+                    categoryName: "Promociones y descuentos",
+                    tags: ["beneficios", "economía", "actualidad", "supermercados", "descuentos", "indumentaria"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80",
+                    desc: "Las principales cadenas lanzaron ofertas especiales en abrigo de temporada con rebajas directas en caja y cuotas sin interés.",
+                    paragraphs: [
+                        "Las grandes cadenas de supermercados e hipermercados de todo el país pusieron en marcha una liquidación agresiva de indumentaria urbana y de abrigo, con camperas livianas, buzos y modelos térmicos que parten desde los $6.000 en sucursales seleccionadas.",
+                        "Según el relevamiento realizado en locales de Capital Federal y el Conurbano bonaerense, las rebajas alcanzan hasta el 50% en prendas de media estación y remanentes de temporada, permitiendo además acumular reintegros bancarios y descuentos con billeteras virtuales en días específicos.",
+                        "Entre las opciones más buscadas por los consumidores se encuentran las camperas rompevientos, chalecos matelaseados y modelos infantiles con cierre reforzado. En varios puntos de venta el stock se renueva durante las primeras horas de la mañana.",
+                        "Los especialistas en consumo recomiendan verificar la etiqueta de precio final en góndola y consultar en línea de cajas si la promoción admite financiación en 3 cuotas sin interés con tarjetas adheridas."
+                    ]
+                },
+                {
+                    id: 102,
+                    title: "Conductores de Uber: cómo registrarte y ganar 360 mil pesos extras",
+                    category: "economía",
+                    categoryName: "Economía",
+                    tags: ["economía", "actualidad", "tecnología", "trabajo", "uber", "ingresos"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80",
+                    desc: "Conocé los requisitos actualizados, documentación obligatoria y bonos promocionales por completar los primeros viajes.",
+                    paragraphs: [
+                        "La plataforma de movilidad mantiene activo su programa de incentivos para nuevos socios conductores que completen una meta mínima de viajes durante sus primeras semanas de actividad en el Área Metropolitana de Buenos Aires y principales plazas del interior.",
+                        "Para iniciar el alta únicamente se solicita licencia de conducir vigente con categoría profesional según jurisdicción, cédula del vehículo, comprobante de seguro automotor al día y certificado de antecedentes penales.",
+                        "Una vez aprobada la documentación dentro de la aplicación, el sistema habilita de forma automática las promociones de bienvenida y las tarifas dinámicas en franjas horarias de alta demanda, como mañanas laborales y salidas nocturnas de fines de semana.",
+                        "Quienes ya operan en la plataforma destacan que combinar trayectos cortos en zonas céntricas con viajes hacia estaciones ferroviarias o aeropuertos permite maximizar la rentabilidad por kilómetro recorrido."
+                    ]
+                },
+                {
+                    id: 103,
+                    title: "¿Qué significa que tu perro te siga a todos lados?",
+                    category: "actualidad",
+                    categoryName: "Actualidad",
+                    tags: ["actualidad", "mascotas", "bienestar", "hogar"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80",
+                    desc: "Veterinarios y especialistas en comportamiento canino explican las razones emocionales y evolutivas detrás de este hábito.",
+                    paragraphs: [
+                        "Si cada vez que te levantás del sillón o caminás hacia la cocina tu perro te acompaña paso a paso, estás frente a una de las conductas más habituales del vínculo entre humanos y caninos domésticos.",
+                        "De acuerdo con especialistas en etología clínica, este comportamiento responde en primer lugar al instinto de manada y al apego seguro: el animal te identifica como su referente principal de protección, alimento y compañía.",
+                        "Sin embargo, los profesionales señalan que también puede tratarse de curiosidad activa o búsqueda de estímulos cuando el perro pasa muchas horas dentro del hogar sin paseos prolongados o juegos de olfato.",
+                        "Solo cuando el seguimiento viene acompañado de jadeo excesivo, llanto al cerrar una puerta o destrucción de objetos al quedarse solo, conviene consultar con un especialista para prevenir cuadros de ansiedad por separación."
+                    ]
+                },
+                {
+                    id: 104,
+                    title: "¿Qué significa ver humo blanco en la casa?",
+                    category: "actualidad",
+                    categoryName: "Actualidad",
+                    tags: ["actualidad", "hogar", "seguridad", "prevención"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=80",
+                    desc: "Desde causas técnicas en electrodomésticos hasta interpretaciones tradicionales: qué revisar de inmediato por seguridad.",
+                    paragraphs: [
+                        "Advertir una neblina o columna de humo blanco dentro de una vivienda requiere ante todo una verificación técnica inmediata para descartar fallas eléctricas, pérdidas de vapor en artefactos o recalentamiento de resistencias.",
+                        "En el ámbito doméstico, el humo blanquecino suele originarse por derrames de líquidos sobre hornallas calientes, filtros saturados en campanas extractoras o condensación repentina en equipos de aire acondicionado y calefacción.",
+                        "Por otro lado, desde el punto de vista simbólico y cultural, diversas tradiciones asocian el humo claro y ascendente con procesos de renovación ambiental, limpieza energética tras ventilar los ambientes o cambios de etapa en el hogar.",
+                        "Ante cualquier olor acre o persistencia en tableros eléctricos, la recomendación primordial de seguridad es cortar la llave térmica general, ventilar todos los ambientes y solicitar revisión matriculada."
+                    ]
+                },
+                {
+                    id: 105,
+                    title: "¿Cómo surgió el Derecho romano?: historia, instituciones y legado de un imperio que lo cambió todo",
+                    category: "actualidad",
+                    categoryName: "Actualidad",
+                    tags: ["actualidad", "historia", "cultura", "derecho"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1529154036614-a60975f5c760?auto=format&fit=crop&w=900&q=80",
+                    desc: "Un recorrido por las Doce Tablas, la labor de los pretores y la codificación de Justiniano que moldeó las leyes modernas.",
+                    paragraphs: [
+                        "El surgimiento del Derecho romano marcó un antes y un después en la historia de la civilización occidental al transformar costumbres orales y religiosas en un sistema jurídico racional, escrito y aplicable a millones de habitantes.",
+                        "Su primer gran hito fue la redacción de la Ley de las XII Tablas en el siglo V a.C., conquistada tras las tensiones sociales entre patricios y plebeyos para garantizar publicidad y seguridad jurídica frente a decisiones arbitrarias.",
+                        "Con la expansión territorial de Roma, la figura del pretor peregrino permitió desarrollar el ius gentium, un conjunto de normas flexibles basadas en la buena fe contractual que facilitó el comercio en todo el Mediterráneo.",
+                        "Siglos más tarde, la monumental compilación impulsada por el emperador Justiniano en el Corpus Iuris Civilis preservó esa sabiduría jurídica y sirvió de cimiento directo para los códigos civiles de Europa y América Latina."
+                    ]
+                },
+                {
+                    id: 106,
                     title: "Godzilla Minus Zero llega a los cines: todos los detalles del estreno más esperado del año",
                     category: "cine",
                     categoryName: "Cine",
@@ -1256,68 +1551,252 @@
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
                     image: "https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg",
+                    secondImage: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
                     desc: "Análisis exclusivo sobre la nueva superproducción japonesa que revoluciona la taquilla mundial y funciones especiales en Argentina.",
-                    fullText: "La esperada continuación del universo cinematográfico de Toho desembarca en las salas argentinas con funciones en formato tradicional y salas especiales. En este informe exclusivo para miembros Premium repasamos las claves de su producción, el impacto en la taquilla internacional y cómo aprovechar los beneficios disponibles en complejos Cinemark Hoyts."
+                    paragraphs: [
+                        "La esperada continuación del universo cinematográfico de Toho desembarca en las salas argentinas con funciones en formato tradicional, 4D y salas especiales de sonido envolvente.",
+                        "La crítica especializada destacó el equilibrio entre efectos visuales de última generación y un guion dramático centrado en el impacto humano de la catástrofe, consolidando a la franquicia en su mejor momento artístico.",
+                        "En Buenos Aires, complejos como Cinemark Abasto y Hoyts Unicenter programaron funciones nocturnas con alta demanda de localidades desde la apertura de la preventa.",
+                        "Además, los miembros Premium del portal cuentan con acceso directo a sorteos exclusivos de pares de entradas en ubicaciones centrales."
+                    ]
                 },
                 {
-                    id: 102,
+                    id: 107,
                     title: "Nuevos beneficios y descuentos en supermercados y comercios durante noviembre",
                     category: "beneficios",
                     categoryName: "Beneficios",
                     tags: ["beneficios", "economía", "actualidad", "supermercados", "descuentos"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
-                    image: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=600&q=80",
+                    image: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80",
                     desc: "Repasamos las promociones bancarias y rebajas vigentes en cadenas de consumo masivo de CABA y GBA.",
-                    fullText: "Las principales cadenas de supermercados y billeteras virtuales lanzaron un esquema de descuentos escalonados para la segunda quincena de noviembre. Conocé los días de ahorro en compras presenciales y online, los topes de reintegro vigentes y cómo combinar promociones."
+                    paragraphs: [
+                        "Las principales cadenas de supermercados y billeteras virtuales lanzaron un esquema de descuentos escalonados para la segunda quincena de noviembre con topes ampliados.",
+                        "Los mayores porcentajes de ahorro se concentran entre martes y jueves pagando con código QR desde aplicaciones bancarias adheridas, alcanzando rebajas de hasta el 30% en productos de almacén y frescos.",
+                        "En compras online, varias tiendas incorporaron envíos sin cargo superando un monto mínimo de compra y cupones adicionales para primeras operaciones digitales.",
+                        "Revisar el calendario semanal de promociones antes de realizar la compra mensual permite reducir significativamente el ticket final del hogar."
+                    ]
                 },
                 {
-                    id: 103,
+                    id: 108,
                     title: "Informe especial: proyección económica y tendencias financieras para el cierre de 2026",
                     category: "economía",
                     categoryName: "Economía",
                     tags: ["economía", "actualidad", "tecnología", "finanzas", "dólar"],
                     acceso: "premium",
-                    secciones: ["destacado"],
-                    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
                     desc: "Claves del mercado local, tasas de interés y comportamiento del consumo según los últimos relevamientos.",
-                    fullText: "Analistas del sector financiero detallan las variables centrales que marcarán el cierre del último trimestre del año. Este informe exclusivo para suscriptores Premium reúne los datos clave sobre evolución de precios, crédito al consumo y oportunidades de ahorro."
+                    paragraphs: [
+                        "Analistas del sector financiero detallan las variables centrales que marcarán el cierre del último trimestre del año en materia de liquidez, tasas pasivas y consumo interno.",
+                        "El comportamiento de las billeteras remuneradas y los fondos comunes de inversión de rescate inmediato continúa captando el interés de pequeños ahorristas que buscan resguardar capital de trabajo.",
+                        "En paralelo, el crédito al consumo muestra una reactivación selectiva en rubros de electrodomésticos, turismo nacional e indumentaria mediante planes en cuotas fijas.",
+                        "Este informe exclusivo reúne las proyecciones consensuadas para planificar presupuestos personales y familiares de cara al inicio de 2027."
+                    ]
                 },
                 {
-                    id: 104,
+                    id: 109,
                     title: "Las plataformas digitales y herramientas de IA que transforman el trabajo diario",
                     category: "tecnología",
                     categoryName: "Tecnología",
                     tags: ["tecnología", "actualidad", "inteligencia artificial", "digital"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
-                    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80",
+                    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80",
                     desc: "Un recorrido práctico por las aplicaciones más utilizadas para optimizar tiempos y productividad.",
-                    fullText: "La adopción de asistentes inteligentes y herramientas colaborativas en la nube continúa creciendo en Argentina. Te mostramos cuáles son las plataformas gratuitas y de pago más eficientes para organizar proyectos, redactar documentos y automatizar tareas repetitivas."
+                    paragraphs: [
+                        "La adopción de asistentes inteligentes y herramientas colaborativas en la nube continúa creciendo entre profesionales independientes, docentes y comercios.",
+                        "Estas plataformas permiten resumir documentos extensos, organizar agendas compartidas, automatizar respuestas frecuentes y diseñar presentaciones visuales en pocos minutos.",
+                        "Los expertos en transformación digital aconsejan comenzar incorporando una o dos herramientas específicas para tareas repetitivas antes de migrar flujos completos de trabajo.",
+                        "Además, resulta fundamental configurar correctamente los permisos de privacidad y copias de seguridad en cada servicio utilizado."
+                    ]
                 },
                 {
-                    id: 105,
+                    id: 110,
                     title: "Agenda cultural y estrenos de cine de la semana en Buenos Aires",
                     category: "espectáculos",
                     categoryName: "Espectáculos",
                     tags: ["espectáculos", "cine", "beneficios", "cartelera", "buenos aires"],
                     acceso: "basico",
-                    secciones: ["mas_visto"],
-                    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
                     desc: "Cartelera completa, horarios destacados y recomendaciones para disfrutar el fin de semana.",
-                    fullText: "La cartelera porteña renueva su programación con estrenos internacionales, ciclos de cine independiente y funciones nocturnas en los principales complejos de la Ciudad de Buenos Aires."
+                    paragraphs: [
+                        "La cartelera porteña renueva su programación con estrenos internacionales, ciclos de cine independiente y funciones nocturnas en los principales complejos de la Ciudad de Buenos Aires.",
+                        "A la oferta cinematográfica se suman espectáculos teatrales en la calle Corrientes, muestras fotográficas con entrada libre y recorridos guiados por espacios históricos.",
+                        "Para quienes buscan salidas en familia, varios centros culturales ofrecen talleres participativos y proyecciones al aire libre durante las tardes de sábado y domingo.",
+                        "Consultá con anticipación los horarios de boletería y las promociones 2x1 disponibles para funciones seleccionadas."
+                    ]
                 },
                 {
-                    id: 106,
+                    id: 111,
                     title: "Guía exclusiva: cómo acceder a preventas VIP y funciones privadas de cine",
                     category: "cine",
                     categoryName: "Cine",
                     tags: ["cine", "beneficios", "espectáculos", "entradas", "vip"],
                     acceso: "premium",
-                    secciones: ["mas_visto"],
-                    image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=900&q=80",
                     desc: "Todo lo que necesitás saber para participar por entradas preferenciales en complejos seleccionados.",
-                    fullText: "Los miembros Premium del portal cuentan con acceso prioritario a sorteos de entradas en ubicaciones centrales y funciones especiales. Revisá las condiciones de participación y mantené tus notificaciones activas."
+                    paragraphs: [
+                        "Los miembros Premium del portal cuentan con acceso prioritario a sorteos de entradas en ubicaciones centrales y funciones especiales de los tanques cinematográficos más esperados.",
+                        "Cada semana se habilitan nuevas convocatorias dentro de la pestaña Sorteos, donde los suscriptores activos pueden inscribirse en segundos con su correo registrado.",
+                        "Las ubicaciones seleccionadas corresponden a filas centrales con visión óptima de pantalla y sonido, pensadas para brindar la mejor experiencia en sala.",
+                        "Mantené tus datos actualizados en el menú de cuenta para recibir la confirmación inmediata en caso de resultar ganador."
+                    ]
+                },
+                {
+                    id: 112,
+                    title: "Claves para ahorrar en el pago de servicios del hogar y telefonía móvil",
+                    category: "economía",
+                    categoryName: "Economía",
+                    tags: ["economía", "beneficios", "actualidad", "servicios", "ahorro"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=80",
+                    desc: "Estrategias simples para revisar abonos mensuales, solicitar bonificaciones y aprovechar reintegros.",
+                    paragraphs: [
+                        "Revisar periódicamente el detalle de las facturas de internet, telefonía celular y suscripciones digitales permite detectar aumentos fuera de promoción y renegociar tarifas.",
+                        "Las compañías de telecomunicaciones suelen otorgar bonificaciones de entre el 30% y el 50% por seis meses a los clientes que solicitan actualización de plan comercial.",
+                        "Asimismo, adherir los servicios al débito automático de billeteras digitales con campañas de reintegro mensual suma un ahorro adicional sin trámites complejos.",
+                        "Organizar los vencimientos en una planilla mensual evita recargos por mora y mejora el control del presupuesto familiar."
+                    ]
+                },
+                {
+                    id: 113,
+                    title: "Los mejores destinos para una escapada de fin de semana cerca de Buenos Aires",
+                    category: "actualidad",
+                    categoryName: "Actualidad",
+                    tags: ["actualidad", "turismo", "beneficios", "escapadas"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80",
+                    desc: "Pueblos rurales, lagunas y paseos ribereños a menos de dos horas de viaje para desconectar de la rutina.",
+                    paragraphs: [
+                        "A menos de 150 kilómetros de la Ciudad de Buenos Aires existen múltiples opciones ideales para una escapada de día completo o fin de semana con propuestas gastronómicas y naturaleza.",
+                        "Entre los destinos favoritos se destacan las caminatas por la costanera de Chascomús, los paseos en lancha por el Delta de Tigre y las parrillas de campo en pueblos tradicionales.",
+                        "Viajar temprano por la mañana permite aprovechar mejor la jornada, evitar congestiones en los accesos principales y disfrutar de actividades al aire libre.",
+                        "En este especial detallamos rutas recomendadas, costos estimados de peajes y opciones de recreación para toda la familia."
+                    ]
+                },
+                {
+                    id: 114,
+                    title: "Novedades en billeteras virtuales: qué rendimiento ofrecen hoy los saldos diarios",
+                    category: "tecnología",
+                    categoryName: "Tecnología",
+                    tags: ["tecnología", "economía", "finanzas", "billeteras"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80",
+                    desc: "Comparativa actualizada de tasas anuales, disponibilidad inmediata y beneficios en comercios.",
+                    paragraphs: [
+                        "Las cuentas remuneradas de las principales billeteras digitales continúan siendo una de las herramientas más utilizadas para hacer rendir el dinero de uso cotidiano.",
+                        "A diferencia de un plazo fijo tradicional, estos instrumentos acreditan rendimientos todos los días hábiles manteniendo el saldo disponible las 24 horas para transferencias o pagos con QR.",
+                        "Comparar la tasa nominal anual vigente en cada aplicación ayuda a elegir la alternativa más conveniente según el perfil de gastos de cada usuario.",
+                        "También es recomendable activar la verificación en dos pasos para proteger el acceso a todas las cuentas financieras desde el teléfono móvil."
+                    ]
+                },
+                {
+                    id: 115,
+                    title: "Estrenos en plataformas de streaming: las series y películas más vistas del mes",
+                    category: "espectáculos",
+                    categoryName: "Espectáculos",
+                    tags: ["espectáculos", "cine", "tecnología", "series"],
+                    acceso: "basico",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=900&q=80",
+                    desc: "Un repaso por los thrillers, documentales y producciones nacionales que lideran los rankings.",
+                    paragraphs: [
+                        "Las principales plataformas de streaming renovaron sus catálogos con miniseries de suspenso, documentales deportivos y producciones argentinas que rápidamente escalaron al top 10.",
+                        "Entre los títulos más comentados por la audiencia sobresalen los relatos basados en hechos reales y las continuaciones de sagas de ciencia ficción.",
+                        "Para aprovechar mejor las suscripciones, muchos usuarios optan por rotar plataformas según los lanzamientos principales de cada trimestre.",
+                        "Te presentamos una selección curada con sinopsis y duración de cada título recomendado para maratonear."
+                    ]
+                },
+                {
+                    id: 116,
+                    title: "Consejos prácticos para mantener el auto en óptimas condiciones antes del verano",
+                    category: "actualidad",
+                    categoryName: "Actualidad",
+                    tags: ["actualidad", "autos", "mantenimiento", "seguridad"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
+                    desc: "Revisión de fluidos, presión de neumáticos, batería y aire acondicionado para viajar tranquilo.",
+                    paragraphs: [
+                        "Con la llegada de las temperaturas más altas y los viajes en ruta, realizar un chequeo preventivo del vehículo resulta clave para evitar inconvenientes mecánicos.",
+                        "Los talleres especializados sugieren controlar el nivel y estado del aceite del motor, el líquido refrigerante, el líquido de frenos y el correcto funcionamiento del electroventilador.",
+                        "También es fundamental verificar la presión de los neumáticos en frío, incluyendo la rueda de auxilio, y comprobar el desgaste de las escobillas limpiaparabrisas.",
+                        "Una revisión a tiempo prolonga la vida útil de los componentes y garantiza mayor seguridad en cada trayecto."
+                    ]
+                },
+                {
+                    id: 117,
+                    title: "Beneficios exclusivos en gastronomía y cafeterías de especialidad en CABA",
+                    category: "beneficios",
+                    categoryName: "Beneficios",
+                    tags: ["beneficios", "espectáculos", "actualidad", "gastronomía"],
+                    acceso: "premium",
+                    secciones: ["destacado", "mas_visto"],
+                    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80",
+                    desc: "Descubrí los locales adheridos con descuentos en meriendas, brunchs y cenas durante toda la semana.",
+                    paragraphs: [
+                        "El circuito gastronómico porteño suma nuevas propuestas con promociones especiales para desayunos, meriendas y salidas nocturnas en barrios como Palermo, Belgrano, Caballito y Devoto.",
+                        "Cafeterías de especialidad y panaderías artesanales ofrecen combos promocionales con rebajas de hasta el 25% abonando con medios digitales seleccionados.",
+                        "Durante los fines de semana, los menús de brunch continúan posicionándose como una de las opciones más elegidas para compartir en pareja o con amigos.",
+                        "Conocé los horarios recomendados para evitar demoras y aprovechar los beneficios vigentes."
+                    ]
+                }
+            ];
+
+            // =========================================================================
+            // BASE DE DATOS DE SORTEOS (DE A DOS EN DOS + ESTRELLA PREMIUM + DEGRADADO)
+            // =========================================================================
+            const sorteosData = [
+                {
+                    id: 501,
+                    title: "Participá por un par de entradas para ver Godzilla Minus Zero en Cinemark Abasto",
+                    image: "https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg",
+                    secondImage: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
+                    cine: "Cinemark Abasto",
+                    fechaHora: "Sábado 21 de noviembre a las 22:00 hrs.",
+                    ubicacion: "Butacas AK y AI (centro al medio)",
+                    acceso: "premium",
+                    desc: "Viví el estreno más impactante del año en ubicaciones centrales preferenciales reservadas exclusivamente para miembros Premium.",
+                    paragraphs: [
+                        "Sorteamos un par de entradas ubicadas en el sector central de la sala (Butacas AK y AI) para disfrutar de Godzilla Minus Zero en Cinemark Abasto el sábado 21 de noviembre a las 22:00 horas.",
+                        "El premio incluye las dos localidades digitales listas para ingresar directamente a la sala sin hacer fila en boletería.",
+                        "Exclusivo para suscriptores con membresía Premium activa al momento del sorteo."
+                    ],
+                    hasForm: true
+                },
+                {
+                    id: 502,
+                    title: "Sorteo Especial: Combo Cinema VIP + 2 Entradas 2D/3D para funciones de fin de semana",
+                    image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=900&q=80",
+                    cine: "Complejos Cinemark Hoyts adheridos (CABA y GBA)",
+                    fechaHora: "Válido de jueves a domingo en funciones seleccionadas",
+                    ubicacion: "Sector central preferencial + Pochoclos grandes y 2 bebidas",
+                    acceso: "premium",
+                    desc: "Participá por una experiencia completa de cine para dos personas con entradas y combo gastronómico incluido.",
+                    paragraphs: [
+                        "Premiamos a nuestra comunidad Premium con un pase doble para disfrutar de la película en cartelera que elijas junto con un combo grande de pochoclos y dos bebidas.",
+                        "Los ganadores recibirán los códigos de canje directamente en su correo electrónico registrado en el portal.",
+                        "Completá tu inscripción con tus datos de miembro Premium para quedar automáticamente habilitado."
+                    ],
+                    hasForm: true
                 }
             ];
 
@@ -1343,15 +1822,51 @@
                     return user.tipoUsuario === "premium" && user.estadoMembresia === "habilitado";
                 }
 
+                // =====================================================================
+                // RENDERIZADO DE BANNER DESTACADO PARA USUARIOS BÁSICOS (CON CACHÉ)
+                // =====================================================================
+                function renderBasicPromoBanner() {
+                    const bannerContainer = document.getElementById('basic-promo-banner-container');
+                    if (!bannerContainer) return;
+
+                    if (!currentUser || esUsuarioPremium(currentUser) || !debeMostrarPromo(currentUser.usuario)) {
+                        bannerContainer.classList.add('hidden');
+                        bannerContainer.innerHTML = '';
+                        return;
+                    }
+
+                    bannerContainer.classList.remove('hidden');
+                    bannerContainer.innerHTML = `
+                        <div class="promo-premium-banner">
+                            <div class="promo-premium-header">
+                                <span class="promo-premium-pill">★ Beneficio Exclusivo</span>
+                            </div>
+                            <h3>¡Cambiá a Miembro Premium por solo $2.990/mes!</h3>
+                            <p>Accedé a todas las noticias completas sin restricciones, participá por entradas de cine, sorteos exclusivos y obtené beneficios especiales todos los meses.</p>
+                            <div class="promo-premium-actions">
+                                <a href="${MP_LINK}" target="_blank" class="btn-promo-accept">★ Acepto, quiero ser Premium</a>
+                                <button type="button" class="btn-promo-dismiss" id="btn-dismiss-promo">Por ahora no, gracias</button>
+                            </div>
+                        </div>
+                    `;
+
+                    const btnDismiss = document.getElementById('btn-dismiss-promo');
+                    if (btnDismiss) {
+                        btnDismiss.addEventListener('click', () => {
+                            ocultarPromoPorHoras(currentUser.usuario);
+                            bannerContainer.classList.add('hidden');
+                            bannerContainer.innerHTML = '';
+                        });
+                    }
+                }
+
                 function cargarDatosUsuario(user) {
                     currentUser = user;
                     const isPremium = esUsuarioPremium(user);
 
-                    // Actualizar saludo superior (nombre en negro)
                     const greetingEl = document.getElementById('header-greeting-title');
                     if (greetingEl) greetingEl.textContent = `Hola, ${user.nombre}`;
 
-                    // Actualizar etiqueta de usuario básico / premium en header
                     const headerPlanBadge = document.getElementById('header-plan-badge');
                     if (headerPlanBadge) {
                         if (isPremium) {
@@ -1363,7 +1878,6 @@
                         }
                     }
 
-                    // Actualizar datos en el menú lateral
                     const nameEl = document.getElementById('acc-name');
                     const lastNameEl = document.getElementById('acc-lastname');
                     const locEl = document.getElementById('acc-location');
@@ -1373,6 +1887,7 @@
                     const billingDetailsBox = document.getElementById('premium-billing-details');
                     const upgradeSidebarBtn = document.getElementById('sidebar-upgrade-btn');
                     const downgradeSidebarBtn = document.getElementById('nav-downgrade-basic');
+                    const sidebarPromoBox = document.getElementById('sidebar-promo-box');
 
                     if (nameEl) nameEl.textContent = user.nombre;
                     if (lastNameEl) lastNameEl.textContent = user.apellido;
@@ -1388,7 +1903,14 @@
                         }
                     }
 
-                    // Ocultar Medio de Pago y Próximo Débito a usuarios básicos; mostrarlos solo a Premium
+                    if (sidebarPromoBox) {
+                        if (isPremium) {
+                            sidebarPromoBox.classList.add('hidden');
+                        } else {
+                            sidebarPromoBox.classList.remove('hidden');
+                        }
+                    }
+
                     if (billingDetailsBox) {
                         if (isPremium) {
                             billingDetailsBox.classList.remove('hidden');
@@ -1397,7 +1919,6 @@
                         }
                     }
 
-                    // Botones de cambio de plan según tipo de usuario
                     if (upgradeSidebarBtn && downgradeSidebarBtn) {
                         if (isPremium) {
                             upgradeSidebarBtn.classList.add('hidden');
@@ -1408,7 +1929,6 @@
                         }
                     }
 
-                    // Cargar temas de interés
                     const interestsContainer = document.getElementById('acc-interests');
                     if (interestsContainer) {
                         interestsContainer.innerHTML = '';
@@ -1420,7 +1940,6 @@
                         });
                     }
 
-                    // Actualizar estado de cuenta
                     const statusBox = document.getElementById('acc-status-box');
                     if (statusBox) {
                         if (!isPremium) {
@@ -1432,6 +1951,7 @@
                         }
                     }
 
+                    renderBasicPromoBanner();
                     renderContent();
                 }
 
@@ -1485,8 +2005,8 @@
                         const userVal = loginUser.value.trim().toLowerCase();
                         const passVal = loginPassInput.value.trim();
 
-                        const matchedUser = usuariosDB.find(u => 
-                            (u.usuario.toLowerCase() === userVal || u.nombre.toLowerCase() === userVal) && 
+                        const matchedUser = usuariosDB.find(u =>
+                            (u.usuario.toLowerCase() === userVal || u.nombre.toLowerCase() === userVal) &&
                             u.contrasena === passVal
                         );
 
@@ -1517,7 +2037,7 @@
                 }
 
                 // =========================================================================
-                // MENÚ LATERAL Y SUBVISTAS (Cambiar a Básico, Actualizar Datos, Eliminar)
+                // MENÚ LATERAL Y SUBVISTAS
                 // =========================================================================
                 const menuToggleBtn = document.getElementById('menu-toggle-btn');
                 const closeSidebarBtn = document.getElementById('close-sidebar-btn');
@@ -1578,20 +2098,12 @@
                     });
                 }
 
-                if (backFromDowngrade) {
-                    backFromDowngrade.addEventListener('click', resetSidebarViews);
-                }
-
-                if (backFromUpdate) {
-                    backFromUpdate.addEventListener('click', resetSidebarViews);
-                }
-
-                if (backFromDelete) {
-                    backFromDelete.addEventListener('click', resetSidebarViews);
-                }
+                if (backFromDowngrade) backFromDowngrade.addEventListener('click', resetSidebarViews);
+                if (backFromUpdate) backFromUpdate.addEventListener('click', resetSidebarViews);
+                if (backFromDelete) backFromDelete.addEventListener('click', resetSidebarViews);
 
                 // =========================================================================
-                // BUSCADOR DESLIZANTE Y BÚSQUEDA CON RUEDA DE CARGA
+                // BUSCADOR DESLIZANTE
                 // =========================================================================
                 const searchToggleBtn = document.getElementById('search-toggle-btn');
                 const searchDrawer = document.getElementById('search-drawer');
@@ -1626,9 +2138,7 @@
                     });
                 }
 
-                if (btnSearchClose) {
-                    btnSearchClose.addEventListener('click', cerrarBuscador);
-                }
+                if (btnSearchClose) btnSearchClose.addEventListener('click', cerrarBuscador);
 
                 function restaurarTabAnterior() {
                     document.getElementById('detail-view-section').classList.remove('active');
@@ -1641,16 +2151,13 @@
                 }
 
                 if (btnClearSearchView) {
-                    btnClearSearchView.addEventListener('click', () => {
-                        restaurarTabAnterior();
-                    });
+                    btnClearSearchView.addEventListener('click', restaurarTabAnterior);
                 }
 
                 function ejecutarBusqueda(terminoRaw) {
                     const termino = terminoRaw.trim();
                     if (!termino) return;
 
-                    // Ocultar detalle y otras pestañas y mostrar pestaña de búsqueda
                     document.getElementById('detail-view-section').classList.remove('active');
                     tabPanes.forEach(p => p.classList.remove('active'));
                     if (tabBusqueda) tabBusqueda.classList.add('active');
@@ -1660,7 +2167,6 @@
                         searchResultsSubtitle.textContent = `Buscando resultados relacionados con "${termino}"...`;
                     }
 
-                    // Mostrar rueda de carga durante unos instantes
                     if (searchResultsContainer) {
                         searchResultsContainer.innerHTML = `
                             <div class="search-loader-box">
@@ -1705,15 +2211,15 @@
                                 `;
                             } else {
                                 const grid = document.createElement('div');
-                                grid.className = 'cards-grid';
+                                grid.className = 'two-col-editorial-grid';
                                 resultados.forEach(item => {
-                                    grid.appendChild(crearTarjetaNoticia(item));
+                                    grid.appendChild(crearMiniTarjetaEditorial(item, 'noticia'));
                                 });
                                 searchResultsContainer.innerHTML = '';
                                 searchResultsContainer.appendChild(grid);
                             }
                         }
-                    }, 950);
+                    }, 800);
                 }
 
                 if (searchForm) {
@@ -1737,15 +2243,13 @@
                         document.getElementById('detail-view-section').classList.remove('active');
 
                         tabBtns.forEach(b => b.classList.remove('active'));
-                        tabPanes.forEach(p => {
-                            p.classList.remove('active');
-                        });
+                        tabPanes.forEach(p => p.classList.remove('active'));
 
                         btn.classList.add('active');
                         const targetPane = document.getElementById(targetId);
                         if (targetPane) targetPane.classList.add('active');
                         lastActiveViewId = targetId;
-                        
+
                         const container = document.getElementById('main-content-container');
                         if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
                     });
@@ -1756,171 +2260,250 @@
                     const itemTags = item.tags || [item.category.toLowerCase()];
                     return currentUser.intereses.some(interes => {
                         const intLower = interes.toLowerCase().trim();
-                        return item.category.toLowerCase().includes(intLower) || 
+                        return item.category.toLowerCase().includes(intLower) ||
                                itemTags.some(tag => tag.toLowerCase().includes(intLower));
                     });
                 }
 
-                function crearTarjetaNoticia(item) {
-                    const card = document.createElement('div');
-                    card.className = 'item-card';
-                    card.addEventListener('click', () => openDetailView(item.id));
+                // =========================================================================
+                // TARJETAS EDITORIALES (SOLO FOTO + TÍTULO + ESTRELLA DORADA ARRIBA IZQ)
+                // =========================================================================
+                function crearHeroEditorial(item) {
+                    const hero = document.createElement('article');
+                    hero.className = 'hero-editorial-card';
+                    hero.addEventListener('click', () => openDetailView(item.id, 'noticia'));
 
-                    const badgeAcceso = item.acceso === "premium"
-                        ? `<span class="item-tag tag-premium">★ Exclusivo Premium</span>`
-                        : `<span class="item-tag tag-basico">Vista Previa Básica</span>`;
+                    const starBadge = item.acceso === "premium"
+                        ? `<span class="premium-star-corner" title="Contenido exclusivo Premium">★</span>`
+                        : '';
+
+                    hero.innerHTML = `
+                        ${starBadge}
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="hero-editorial-overlay">
+                            <span class="hero-category-pill">${item.categoryName}</span>
+                            <h3>${item.title}</h3>
+                        </div>
+                    `;
+                    return hero;
+                }
+
+                function crearMiniTarjetaEditorial(item, tipo = 'noticia') {
+                    const card = document.createElement('article');
+                    card.className = 'mini-editorial-card';
+                    card.addEventListener('click', () => openDetailView(item.id, tipo));
+
+                    const starBadge = item.acceso === "premium"
+                        ? `<span class="premium-star-corner" title="Contenido exclusivo Premium">★</span>`
+                        : '';
 
                     card.innerHTML = `
-                        <img src="${item.image}" alt="${item.title}">
-                        <div class="item-card-body">
-                            <div class="tags-container">
-                                ${badgeAcceso}
-                                <span class="item-tag">🏷️ ${item.categoryName}</span>
-                            </div>
-                            <h4>${item.title}</h4>
-                            <p>${item.desc}</p>
-                            <button class="btn-card-action" type="button">Leer noticia</button>
+                        <div class="mini-card-img-wrap">
+                            ${starBadge}
+                            <img src="${item.image}" alt="${item.title}">
                         </div>
+                        <h4>${item.title}</h4>
                     `;
                     return card;
                 }
 
-                function renderGrid(gridElement, listaNoticias) {
+                // Renderizado editorial: 1° grande arriba + los siguientes de a 2 en 2 (hasta 11 iniciales, luego +6 con "Ver más")
+                function renderEditorialSection(gridElement, moreContainer, listaNoticias, sectionKey) {
                     if (!gridElement) return;
                     gridElement.innerHTML = '';
+
                     if (listaNoticias.length === 0) {
-                        gridElement.style.display = 'block';
                         gridElement.innerHTML = `<div class="empty-state-box">No hay noticias disponibles en esta sección para tus categorías seleccionadas.</div>`;
+                        if (moreContainer) {
+                            moreContainer.classList.add('hidden');
+                            moreContainer.innerHTML = '';
+                        }
                         return;
                     }
-                    gridElement.style.display = 'grid';
-                    listaNoticias.forEach(item => {
-                        gridElement.appendChild(crearTarjetaNoticia(item));
-                    });
+
+                    const limit = visibleCounts[sectionKey] || 11;
+                    const visibles = listaNoticias.slice(0, limit);
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'editorial-layout';
+
+                    // 1° Artículo más destacado grande arriba
+                    wrapper.appendChild(crearHeroEditorial(visibles[0]));
+
+                    // Resto de artículos de a dos en dos (solo foto y título)
+                    if (visibles.length > 1) {
+                        const twoColGrid = document.createElement('div');
+                        twoColGrid.className = 'two-col-editorial-grid';
+                        for (let i = 1; i < visibles.length; i++) {
+                            twoColGrid.appendChild(crearMiniTarjetaEditorial(visibles[i], 'noticia'));
+                        }
+                        wrapper.appendChild(twoColGrid);
+                    }
+
+                    gridElement.appendChild(wrapper);
+
+                    // Botón "Ver más" que agrega de 6 en 6 artículos (3 filas de 2 en 2)
+                    if (moreContainer) {
+                        if (listaNoticias.length > visibles.length) {
+                            moreContainer.classList.remove('hidden');
+                            moreContainer.innerHTML = `<button type="button" class="btn-load-more">Ver más</button>`;
+                            const btnMore = moreContainer.querySelector('.btn-load-more');
+                            btnMore.addEventListener('click', () => {
+                                visibleCounts[sectionKey] = (visibleCounts[sectionKey] || 11) + 6;
+                                renderEditorialSection(gridElement, moreContainer, listaNoticias, sectionKey);
+                            });
+                        } else {
+                            moreContainer.classList.add('hidden');
+                            moreContainer.innerHTML = '';
+                        }
+                    }
                 }
 
+                // =========================================================================
+                // SECCIÓN SORTEOS: DE A DOS EN DOS CON FOTO, TÍTULO Y ESTRELLA PREMIUM
+                // =========================================================================
                 function renderSorteos() {
                     const sorteosWrapper = document.getElementById('sorteos-content-wrapper');
                     if (!sorteosWrapper || !currentUser) return;
 
-                    const isPremium = esUsuarioPremium(currentUser);
+                    sorteosWrapper.innerHTML = '';
+                    const grid = document.createElement('div');
+                    grid.className = 'two-col-editorial-grid';
 
-                    if (!isPremium) {
-                        sorteosWrapper.innerHTML = `
-                            <div class="sorteo-card-wrapper">
-                                <img src="https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg" alt="Godzilla Minus Zero" class="sorteo-banner-img">
-                                <div class="sorteo-body">
-                                    <span class="sorteo-badge">★ Exclusivo Usuario Premium</span>
-                                    <h3 class="sorteo-title">Participá por un par de entradas para ver Godzilla Minus Zero</h3>
-                                    <div class="sorteo-details-box">
-                                        <p><strong>Cine:</strong> Cinemark Abasto</p>
-                                        <p><strong>Función:</strong> Sábado 21 de noviembre a las 22:00 hrs.</p>
-                                        <p><strong>Ubicación:</strong> Butacas AK y AI (centro al medio)</p>
-                                    </div>
-                                    <div class="membership-lock-box" style="margin: 0; max-width: 100%;">
-                                        <h3>Este contenido es para usuarios Premium</h3>
-                                        <p>Para participar del sorteo y acceder a todos los beneficios exclusivos, mejorá tu usuario o cuenta a Premium.</p>
-                                        <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Mejorar cuenta con Mercado Pago</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        return;
-                    }
+                    sorteosData.forEach(sorteo => {
+                        grid.appendChild(crearMiniTarjetaEditorial(sorteo, 'sorteo'));
+                    });
 
-                    sorteosWrapper.innerHTML = `
-                        <div class="sorteo-card-wrapper">
-                            <img src="https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg" alt="Godzilla Minus Zero" class="sorteo-banner-img">
-                            <div class="sorteo-body">
-                                <span class="sorteo-badge">★ Sorteo Exclusivo Premium</span>
-                                <h3 class="sorteo-title">Participá por un par de entradas para ver Godzilla Minus Zero</h3>
-                                <div class="sorteo-details-box">
-                                    <p><strong>Cine:</strong> Cinemark Abasto</p>
-                                    <p><strong>Fecha y hora:</strong> Sábado 21 de noviembre a las 22:00 hrs.</p>
-                                    <p><strong>Ubicación:</strong> Butacas AK y AI, centro al medio</p>
-                                </div>
-                                <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 20px;">Completá el formulario con tus datos de miembro Premium para quedar registrado en el sorteo:</p>
-                                <div id="elfsight-sorteo-slot">
-                                    <!-- Elfsight Subscription Form | Untitled Subscription Form -->
-                                    <div class="elfsight-app-d6c0152e-61ab-4aa3-bd31-a89240cd197b" data-elfsight-app-lazy></div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
-                        const scriptEl = document.createElement('script');
-                        scriptEl.src = "https://elfsightcdn.com/platform.js";
-                        scriptEl.async = true;
-                        document.body.appendChild(scriptEl);
-                    }
+                    sorteosWrapper.appendChild(grid);
                 }
 
                 function renderContent() {
                     if (!currentUser) return;
 
                     const destacadoGrid = document.getElementById('destacado-grid');
+                    const destacadoMore = document.getElementById('destacado-more-container');
+
                     const interesGrid = document.getElementById('interes-grid');
+                    const interesMore = document.getElementById('interes-more-container');
+
                     const masVistoGrid = document.getElementById('mas-visto-grid');
+                    const masVistoMore = document.getElementById('mas-visto-more-container');
 
                     const noticiasDestacadas = noticiasData.filter(n => n.secciones.includes("destacado"));
                     const noticiasDeInteres = noticiasData.filter(n => coincideConIntereses(n));
                     const noticiasMasVistas = noticiasData.filter(n => n.secciones.includes("mas_visto"));
 
-                    renderGrid(destacadoGrid, noticiasDestacadas);
-                    renderGrid(interesGrid, noticiasDeInteres);
-                    renderGrid(masVistoGrid, noticiasMasVistas);
+                    renderEditorialSection(destacadoGrid, destacadoMore, noticiasDestacadas, 'destacado');
+                    renderEditorialSection(interesGrid, interesMore, noticiasDeInteres, 'interes');
+                    renderEditorialSection(masVistoGrid, masVistoMore, noticiasMasVistas, 'mas_visto');
                     renderSorteos();
                 }
 
                 // =========================================================================
-                // VISTA DE DETALLE (Básicos ven solo título + subtítulo + aviso Premium)
+                // VISTA DE DETALLE (NOTICIAS Y SORTEOS)
+                // Si el contenido es Premium y el usuario es Básico:
+                // Muestra foto + título + degradado borroso y mensaje de suscripción a $2.990/mes
                 // =========================================================================
                 const detailViewSection = document.getElementById('detail-view-section');
                 const detailContentBox = document.getElementById('detail-content-box');
                 const btnBackToList = document.getElementById('btn-back-to-list');
 
-                window.openDetailView = function(id) {
+                window.openDetailView = function(id, tipo = 'noticia') {
                     if (!currentUser) return;
 
-                    const item = noticiasData.find(n => n.id === id);
+                    const item = tipo === 'sorteo'
+                        ? sorteosData.find(s => s.id === id)
+                        : noticiasData.find(n => n.id === id);
+
                     if (!item) return;
 
-                    const isPremium = esUsuarioPremium(currentUser);
+                    const isPremiumUser = esUsuarioPremium(currentUser);
+                    const isItemPremium = item.acceso === "premium";
                     tabPanes.forEach(p => p.classList.remove('active'));
 
                     if (detailContentBox) {
-                        const badgeAcceso = item.acceso === "premium"
-                            ? `<span class="item-tag tag-premium">★ Exclusivo Premium</span>`
-                            : `<span class="item-tag tag-basico">Vista Previa Básica</span>`;
+                        const starCorner = isItemPremium
+                            ? `<span class="premium-star-corner" title="Contenido exclusivo Premium">★</span>`
+                            : '';
 
-                        // Si el usuario es BÁSICO: solo ve hasta el título y el subtítulo, y nada más del cuerpo
-                        if (!isPremium) {
+                        // Usuario Básico ingresando a contenido Premium (nota o sorteo):
+                        // Solo ve foto y título + efecto degradado borroso + cartel de suscripción $2.990/mes
+                        if (isItemPremium && !isPremiumUser) {
+                            const previewText = (item.paragraphs && item.paragraphs[0]) ? item.paragraphs[0] : item.desc;
                             detailContentBox.innerHTML = `
-                                <img src="${item.image}" alt="${item.title}">
-                                <div class="tags-container" style="margin-bottom: 14px;">
-                                    ${badgeAcceso}
-                                    <span class="item-tag">🏷️ ${item.categoryName}</span>
+                                <div class="detail-main-img-wrap">
+                                    ${starCorner}
+                                    <img src="${item.image}" alt="${item.title}" class="detail-hero-img">
                                 </div>
                                 <h2>${item.title}</h2>
-                                <p class="detail-subtitle">${item.desc}</p>
-                                <div class="membership-lock-box" style="margin-top: 24px;">
-                                    <h3>Este contenido es para usuarios Premium</h3>
-                                    <p>Para leer el artículo completo, mejorá tu usuario o cuenta a Premium.</p>
-                                    <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Mejorar cuenta con Mercado Pago</a>
+                                <div class="paywall-fade-wrapper">
+                                    <div class="paywall-blurred-preview">
+                                        <p>${item.desc}</p>
+                                        <p>${previewText}</p>
+                                    </div>
+                                    <div class="paywall-gradient-overlay">
+                                        <div class="membership-lock-box">
+                                            <h3>★ Contenido Exclusivo para Miembros Premium</h3>
+                                            <p>Para leer este contenido completo, pasate a <strong>Miembro Premium por solo $2.990 al mes</strong> y participá de sorteos exclusivos y beneficios especiales.</p>
+                                            <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Pasarme a Miembro Premium ($2.990/mes)</a>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
-                        } else {
-                            // Usuario PREMIUM: lectura completa
+                        } else if (tipo === 'sorteo') {
+                            // Usuario Premium ingresando a un Sorteo: visualiza todo y participa
+                            const parrafosHTML = (item.paragraphs || []).map(p => `<p>${p}</p>`).join('');
+                            const secondImgHTML = item.secondImage
+                                ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
+                                : '';
+
                             detailContentBox.innerHTML = `
-                                <img src="${item.image}" alt="${item.title}">
-                                <div class="tags-container" style="margin-bottom: 14px;">
-                                    ${badgeAcceso}
-                                    <span class="item-tag">🏷️ ${item.categoryName}</span>
+                                <div class="detail-main-img-wrap">
+                                    ${starCorner}
+                                    <img src="${item.image}" alt="${item.title}" class="detail-hero-img">
                                 </div>
                                 <h2>${item.title}</h2>
                                 <p class="detail-subtitle">${item.desc}</p>
-                                <p>${item.fullText}</p>
+                                <div class="sorteo-details-box">
+                                    <p><strong>Cine / Lugar:</strong> ${item.cine}</p>
+                                    <p><strong>Fecha y hora:</strong> ${item.fechaHora}</p>
+                                    <p><strong>Ubicación / Premio:</strong> ${item.ubicacion}</p>
+                                </div>
+                                ${parrafosHTML}
+                                ${secondImgHTML}
+                                <p style="font-size: 15px; color: var(--text-muted); margin-top: 12px; margin-bottom: 20px;">Completá el formulario con tus datos de miembro Premium para quedar registrado en el sorteo:</p>
+                                <div id="elfsight-sorteo-slot">
+                                    <div class="elfsight-app-d6c0152e-61ab-4aa3-bd31-a89240cd197b" data-elfsight-app-lazy></div>
+                                </div>
+                            `;
+
+                            if (!document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')) {
+                                const scriptEl = document.createElement('script');
+                                scriptEl.src = "https://elfsightcdn.com/platform.js";
+                                scriptEl.async = true;
+                                document.body.appendChild(scriptEl);
+                            }
+                        } else {
+                            // Lectura completa de noticia (usuario Premium, o nota básica abierta para todos)
+                            const parrafos = item.paragraphs || [item.desc];
+                            const primerParrafo = parrafos[0] ? `<p>${parrafos[0]}</p>` : '';
+                            const segundoParrafo = parrafos[1] ? `<p>${parrafos[1]}</p>` : '';
+                            const secondImgHTML = item.secondImage
+                                ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
+                                : '';
+                            const restoParrafos = parrafos.slice(2).map(p => `<p>${p}</p>`).join('');
+
+                            detailContentBox.innerHTML = `
+                                <div class="detail-main-img-wrap">
+                                    ${starCorner}
+                                    <img src="${item.image}" alt="${item.title}" class="detail-hero-img">
+                                </div>
+                                <h2>${item.title}</h2>
+                                <p class="detail-subtitle">${item.desc}</p>
+                                ${primerParrafo}
+                                ${segundoParrafo}
+                                ${secondImgHTML}
+                                ${restoParrafos}
                             `;
                         }
                     }
