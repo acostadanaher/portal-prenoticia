@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Portal de Miembros</title>
+    <title>Portal de Miembros - Prenoticia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary: #f68e02;
@@ -15,6 +17,8 @@
             --border-color: #e5e5e5;
             --premium-gold: #f68e02;
             --basic-gray: #64748b;
+            --green-success: #2e7d32;
+            --red-error: #c62828;
         }
 
         * {
@@ -24,7 +28,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Fix definitivo para eliminar la raya blanca inferior en móviles (100dvh + min-height: 0) */
+        /* Fix definitivo para eliminar la raya blanca inferior en móviles */
         html, body {
             background-color: var(--bg-color) !important;
             color: var(--text-color) !important;
@@ -41,6 +45,20 @@
         }
 
         .hidden { display: none !important; }
+
+        /* OCULTAR MENSAJES NATIVOS DE BLOGGER PARA MANEJARLOS POR JS SILENCIOSO */
+        #ContactForm1_contact-form-error-message,
+        #ContactForm1_contact-form-success-message,
+        .contact-form-error-message,
+        .contact-form-success-message,
+        .widget-content .contact-form-success-message {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
 
         .container {
             width: 100%;
@@ -165,7 +183,7 @@
             display: none;
         }
 
-        /* Panel Principal con scroll interno fluido sin franja blanca inferior */
+        /* Panel Principal con scroll interno fluido */
         #app-section {
             display: flex;
             flex-direction: column;
@@ -393,7 +411,6 @@
             background: #e2e8f0;
         }
 
-        /* Alineado a la izquierda igual que el resto */
         .btn-upgrade-sidebar {
             background: var(--primary);
             color: #ffffff;
@@ -675,11 +692,12 @@
         .btn-promo-accept {
             background-color: var(--primary);
             color: #ffffff;
-            text-decoration: none;
+            border: none;
             padding: 11px 20px;
             font-size: 14px;
             font-weight: 700;
             border-radius: 8px;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -722,8 +740,7 @@
         }
 
         /* =====================================================================
-           DISEÑO DE ARTÍCULOS Y SORTEOS (1° HERO DESTACADO + GRILLA DE 2 EN 2)
-           SOLO FOTO + TÍTULO + ESTRELLA DORADA ARRIBA A LA IZQUIERDA SI ES PREMIUM
+           DISEÑO DE ARTÍCULOS Y BENEFICIOS (1° HERO DESTACADO + GRILLA DE 2 EN 2)
            ===================================================================== */
         .editorial-layout {
             display: flex;
@@ -731,7 +748,6 @@
             gap: 22px;
         }
 
-        /* Artículo Hero Principal (el 1°) */
         .hero-editorial-card {
             position: relative;
             width: 100%;
@@ -770,10 +786,12 @@
             padding: 20px;
         }
 
+        /* Categoría tipo botón con color un poquito transparente */
         .hero-category-pill {
             display: inline-block;
             align-self: flex-start;
-            background-color: var(--primary);
+            background-color: rgba(246, 142, 2, 0.78);
+            backdrop-filter: blur(2px);
             color: #ffffff;
             font-size: 12px;
             font-weight: 700;
@@ -792,7 +810,7 @@
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
         }
 
-        /* Grilla de 2 columnas (siempre de a dos en dos, incluso en celulares) */
+        /* Grilla de 2 columnas */
         .two-col-editorial-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -861,6 +879,25 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
         }
 
+        /* Badge de estado de stock en Beneficios/Códigos */
+        .benefit-stock-pill {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            z-index: 5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(17, 17, 17, 0.82);
+            color: #ffffff;
+        }
+
+        .benefit-stock-pill.agotado {
+            background: rgba(198, 40, 40, 0.92);
+            color: #ffffff;
+        }
+
         /* Botón Ver más (6 en 6) */
         .load-more-wrapper {
             margin-top: 26px;
@@ -885,7 +922,7 @@
         }
 
         /* =====================================================================
-           VISTA DE DETALLE DE ARTÍCULO / SORTEO + PAYWALL CON DEGRADADO
+           VISTA DE DETALLE DE ARTÍCULO / BENEFICIO + PAYWALL CON DEGRADADO
            ===================================================================== */
         #detail-view-section {
             display: none;
@@ -966,7 +1003,7 @@
             margin-bottom: 18px;
         }
 
-        /* Efecto degradado que borra el contenido para usuarios Básicos en notas/sorteos Premium */
+        /* Efecto degradado que borra el contenido para usuarios Básicos en notas/beneficios Premium */
         .paywall-fade-wrapper {
             position: relative;
             margin-top: 8px;
@@ -1019,11 +1056,13 @@
             display: inline-block;
             background-color: var(--primary);
             color: #ffffff;
+            border: none;
             text-decoration: none;
             padding: 14px 28px;
             font-size: 15px;
             font-weight: 700;
             border-radius: 8px;
+            cursor: pointer;
             transition: background-color 0.2s;
             box-shadow: 0 4px 12px rgba(246, 142, 2, 0.25);
         }
@@ -1051,6 +1090,107 @@
             margin-bottom: 0 !important;
         }
 
+        /* Caja de solicitud de código de descuento exclusivo */
+        .coupon-claim-box {
+            background: #fffaf3;
+            border: 1.5px solid #fbd38d;
+            border-radius: 14px;
+            padding: 24px 20px;
+            margin: 22px 0;
+        }
+
+        .coupon-claim-box h3 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #111111;
+            margin-bottom: 8px;
+        }
+
+        .coupon-form-field {
+            margin-bottom: 14px;
+        }
+
+        .coupon-form-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 6px;
+        }
+
+        .coupon-form-field input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #ffffff;
+            outline: none;
+        }
+
+        .coupon-form-field input:focus {
+            border-color: var(--primary);
+        }
+
+        .coupon-code-revealed {
+            background: #ffffff;
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 22px 18px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .coupon-code-value {
+            font-family: monospace;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #111111;
+            background: #fff6ea;
+            padding: 10px 18px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 12px 0;
+            user-select: all;
+            border: 1px solid #fbd38d;
+        }
+
+        .btn-copy-code {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 11px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-copy-code:hover {
+            background: var(--primary-hover);
+        }
+
+        .coupon-exhausted-box {
+            background: #fef2f2;
+            border: 1.5px solid #fecaca;
+            border-radius: 12px;
+            padding: 24px 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .coupon-exhausted-box h3 {
+            color: #b91c1c;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
         .empty-state-box {
             background: #f8fafc;
             border: 1px dashed #cbd5e1;
@@ -1058,6 +1198,373 @@
             padding: 36px 24px;
             text-align: center;
             color: var(--text-muted);
+        }
+
+        /* =====================================================================
+           PANTALLA DE PASE A USUARIO PREMIUM (WIZARD ADAPTADO DEL FORMULARIO)
+           ===================================================================== */
+        #upgrade-wizard-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            background: #f4f6f9;
+            z-index: 2000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 20px 16px 60px 16px;
+        }
+
+        #upgrade-wizard-overlay.active {
+            display: block;
+        }
+
+        .wizard-card-root {
+            background: #ffffff;
+            max-width: 680px;
+            margin: 10px auto 30px auto;
+            padding: 32px 26px;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
+            border-top: 6px solid #f58220;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .banner-beneficios-alta {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 1px solid #ffe0b2;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .banner-beneficios-alta h3 {
+            color: #e68a00;
+            margin: 0 0 8px 0;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .banner-beneficios-alta p {
+            font-size: 13.5px;
+            color: #444;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .wizard-steps-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .step-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .step-dot.active {
+            border-color: #f58220;
+            background: #fff3e0;
+            color: #f58220;
+            box-shadow: 0 0 12px rgba(245, 130, 32, 0.35);
+        }
+
+        .step-dot.completed {
+            background: #f58220;
+            border-color: #f58220;
+            color: #ffffff;
+        }
+
+        .wizard-step-panel {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .wizard-step-panel.active-step {
+            display: block;
+            opacity: 1;
+        }
+
+        .wiz-input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .wiz-input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #f58220;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .wiz-input-group input[type="text"],
+        .wiz-input-group input[type="email"],
+        .wiz-input-group select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14.5px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .wiz-input-group input:focus,
+        .wiz-input-group select:focus {
+            border-color: #f58220;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(245, 130, 32, 0.2);
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn-interest-tag {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 13px 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #444;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-interest-tag:hover {
+            border-color: #f58220;
+            background: #fff8f0;
+        }
+
+        .btn-interest-tag.selected {
+            background: #fff3e0;
+            border-color: #f58220;
+            color: #e68a00;
+            box-shadow: 0 4px 12px rgba(245, 130, 32, 0.25);
+        }
+
+        .nav-buttons-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 26px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav-step {
+            padding: 13px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #ccc;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .btn-nav-step:hover { background: #e2e6ea; }
+
+        .btn-nav-next {
+            background: #f58220;
+            color: #ffffff;
+            border: 1px solid #f58220;
+            margin-left: auto;
+            font-weight: 600;
+        }
+
+        .btn-nav-next:hover {
+            background: #f58220;
+            color: #ffffff;
+            opacity: 0.95;
+            box-shadow: 0 2px 8px rgba(245, 130, 32, 0.25);
+        }
+
+        .btn-nav-cancel {
+            background: rgba(198, 40, 40, 0.08);
+            border-color: rgba(198, 40, 40, 0.25);
+            color: #c62828;
+        }
+
+        .btn-nav-cancel:hover { background: rgba(198, 40, 40, 0.15); }
+
+        .btn-submit-mp {
+            background: linear-gradient(135deg, #f68e02 0%, #d97a00 100%);
+            color: white;
+            border: none;
+            padding: 16px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15.5px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(246, 142, 2, 0.35);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit-mp:hover {
+            box-shadow: 0 6px 20px rgba(246, 142, 2, 0.5);
+            transform: translateY(-2px);
+        }
+
+        #redirect-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 16px;
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* MODAL ELEGANTE SUPERPUESTO (ALERTAS Y CONFIRMACIÓN DE CANCELACIÓN) */
+        .custom-alert-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: 100000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .custom-alert-card {
+            background: #ffffff;
+            border-radius: 14px;
+            max-width: 460px;
+            width: 100%;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            border-top: 6px solid #f58220;
+            animation: modalFadeIn 0.25s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-alert-card .modal-icon {
+            font-size: 2.8rem;
+            color: #f58220;
+            margin-bottom: 14px;
+        }
+
+        .custom-alert-card.success-style .modal-icon {
+            color: var(--green-success);
+        }
+
+        .custom-alert-card h3 {
+            margin: 0 0 10px 0;
+            color: #222222;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .custom-alert-card p {
+            margin: 0 0 22px 0;
+            font-size: 14.5px;
+            color: #444444;
+            line-height: 1.6;
+        }
+
+        .modal-buttons-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-modal-close {
+            background: linear-gradient(135deg, #f58220, #e68a00);
+            color: #ffffff;
+            border: none;
+            padding: 13px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-close:hover {
+            opacity: 0.95;
+            box-shadow: 0 4px 12px rgba(245, 130, 32, 0.3);
+        }
+
+        .btn-modal-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-secondary:hover {
+            background: #e2e8f0;
+            color: #111111;
         }
 
         @media (min-width: 769px) {
@@ -1073,6 +1580,14 @@
             .mini-editorial-card h4 {
                 font-size: 17px;
             }
+        }
+
+        @media (max-width: 600px) {
+            .wizard-card-root { padding: 24px 18px; margin: 10px auto; }
+            .interests-grid { grid-template-columns: 1fr 1fr; }
+            .nav-buttons-container { flex-direction: column; }
+            .btn-nav-step { width: 100%; justify-content: center; }
+            .btn-nav-next { margin-left: 0; }
         }
 
         @media (max-width: 480px) {
@@ -1107,6 +1622,160 @@
     </style>
 </head>
 <body>
+
+    <!-- MODAL ELEGANTE SUPERPUESTO (ALERTAS Y CONFIRMACIÓN DE CANCELACIÓN) -->
+    <div class="custom-alert-backdrop" id="custom-modal-backdrop">
+        <div class="custom-alert-card" id="custom-modal-card">
+            <i class="fas fa-exclamation-circle modal-icon" id="modal-icon-element"></i>
+            <h3 id="modal-title-element">Atención</h3>
+            <p id="modal-msg-element"></p>
+            <div class="modal-buttons-row" id="modal-buttons-container">
+                <button type="button" class="btn-modal-close" id="modal-btn-action">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORMULARIO OCULTO NATIVO DE BLOGGER PARA ENVÍO SILENCIOSO DE EMAILS -->
+    <div style="display:none !important; visibility:hidden !important; height:0 !important; overflow:hidden !important;">
+        <form name="contact-form" id="contact-form" onsubmit="return false;">
+            <input type="hidden" id="ContactForm1_contact-form-name" name="name" value="" />
+            <input type="hidden" id="ContactForm1_contact-form-email" name="email" value="" />
+            <textarea id="ContactForm1_contact-form-email-message" name="email-message"></textarea>
+            <input type="button" id="ContactForm1_contact-form-submit" value="Send" />
+        </form>
+    </div>
+
+    <!-- ================= PANTALLA DE PASE DE USUARIO BÁSICO A PREMIUM ================= -->
+    <div id="upgrade-wizard-overlay">
+        <div class="wizard-card-root">
+
+            <!-- OVERLAY DE CARGA Y REDIRECCIÓN SILENCIOSA -->
+            <div id="redirect-overlay">
+                <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #f58220; margin-bottom: 20px;"></i>
+                <h3 style="color: #f58220; font-size: 1.2rem; margin: 0 0 10px 0; text-transform: uppercase;">Procesando Pase a Premium...</h3>
+                <p id="redirect-overlay-txt" style="font-size: 0.95rem; color: #555; max-width: 380px;">Actualizando tus datos de suscripción y abriendo la pasarela de pago segura...</p>
+            </div>
+
+            <!-- BANNER INFORMATIVO -->
+            <div class="banner-beneficios-alta">
+                <h3><i class="fas fa-star"></i> Pase a Miembro Premium</h3>
+                <p>Estás pasando tu cuenta básica a <strong>Usuario Premium</strong> por solo <strong>$2.990 / mes</strong> (precio congelado por 6 meses). Accedé a <strong>notas completas</strong>, <strong>códigos de descuento exclusivos</strong> y <strong>sorteos especiales</strong>.</p>
+            </div>
+
+            <!-- INDICADOR DE PASOS WIZARD -->
+            <div class="wizard-steps-indicator">
+                <div class="step-dot active" id="dot-1">1</div>
+                <div class="step-dot" id="dot-2">2</div>
+                <div class="step-dot" id="dot-3">3</div>
+            </div>
+
+            <!-- PASO 1: DATOS PERSONALES -->
+            <div class="wizard-step-panel active-step" id="step-panel-1">
+                <h4 style="color: #e68a00; font-size: 13px; text-transform: uppercase; margin-bottom: 18px; letter-spacing: 0.5px;">Paso 1: Confirmá tus Datos para Activar Premium</h4>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="wiz-input-group" style="flex:1; min-width: 220px;">
+                        <label>Nombre *</label>
+                        <input type="text" id="reg_nombre" placeholder="Ingrese su nombre">
+                    </div>
+                    <div class="wiz-input-group" style="flex:1; min-width: 220px;">
+                        <label>Apellido *</label>
+                        <input type="text" id="reg_apellido" placeholder="Ingrese su apellido">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="wiz-input-group" style="flex:1; min-width: 220px;">
+                        <label>DNI / Documento *</label>
+                        <input type="text" id="reg_dni" placeholder="Ej: 38123456">
+                    </div>
+                    <div class="wiz-input-group" style="flex:1; min-width: 220px;">
+                        <label>Localidad *</label>
+                        <input type="text" id="reg_localidad" placeholder="Ej: Liniers, CABA">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="wiz-input-group" style="flex:1; min-width: 220px;">
+                        <label>Correo Electrónico de tu Cuenta *</label>
+                        <input type="email" id="reg_email" placeholder="ejemplo@gmail.com">
+                    </div>
+                    <div class="wiz-input-group" style="flex:1; min-width: 220px;">
+                        <label>Número de Celular / WhatsApp *</label>
+                        <input type="text" id="reg_telefono" placeholder="Ej: 1121679936">
+                    </div>
+                </div>
+
+                <div class="nav-buttons-container">
+                    <button type="button" class="btn-nav-step btn-nav-cancel" id="wiz-cancel-step-1">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn-nav-step btn-nav-next" id="wiz-next-step-1">
+                        Siguiente <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 2: SELECCIÓN DE INTERESES PREFERENCIALES -->
+            <div class="wizard-step-panel" id="step-panel-2">
+                <h4 style="color: #e68a00; font-size: 13px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">Paso 2: Personalizá tus Intereses Premium</h4>
+                <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Seleccioná los temas y beneficios exclusivos que más te interesan:</p>
+
+                <div class="interests-grid" id="wiz-interests-grid">
+                    <div class="btn-interest-tag" data-value="Economía"><i class="fas fa-chart-line"></i> Economía</div>
+                    <div class="btn-interest-tag" data-value="Cine"><i class="fas fa-film"></i> Cine</div>
+                    <div class="btn-interest-tag" data-value="Espectáculos"><i class="fas fa-theater-masks"></i> Espectáculos</div>
+                    <div class="btn-interest-tag" data-value="Actualidad"><i class="fas fa-newspaper"></i> Actualidad</div>
+                    <div class="btn-interest-tag" data-value="Tecnología"><i class="fas fa-laptop"></i> Tecnología</div>
+                    <div class="btn-interest-tag" data-value="Beneficios"><i class="fas fa-tags"></i> Códigos y Descuentos</div>
+                    <div class="btn-interest-tag" data-value="Sorteo Entradas Cine"><i class="fas fa-ticket-alt"></i> Sorteos Entradas Cine</div>
+                </div>
+
+                <div class="nav-buttons-container">
+                    <button type="button" class="btn-nav-step" id="wiz-back-step-2">
+                        <i class="fas fa-arrow-left"></i> Atrás
+                    </button>
+                    <button type="button" class="btn-nav-step btn-nav-cancel" id="wiz-cancel-step-2">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn-nav-step btn-nav-next" id="wiz-next-step-2">
+                        Siguiente <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 3: CONFIRMACIÓN Y ACTIVACIÓN -->
+            <div class="wizard-step-panel" id="step-panel-3">
+                <h4 style="color: #e68a00; font-size: 13px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px;">Paso 3: Resumen y Activación de Membresía Premium</h4>
+                
+                <div style="background: #fff3e0; padding: 18px; border-radius: 10px; border: 1px solid #ffe0b2; margin-bottom: 22px; font-size: 14px; line-height: 1.65;">
+                    <strong>Resumen del Cambio de Plan:</strong><br>
+                    • <strong>Titular:</strong> <span id="resumen_titular">-</span><br>
+                    • <strong>Correo de cuenta:</strong> <span id="resumen_email">-</span><br>
+                    • <strong>Nuevo Plan:</strong> ★ Miembro Premium<br>
+                    • <strong>Abono Mensual:</strong> $2.990 / mes (precio congelado por 6 meses, cancelás cuando quieras)
+                </div>
+
+                <p style="font-size: 13.5px; color: #555; line-height: 1.55; margin-bottom: 22px;">
+                    Al confirmar, registraremos tu solicitud de pase a <strong>Usuario Premium</strong> y se abrirá la pasarela de pago segura para completar tu suscripción mensual.
+                </p>
+
+                <button type="button" class="btn-submit-mp" id="wiz-submit-upgrade-btn">
+                    <i class="fas fa-lock"></i> Confirmar y Pagar con Mercado Pago ($2.990/mes)
+                </button>
+
+                <div class="nav-buttons-container">
+                    <button type="button" class="btn-nav-step" id="wiz-back-step-3">
+                        <i class="fas fa-arrow-left"></i> Atrás
+                    </button>
+                    <button type="button" class="btn-nav-step btn-nav-cancel" id="wiz-cancel-step-3">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- ================= SECCIÓN DE INICIO DE SESIÓN ================= -->
     <section id="auth-section">
@@ -1168,10 +1837,9 @@
 
             <!-- Vista Principal del Menú -->
             <div id="sidebar-main-view">
-                <!-- Banner de Membresía en Sidebar (solo visible para usuarios básicos) -->
                 <div id="sidebar-promo-box" style="background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
                     <p style="font-size: 13px; color: var(--text-color); line-height: 1.45;">
-                        ★ <strong>Membresía Premium:</strong> Accedé a todas las noticias completas, sorteos exclusivos y beneficios especiales por solo <strong>$2.990 al mes</strong>.
+                        ★ <strong>Membresía Premium:</strong> Accedé a todas las noticias completas, códigos de descuento exclusivos y sorteos especiales por solo <strong>$2.990 al mes</strong>.
                     </p>
                 </div>
 
@@ -1184,7 +1852,7 @@
                     <p style="margin-top: 8px;"><strong>Temas de interés:</strong><br><span id="acc-interests"></span></p>
                     
                     <div id="premium-billing-details">
-                        <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Mercado Pago</p>
+                        <p style="margin-top: 8px;"><strong>Medio de Pago:</strong> Débito Automático</p>
                         <p><strong>Próximo débito:</strong> <span id="acc-next-debit">1 de diciembre de 2026</span></p>
                     </div>
 
@@ -1192,10 +1860,10 @@
                 </div>
 
                 <div class="sidebar-actions">
-                    <!-- Botón para básicos: mejorar a Premium alineado a la izquierda y con el nuevo link y valor -->
-                    <a href="https://mpago.la/2GaBY8W" target="_blank" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($2.990/mes)</a>
+                    <!-- Botón para básicos: abre el wizard de pase a Premium -->
+                    <button type="button" id="sidebar-upgrade-btn" class="btn-sidebar-action btn-upgrade-sidebar hidden">Mejorar a Usuario Premium ($2.990/mes)</button>
                     
-                    <!-- Botón para Premium: cambiar a Básico con exactamente el mismo diseño y color que Actualizar o modificar datos -->
+                    <!-- Botón para Premium: cambiar a Básico -->
                     <button class="btn-sidebar-action hidden" id="nav-downgrade-basic">Cambiar a plan Básico</button>
                     
                     <button class="btn-sidebar-action" id="nav-update-data">Actualizar o modificar datos</button>
@@ -1235,7 +1903,7 @@
                 <li><button class="tab-btn active" data-target="tab-destacado">Destacado</button></li>
                 <li><button class="tab-btn" data-target="tab-interes">De tu interés</button></li>
                 <li><button class="tab-btn" data-target="tab-mas-visto">Lo más visto</button></li>
-                <li><button class="tab-btn" data-target="tab-sorteos">Sorteos</button></li>
+                <li><button class="tab-btn" data-target="tab-beneficios">Beneficios</button></li>
             </ul>
         </nav>
 
@@ -1264,27 +1932,27 @@
                 <div id="destacado-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
-            <!-- TAB 2: DE TU INTERÉS -->
+            <!-- TAB 2: DE TU INTERÉS (ORDEN CRONOLÓGICO SEGÚN CATEGORÍAS DEL USUARIO) -->
             <div id="tab-interes" class="tab-pane">
                 <h2 class="section-title">De tu interés</h2>
-                <p class="section-desc">Noticias filtradas automáticamente según las categorías y etiquetas configuradas en tu perfil.</p>
+                <p class="section-desc">Noticias ordenadas cronológicamente según las categorías y etiquetas configuradas en tu perfil.</p>
                 <div id="interes-grid"></div>
                 <div id="interes-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
-            <!-- TAB 3: LO MÁS VISTO -->
+            <!-- TAB 3: LO MÁS VISTO (ORDEN MANUAL CONFIGURABLE POR ordenMasVisto) -->
             <div id="tab-mas-visto" class="tab-pane">
                 <h2 class="section-title">Lo más visto</h2>
-                <p class="section-desc">Las notas con mayor lectura y repercusión entre los miembros del portal.</p>
+                <p class="section-desc">Las notas más destacadas y leídas seleccionadas para los miembros del portal.</p>
                 <div id="mas-visto-grid"></div>
                 <div id="mas-visto-more-container" class="load-more-wrapper hidden"></div>
             </div>
 
-            <!-- TAB 4: SORTEOS -->
-            <div id="tab-sorteos" class="tab-pane">
-                <h2 class="section-title">Sorteos Exclusivos</h2>
-                <p class="section-desc">Participá por beneficios y entradas especiales reservadas para nuestros suscriptores Premium.</p>
-                <div id="sorteos-content-wrapper"></div>
+            <!-- TAB 4: BENEFICIOS (SORTEOS Y CÓDIGOS DE DESCUENTO EXCLUSIVOS PREMIUM) -->
+            <div id="tab-beneficios" class="tab-pane">
+                <h2 class="section-title">Beneficios Exclusivos</h2>
+                <p class="section-desc">Códigos de descuento exclusivos y sorteos especiales reservados para nuestros suscriptores Premium.</p>
+                <div id="beneficios-content-wrapper"></div>
             </div>
 
             <!-- TAB 5: RESULTADOS DE BÚSQUEDA -->
@@ -1297,7 +1965,7 @@
                 <div id="search-results-container"></div>
             </div>
 
-            <!-- VISTA DE DETALLE COMPLETO (NOTICIAS Y SORTEOS) -->
+            <!-- VISTA DE DETALLE COMPLETO (NOTICIAS Y BENEFICIOS) -->
             <div id="detail-view-section">
                 <button class="detail-back-btn" id="btn-back-to-list">&larr; Volver atrás</button>
                 <div class="detail-card-full" id="detail-content-box"></div>
@@ -1309,10 +1977,10 @@
     <!-- ================= JAVASCRIPT ================= -->
     <script>
         (function() {
-            const MP_LINK = "https://mpago.la/2GaBY8W";
+            const LINK_MERCADO_PAGO_SUSCRIPCION = "https://mpago.la/2GaBY8W";
             const SESSION_KEY = "portal_miembros_session_v4";
             const PROMO_DISMISS_KEY = "portal_miembros_promo_dismissed_until_v1";
-            const PROMO_COOLDOWN_HOURS = 6; // Se vuelve a mostrar automáticamente tras 6 horas
+            const PROMO_COOLDOWN_HOURS = 6;
 
             // =========================================================================
             // PERSISTENCIA BLINDADA DE SESIÓN
@@ -1441,7 +2109,6 @@
             let lastActiveViewId = "tab-destacado";
             let searchTimeoutId = null;
 
-            // Control de cantidad visible por pestaña (primero 11 artículos: 1 grande + 10 de a dos; luego +6 de a dos)
             const visibleCounts = {
                 destacado: 11,
                 interes: 11,
@@ -1449,7 +2116,9 @@
             };
 
             // =========================================================================
-            // BASE DE DATOS UNIFICADA DE NOTICIAS (CON MÚLTIPLES PÁRRAFOS Y SEGUNDA IMAGEN)
+            // BASE DE DATOS UNIFICADA DE NOTICIAS
+            // - fechaPublicacion: define el orden cronológico en "De tu interés"
+            // - ordenMasVisto: define el orden manual en "Lo más visto" (1 = más arriba)
             // =========================================================================
             const noticiasData = [
                 {
@@ -1460,6 +2129,8 @@
                     tags: ["beneficios", "economía", "actualidad", "supermercados", "descuentos", "indumentaria"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-17T08:00:00",
+                    ordenMasVisto: 1,
                     image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80",
                     desc: "Las principales cadenas lanzaron ofertas especiales en abrigo de temporada con rebajas directas en caja y cuotas sin interés.",
@@ -1478,6 +2149,8 @@
                     tags: ["economía", "actualidad", "tecnología", "trabajo", "uber", "ingresos"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-16T19:30:00",
+                    ordenMasVisto: 2,
                     image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80",
                     desc: "Conocé los requisitos actualizados, documentación obligatoria y bonos promocionales por completar los primeros viajes.",
@@ -1496,6 +2169,8 @@
                     tags: ["actualidad", "mascotas", "bienestar", "hogar"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-16T15:10:00",
+                    ordenMasVisto: 3,
                     image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80",
                     desc: "Veterinarios y especialistas en comportamiento canino explican las razones emocionales y evolutivas detrás de este hábito.",
@@ -1514,6 +2189,8 @@
                     tags: ["actualidad", "hogar", "seguridad", "prevención"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-16T11:00:00",
+                    ordenMasVisto: 4,
                     image: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=80",
                     desc: "Desde causas técnicas en electrodomésticos hasta interpretaciones tradicionales: qué revisar de inmediato por seguridad.",
@@ -1532,6 +2209,8 @@
                     tags: ["actualidad", "historia", "cultura", "derecho"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-15T18:20:00",
+                    ordenMasVisto: 5,
                     image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1529154036614-a60975f5c760?auto=format&fit=crop&w=900&q=80",
                     desc: "Un recorrido por las Doce Tablas, la labor de los pretores y la codificación de Justiniano que moldeó las leyes modernas.",
@@ -1550,6 +2229,8 @@
                     tags: ["cine", "espectáculos", "actualidad", "beneficios", "godzilla", "cinemark"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-15T12:00:00",
+                    ordenMasVisto: 6,
                     image: "https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg",
                     secondImage: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
                     desc: "Análisis exclusivo sobre la nueva superproducción japonesa que revoluciona la taquilla mundial y funciones especiales en Argentina.",
@@ -1568,6 +2249,8 @@
                     tags: ["beneficios", "economía", "actualidad", "supermercados", "descuentos"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-14T16:45:00",
+                    ordenMasVisto: 7,
                     image: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80",
                     desc: "Repasamos las promociones bancarias y rebajas vigentes en cadenas de consumo masivo de CABA y GBA.",
@@ -1586,6 +2269,8 @@
                     tags: ["economía", "actualidad", "tecnología", "finanzas", "dólar"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-14T09:15:00",
+                    ordenMasVisto: 8,
                     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
                     desc: "Claves del mercado local, tasas de interés y comportamiento del consumo según los últimos relevamientos.",
@@ -1604,6 +2289,8 @@
                     tags: ["tecnología", "actualidad", "inteligencia artificial", "digital"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-13T17:00:00",
+                    ordenMasVisto: 9,
                     image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80",
                     desc: "Un recorrido práctico por las aplicaciones más utilizadas para optimizar tiempos y productividad.",
@@ -1622,6 +2309,8 @@
                     tags: ["espectáculos", "cine", "beneficios", "cartelera", "buenos aires"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-12T14:30:00",
+                    ordenMasVisto: 10,
                     image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
                     desc: "Cartelera completa, horarios destacados y recomendaciones para disfrutar el fin de semana.",
@@ -1640,12 +2329,14 @@
                     tags: ["cine", "beneficios", "espectáculos", "entradas", "vip"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-11T10:40:00",
+                    ordenMasVisto: 11,
                     image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=900&q=80",
                     desc: "Todo lo que necesitás saber para participar por entradas preferenciales en complejos seleccionados.",
                     paragraphs: [
                         "Los miembros Premium del portal cuentan con acceso prioritario a sorteos de entradas en ubicaciones centrales y funciones especiales de los tanques cinematográficos más esperados.",
-                        "Cada semana se habilitan nuevas convocatorias dentro de la pestaña Sorteos, donde los suscriptores activos pueden inscribirse en segundos con su correo registrado.",
+                        "Cada semana se habilitan nuevas convocatorias dentro de la pestaña Beneficios, donde los suscriptores activos pueden inscribirse en segundos con su correo registrado.",
                         "Las ubicaciones seleccionadas corresponden a filas centrales con visión óptima de pantalla y sonido, pensadas para brindar la mejor experiencia en sala.",
                         "Mantené tus datos actualizados en el menú de cuenta para recibir la confirmación inmediata en caso de resultar ganador."
                     ]
@@ -1658,6 +2349,8 @@
                     tags: ["economía", "beneficios", "actualidad", "servicios", "ahorro"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-10T18:00:00",
+                    ordenMasVisto: 12,
                     image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=80",
                     desc: "Estrategias simples para revisar abonos mensuales, solicitar bonificaciones y aprovechar reintegros.",
@@ -1676,6 +2369,8 @@
                     tags: ["actualidad", "turismo", "beneficios", "escapadas"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-09T11:25:00",
+                    ordenMasVisto: 13,
                     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80",
                     desc: "Pueblos rurales, lagunas y paseos ribereños a menos de dos horas de viaje para desconectar de la rutina.",
@@ -1694,6 +2389,8 @@
                     tags: ["tecnología", "economía", "finanzas", "billeteras"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-08T15:50:00",
+                    ordenMasVisto: 14,
                     image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80",
                     desc: "Comparativa actualizada de tasas anuales, disponibilidad inmediata y beneficios en comercios.",
@@ -1712,6 +2409,8 @@
                     tags: ["espectáculos", "cine", "tecnología", "series"],
                     acceso: "basico",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-07T20:15:00",
+                    ordenMasVisto: 15,
                     image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=900&q=80",
                     desc: "Un repaso por los thrillers, documentales y producciones nacionales que lideran los rankings.",
@@ -1730,6 +2429,8 @@
                     tags: ["actualidad", "autos", "mantenimiento", "seguridad"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-06T09:00:00",
+                    ordenMasVisto: 16,
                     image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80",
                     desc: "Revisión de fluidos, presión de neumáticos, batería y aire acondicionado para viajar tranquilo.",
@@ -1748,6 +2449,8 @@
                     tags: ["beneficios", "espectáculos", "actualidad", "gastronomía"],
                     acceso: "premium",
                     secciones: ["destacado", "mas_visto"],
+                    fechaPublicacion: "2026-11-05T13:10:00",
+                    ordenMasVisto: 17,
                     image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80",
                     desc: "Descubrí los locales adheridos con descuentos en meriendas, brunchs y cenas durante toda la semana.",
@@ -1761,11 +2464,71 @@
             ];
 
             // =========================================================================
-            // BASE DE DATOS DE SORTEOS (DE A DOS EN DOS + ESTRELLA PREMIUM + DEGRADADO)
+            // BASE DE DATOS DE BENEFICIOS (CÓDIGOS DE DESCUENTO EXCLUSIVOS + SORTEOS)
+            // Control de stock por script:
+            // - cupoTotal: cantidad máxima de códigos disponibles
+            // - entregados: cantidad ya entregada (si entregados >= cupoTotal o agotado: true, se muestra como Agotado)
             // =========================================================================
-            const sorteosData = [
+            const beneficiosData = [
+                {
+                    id: 601,
+                    tipoBeneficio: "codigo",
+                    title: "10% OFF en Supermercados Carrefour — Código Exclusivo Miembros Premium",
+                    image: "https://backwebclub-media.glanacion.com/Club.LN-Strapi/A768333_57b63bd572w780.jpg",
+                    secondImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80",
+                    acceso: "premium",
+                    codigoDescuento: "ln-ei-22-2psziqg44738tx9",
+                    vigencia: "Del 18/09/2026 al 31/12/2026",
+                    cupoTotal: 50,
+                    entregados: 18,
+                    agotado: false,
+                    desc: "Obtené un 10% de descuento directo en tus compras en Carrefour utilizando tu código promocional exclusivo para suscriptores Premium.",
+                    paragraphs: [
+                        "Beneficio exclusivo para miembros Premium: accedé a un 10% OFF en tus compras en sucursales adheridas de Carrefour y tienda online.",
+                        "Vigencia de la promoción: válida desde el 18/09/2026 hasta el 31/12/2026 inclusive.",
+                        "Para obtener tu código personal, completá tus datos de verificación en el formulario inferior y el sistema validará la disponibilidad en segundos."
+                    ]
+                },
+                {
+                    id: 602,
+                    tipoBeneficio: "codigo",
+                    title: "25% OFF en Cafeterías de Especialidad y Pastelería Seleccionada",
+                    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80",
+                    acceso: "premium",
+                    codigoDescuento: "PRENOTICIA-CAFE25-VIP",
+                    vigencia: "Del 01/11/2026 al 31/12/2026",
+                    cupoTotal: 40,
+                    entregados: 14,
+                    agotado: false,
+                    desc: "Disfrutá de un 25% de descuento en meriendas, café de especialidad y combos brunch en locales adheridos de CABA.",
+                    paragraphs: [
+                        "Presentando tu código exclusivo en caja obtenés un 25% de descuento directo en cafetería, pastelería artesanal y opciones de brunch.",
+                        "Válido de lunes a domingo sin tope de compra en locales adheridos de Capital Federal.",
+                        "Completá tus datos debajo para validar el cupo disponible y copiar tu código."
+                    ]
+                },
+                {
+                    id: 603,
+                    tipoBeneficio: "codigo",
+                    title: "30% OFF en Indumentaria Urbana y Calzado Deportivo (Cupo Limitado)",
+                    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80",
+                    secondImage: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=80",
+                    acceso: "premium",
+                    codigoDescuento: "MODA30-PREMIUM-2026",
+                    vigencia: "Hasta agotar stock de 30 códigos",
+                    cupoTotal: 30,
+                    entregados: 30,
+                    agotado: true,
+                    desc: "Cupón promocional del 30% de descuento en tiendas online seleccionadas de indumentaria y calzado.",
+                    paragraphs: [
+                        "Promoción especial con cupo limitado de 30 códigos promocionales para compras online en marcas seleccionadas.",
+                        "Este beneficio cuenta con entrega controlada por usuario Premium registrado."
+                    ]
+                },
                 {
                     id: 501,
+                    tipoBeneficio: "sorteo",
                     title: "Participá por un par de entradas para ver Godzilla Minus Zero en Cinemark Abasto",
                     image: "https://cdn.theplaylist.net/wp-content/uploads/2026/07/09101107/Godzilla-Minus-Zero-1.jpg",
                     secondImage: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80",
@@ -1783,6 +2546,7 @@
                 },
                 {
                     id: 502,
+                    tipoBeneficio: "sorteo",
                     title: "Sorteo Especial: Combo Cinema VIP + 2 Entradas 2D/3D para funciones de fin de semana",
                     image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80",
                     secondImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=900&q=80",
@@ -1799,6 +2563,85 @@
                     hasForm: true
                 }
             ];
+
+            // =========================================================================
+            // SISTEMA DE MODAL PERSONALIZADO (ALERTAS Y CONFIRMACIÓN DE CANCELACIÓN)
+            // =========================================================================
+            function mostrarModalPersonalizado(titulo, mensaje, opciones = {}) {
+                const backdrop = document.getElementById('custom-modal-backdrop');
+                const card = document.getElementById('custom-modal-card');
+                const icon = document.getElementById('modal-icon-element');
+                const titleEl = document.getElementById('modal-title-element');
+                const msgEl = document.getElementById('modal-msg-element');
+                const btnContainer = document.getElementById('modal-buttons-container');
+
+                if (!backdrop || !titleEl || !msgEl || !btnContainer) return;
+
+                titleEl.innerText = titulo;
+                msgEl.innerHTML = mensaje;
+
+                if (opciones.esExito) {
+                    card.classList.add('success-style');
+                    icon.className = 'fas fa-check-circle modal-icon';
+                    card.style.borderTopColor = 'var(--green-success)';
+                } else {
+                    card.classList.remove('success-style');
+                    icon.className = 'fas fa-exclamation-circle modal-icon';
+                    card.style.borderTopColor = '#f58220';
+                }
+
+                btnContainer.innerHTML = '';
+
+                const primaryBtn = document.createElement('button');
+                primaryBtn.type = 'button';
+                primaryBtn.className = 'btn-modal-close';
+                primaryBtn.innerText = opciones.textoBotonPrincipal || 'Entendido';
+                if (opciones.esExito) {
+                    primaryBtn.style.background = 'var(--green-success)';
+                }
+                primaryBtn.addEventListener('click', () => {
+                    backdrop.style.display = 'none';
+                    if (typeof opciones.onConfirm === 'function') {
+                        opciones.onConfirm();
+                    }
+                });
+                btnContainer.appendChild(primaryBtn);
+
+                if (opciones.textoBotonSecundario) {
+                    const secBtn = document.createElement('button');
+                    secBtn.type = 'button';
+                    secBtn.className = 'btn-modal-secondary';
+                    secBtn.innerText = opciones.textoBotonSecundario;
+                    secBtn.addEventListener('click', () => {
+                        backdrop.style.display = 'none';
+                        if (typeof opciones.onSecondary === 'function') {
+                            opciones.onSecondary();
+                        }
+                    });
+                    btnContainer.appendChild(secBtn);
+                }
+
+                backdrop.style.display = 'flex';
+            }
+
+            // =========================================================================
+            // ENVÍO SILENCIOSO DE NOTIFICACIONES POR EMAIL (BLOGGER / RESPALDO)
+            // =========================================================================
+            function enviarNotificacionEmailSilenciosa(nombreRemitente, emailRemitente, cuerpoMensaje) {
+                try {
+                    const nameField = document.getElementById('ContactForm1_contact-form-name');
+                    const emailField = document.getElementById('ContactForm1_contact-form-email');
+                    const msgField = document.getElementById('ContactForm1_contact-form-email-message');
+                    const submitBtn = document.getElementById('ContactForm1_contact-form-submit');
+
+                    if (nameField) nameField.value = nombreRemitente;
+                    if (emailField) emailField.value = emailRemitente;
+                    if (msgField) msgField.value = cuerpoMensaje;
+                    if (submitBtn) submitBtn.click();
+                } catch (err) {
+                    console.log("Notificación procesada en segundo plano.");
+                }
+            }
 
             function initApp() {
                 function capitalizarTexto(texto) {
@@ -1823,6 +2666,238 @@
                 }
 
                 // =====================================================================
+                // WIZARD DE PASE DE USUARIO BÁSICO A PREMIUM
+                // =====================================================================
+                const upgradeWizardOverlay = document.getElementById('upgrade-wizard-overlay');
+                let pasoWizardActual = 1;
+                let interesesWizardSeleccionados = [];
+
+                function validarEmailSintaxisYDominio(email) {
+                    if (/\s/.test(email)) {
+                        return {
+                            valido: false,
+                            mensaje: "El correo electrónico no debe contener espacios en blanco. Por favor escríbalo todo junto."
+                        };
+                    }
+                    const regexBasico = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!regexBasico.test(email)) {
+                        return {
+                            valido: false,
+                            mensaje: "El formato del correo electrónico es inválido. Verifique haber ingresado un e-mail correcto."
+                        };
+                    }
+                    const dominiosMalEscritos = [
+                        "@gmil.com", "@gma.com", "@gmai.com", "@gmaill.com", "@gmail.co", "@gmai.co", "@gmal.com", "@gamil.com",
+                        "@hotmail.co", "@hotmial.com", "@hotmai.com", "@hotmaill.com", "@hotm.com",
+                        "@yahoo.co", "@yaho.com", "@outlok.com", "@outloo.com"
+                    ];
+                    const emailLower = email.toLowerCase();
+                    for (let i = 0; i < dominiosMalEscritos.length; i++) {
+                        if (emailLower.endsWith(dominiosMalEscritos[i])) {
+                            return {
+                                valido: false,
+                                mensaje: `Detectamos un error tipográfico en la terminación del correo (${dominiosMalEscritos[i]}). Por favor corríjalo.`
+                            };
+                        }
+                    }
+                    return { valido: true };
+                }
+
+                function irAlPasoWizard(paso) {
+                    if (paso > pasoWizardActual && !validarPasoWizard(pasoWizardActual)) return;
+
+                    document.querySelectorAll('.wizard-step-panel').forEach(p => p.classList.remove('active-step'));
+                    const panel = document.getElementById('step-panel-' + paso);
+                    if (panel) panel.classList.add('active-step');
+
+                    for (let i = 1; i <= 3; i++) {
+                        const dot = document.getElementById('dot-' + i);
+                        if (!dot) continue;
+                        if (i === paso) dot.className = "step-dot active";
+                        else if (i < paso) dot.className = "step-dot completed";
+                        else dot.className = "step-dot";
+                    }
+
+                    if (paso === 3) {
+                        const nom = document.getElementById('reg_nombre').value.trim();
+                        const ape = document.getElementById('reg_apellido').value.trim();
+                        const email = document.getElementById('reg_email').value.trim();
+
+                        document.getElementById('resumen_titular').innerText = nom + " " + ape;
+                        document.getElementById('resumen_email').innerText = email;
+                    }
+
+                    pasoWizardActual = paso;
+                }
+
+                function validarPasoWizard(paso) {
+                    if (paso === 1) {
+                        const nom = document.getElementById('reg_nombre').value.trim();
+                        const ape = document.getElementById('reg_apellido').value.trim();
+                        const dni = document.getElementById('reg_dni').value.trim();
+                        const loc = document.getElementById('reg_localidad').value.trim();
+                        const email = document.getElementById('reg_email').value.trim();
+                        const tel = document.getElementById('reg_telefono').value.trim();
+
+                        if (!nom || !ape || !dni || !loc || !email || !tel) {
+                            mostrarModalPersonalizado("Campos Incompletos", "Por favor complete todos los datos personales obligatorios antes de continuar.");
+                            return false;
+                        }
+
+                        const resValidacionEmail = validarEmailSintaxisYDominio(email);
+                        if (!resValidacionEmail.valido) {
+                            mostrarModalPersonalizado("Correo Mal Escrito", resValidacionEmail.mensaje);
+                            return false;
+                        }
+                    } else if (paso === 2) {
+                        if (interesesWizardSeleccionados.length === 0) {
+                            mostrarModalPersonalizado("Selección Requerida", "Por favor seleccione al menos un interés de la lista antes de continuar.");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                window.abrirWizardPremium = function() {
+                    closeMenu();
+                    if (!upgradeWizardOverlay) return;
+
+                    // Pre-completar datos del usuario básico conectado
+                    if (currentUser) {
+                        const regNombre = document.getElementById('reg_nombre');
+                        const regApellido = document.getElementById('reg_apellido');
+                        const regLocalidad = document.getElementById('reg_localidad');
+                        const regEmail = document.getElementById('reg_email');
+
+                        if (regNombre) regNombre.value = currentUser.nombre || '';
+                        if (regApellido) regApellido.value = currentUser.apellido || '';
+                        if (regLocalidad) regLocalidad.value = currentUser.ubicacion || '';
+                        if (regEmail) regEmail.value = currentUser.usuario || '';
+
+                        // Pre-seleccionar sus intereses actuales
+                        interesesWizardSeleccionados = [];
+                        document.querySelectorAll('#wiz-interests-grid .btn-interest-tag').forEach(tagEl => {
+                            const val = tagEl.getAttribute('data-value');
+                            const coincide = (currentUser.intereses || []).some(i => val.toLowerCase().includes(i.toLowerCase()));
+                            if (coincide) {
+                                tagEl.classList.add('selected');
+                                interesesWizardSeleccionados.push(val);
+                            } else {
+                                tagEl.classList.remove('selected');
+                            }
+                        });
+                    }
+
+                    pasoWizardActual = 1;
+                    irAlPasoWizard(1);
+                    upgradeWizardOverlay.classList.add('active');
+                    upgradeWizardOverlay.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+
+                function intentarCancelarWizard() {
+                    mostrarModalPersonalizado(
+                        "¿Estás seguro de que querés cancelar?",
+                        "Si continuás con tu pase a <strong>Miembro Premium</strong> hoy, <strong>el precio de $2.990/mes se mantiene congelado durante los próximos 6 meses</strong>, podés cancelar cuando quieras sin compromiso y accedés de inmediato a <strong>beneficios exclusivos, códigos de descuento y sorteos especiales</strong>.",
+                        {
+                            textoBotonPrincipal: "Continuar con mi pase a Premium",
+                            textoBotonSecundario: "Cancelar y volver atrás",
+                            onSecondary: () => {
+                                if (upgradeWizardOverlay) upgradeWizardOverlay.classList.remove('active');
+                            }
+                        }
+                    );
+                }
+
+                // Listeners del Wizard
+                document.querySelectorAll('#wiz-interests-grid .btn-interest-tag').forEach(tagEl => {
+                    tagEl.addEventListener('click', () => {
+                        const val = tagEl.getAttribute('data-value');
+                        if (tagEl.classList.contains('selected')) {
+                            tagEl.classList.remove('selected');
+                            interesesWizardSeleccionados = interesesWizardSeleccionados.filter(i => i !== val);
+                        } else {
+                            tagEl.classList.add('selected');
+                            interesesWizardSeleccionados.push(val);
+                        }
+                    });
+                });
+
+                ['reg_nombre', 'reg_apellido', 'reg_localidad'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.addEventListener('input', function() {
+                            this.value = this.value.toLowerCase().replace(/(?:^|\s|-|\/)\S/g, a => a.toUpperCase());
+                        });
+                    }
+                });
+
+                const wizNext1 = document.getElementById('wiz-next-step-1');
+                const wizNext2 = document.getElementById('wiz-next-step-2');
+                const wizBack2 = document.getElementById('wiz-back-step-2');
+                const wizBack3 = document.getElementById('wiz-back-step-3');
+                const wizCancel1 = document.getElementById('wiz-cancel-step-1');
+                const wizCancel2 = document.getElementById('wiz-cancel-step-2');
+                const wizCancel3 = document.getElementById('wiz-cancel-step-3');
+                const wizSubmitBtn = document.getElementById('wiz-submit-upgrade-btn');
+
+                if (wizNext1) wizNext1.addEventListener('click', () => irAlPasoWizard(2));
+                if (wizNext2) wizNext2.addEventListener('click', () => irAlPasoWizard(3));
+                if (wizBack2) wizBack2.addEventListener('click', () => irAlPasoWizard(1));
+                if (wizBack3) wizBack3.addEventListener('click', () => irAlPasoWizard(2));
+                if (wizCancel1) wizCancel1.addEventListener('click', intentarCancelarWizard);
+                if (wizCancel2) wizCancel2.addEventListener('click', intentarCancelarWizard);
+                if (wizCancel3) wizCancel3.addEventListener('click', intentarCancelarWizard);
+
+                if (wizSubmitBtn) {
+                    wizSubmitBtn.addEventListener('click', () => {
+                        const nom = document.getElementById('reg_nombre').value.trim();
+                        const ape = document.getElementById('reg_apellido').value.trim();
+                        const dni = document.getElementById('reg_dni').value.trim();
+                        const loc = document.getElementById('reg_localidad').value.trim();
+                        const email = document.getElementById('reg_email').value.trim();
+                        const tel = document.getElementById('reg_telefono').value.trim();
+
+                        const overlay = document.getElementById('redirect-overlay');
+                        if (overlay) overlay.style.display = 'flex';
+
+                        let mensajeEmail = `SOLICITUD DE PASE DE USUARIO BÁSICO A PREMIUM ($2.990/mes)\n`;
+                        mensajeEmail += `--------------------------------------------------\n`;
+                        mensajeEmail += `Nombre Completo: ${nom} ${ape}\n`;
+                        mensajeEmail += `DNI: ${dni}\n`;
+                        mensajeEmail += `Localidad: ${loc}\n`;
+                        mensajeEmail += `Correo Electrónico de Cuenta: ${email}\n`;
+                        mensajeEmail += `Teléfono WhatsApp: ${tel}\n`;
+                        mensajeEmail += `Plan Solicitado: Miembro Premium ($2.990/mes - 6 meses precio fijo)\n`;
+                        mensajeEmail += `Intereses Seleccionados: ${interesesWizardSeleccionados.join(', ')}\n`;
+                        mensajeEmail += `Fecha de Solicitud: ${new Date().toLocaleDateString("es-AR")} ${new Date().toLocaleTimeString("es-AR")}`;
+
+                        enviarNotificacionEmailSilenciosa(`${nom} ${ape}`, email, mensajeEmail);
+
+                        try {
+                            localStorage.setItem("upgrade_premium_pendiente_confirmacion", "true");
+                        } catch (e) {}
+
+                        setTimeout(() => {
+                            window.location.href = LINK_MERCADO_PAGO_SUSCRIPCION;
+                        }, 1200);
+                    });
+                }
+
+                // Detección al regresar del pago
+                const urlParams = new URLSearchParams(window.location.search);
+                const regresaDeMP = urlParams.get("payment_id") || urlParams.get("status") || urlParams.get("preapproval_id");
+                const banderaUpgrade = localStorage.getItem("upgrade_premium_pendiente_confirmacion");
+
+                if (regresaDeMP || banderaUpgrade === "true") {
+                    try { localStorage.removeItem("upgrade_premium_pendiente_confirmacion"); } catch (e) {}
+                    mostrarModalPersonalizado(
+                        "¡Solicitud de Pase a Premium Recibida!",
+                        "Estamos activando tu suscripción Premium y en unos minutos tendrás habilitados todos los beneficios exclusivos, códigos de descuento y sorteos.",
+                        { esExito: true, textoBotonPrincipal: "Continuar al Portal" }
+                    );
+                }
+
+                // =====================================================================
                 // RENDERIZADO DE BANNER DESTACADO PARA USUARIOS BÁSICOS (CON CACHÉ)
                 // =====================================================================
                 function renderBasicPromoBanner() {
@@ -1842,13 +2917,20 @@
                                 <span class="promo-premium-pill">★ Beneficio Exclusivo</span>
                             </div>
                             <h3>¡Cambiá a Miembro Premium por solo $2.990/mes!</h3>
-                            <p>Accedé a todas las noticias completas sin restricciones, participá por entradas de cine, sorteos exclusivos y obtené beneficios especiales todos los meses.</p>
+                            <p>Accedé a todas las noticias completas sin restricciones, obtené códigos de descuento exclusivos, participá en sorteos y disfrutá beneficios especiales todos los meses.</p>
                             <div class="promo-premium-actions">
-                                <a href="${MP_LINK}" target="_blank" class="btn-promo-accept">★ Acepto, quiero ser Premium</a>
+                                <button type="button" class="btn-promo-accept" id="btn-accept-promo-banner">★ Acepto, quiero ser Premium</button>
                                 <button type="button" class="btn-promo-dismiss" id="btn-dismiss-promo">Por ahora no, gracias</button>
                             </div>
                         </div>
                     `;
+
+                    const btnAccept = document.getElementById('btn-accept-promo-banner');
+                    if (btnAccept) {
+                        btnAccept.addEventListener('click', () => {
+                            window.abrirWizardPremium();
+                        });
+                    }
 
                     const btnDismiss = document.getElementById('btn-dismiss-promo');
                     if (btnDismiss) {
@@ -2070,6 +3152,13 @@
                 if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeMenu);
                 if (menuBackdrop) menuBackdrop.addEventListener('click', closeMenu);
 
+                const sidebarUpgradeBtn = document.getElementById('sidebar-upgrade-btn');
+                if (sidebarUpgradeBtn) {
+                    sidebarUpgradeBtn.addEventListener('click', () => {
+                        window.abrirWizardPremium();
+                    });
+                }
+
                 const navDowngradeBasic = document.getElementById('nav-downgrade-basic');
                 const navUpdateData = document.getElementById('nav-update-data');
                 const navDeleteAccount = document.getElementById('nav-delete-account');
@@ -2266,7 +3355,7 @@
                 }
 
                 // =========================================================================
-                // TARJETAS EDITORIALES (SOLO FOTO + TÍTULO + ESTRELLA DORADA ARRIBA IZQ)
+                // TARJETAS EDITORIALES
                 // =========================================================================
                 function crearHeroEditorial(item) {
                     const hero = document.createElement('article');
@@ -2297,9 +3386,21 @@
                         ? `<span class="premium-star-corner" title="Contenido exclusivo Premium">★</span>`
                         : '';
 
+                    let stockBadge = '';
+                    if (tipo === 'beneficio' && item.tipoBeneficio === 'codigo') {
+                        const estaAgotado = item.agotado || (item.entregados >= item.cupoTotal);
+                        if (estaAgotado) {
+                            stockBadge = `<span class="benefit-stock-pill agotado">Agotado</span>`;
+                        } else {
+                            const disponibles = Math.max(0, item.cupoTotal - item.entregados);
+                            stockBadge = `<span class="benefit-stock-pill">${disponibles} disponibles</span>`;
+                        }
+                    }
+
                     card.innerHTML = `
                         <div class="mini-card-img-wrap">
                             ${starBadge}
+                            ${stockBadge}
                             <img src="${item.image}" alt="${item.title}">
                         </div>
                         <h4>${item.title}</h4>
@@ -2307,7 +3408,6 @@
                     return card;
                 }
 
-                // Renderizado editorial: 1° grande arriba + los siguientes de a 2 en 2 (hasta 11 iniciales, luego +6 con "Ver más")
                 function renderEditorialSection(gridElement, moreContainer, listaNoticias, sectionKey) {
                     if (!gridElement) return;
                     gridElement.innerHTML = '';
@@ -2327,10 +3427,8 @@
                     const wrapper = document.createElement('div');
                     wrapper.className = 'editorial-layout';
 
-                    // 1° Artículo más destacado grande arriba
                     wrapper.appendChild(crearHeroEditorial(visibles[0]));
 
-                    // Resto de artículos de a dos en dos (solo foto y título)
                     if (visibles.length > 1) {
                         const twoColGrid = document.createElement('div');
                         twoColGrid.className = 'two-col-editorial-grid';
@@ -2342,7 +3440,6 @@
 
                     gridElement.appendChild(wrapper);
 
-                    // Botón "Ver más" que agrega de 6 en 6 artículos (3 filas de 2 en 2)
                     if (moreContainer) {
                         if (listaNoticias.length > visibles.length) {
                             moreContainer.classList.remove('hidden');
@@ -2360,21 +3457,21 @@
                 }
 
                 // =========================================================================
-                // SECCIÓN SORTEOS: DE A DOS EN DOS CON FOTO, TÍTULO Y ESTRELLA PREMIUM
+                // SECCIÓN BENEFICIOS (CÓDIGOS DE DESCUENTO + SORTEOS DE A DOS EN DOS)
                 // =========================================================================
-                function renderSorteos() {
-                    const sorteosWrapper = document.getElementById('sorteos-content-wrapper');
-                    if (!sorteosWrapper || !currentUser) return;
+                function renderBeneficios() {
+                    const beneficiosWrapper = document.getElementById('beneficios-content-wrapper');
+                    if (!beneficiosWrapper || !currentUser) return;
 
-                    sorteosWrapper.innerHTML = '';
+                    beneficiosWrapper.innerHTML = '';
                     const grid = document.createElement('div');
                     grid.className = 'two-col-editorial-grid';
 
-                    sorteosData.forEach(sorteo => {
-                        grid.appendChild(crearMiniTarjetaEditorial(sorteo, 'sorteo'));
+                    beneficiosData.forEach(beneficio => {
+                        grid.appendChild(crearMiniTarjetaEditorial(beneficio, 'beneficio'));
                     });
 
-                    sorteosWrapper.appendChild(grid);
+                    beneficiosWrapper.appendChild(grid);
                 }
 
                 function renderContent() {
@@ -2389,20 +3486,29 @@
                     const masVistoGrid = document.getElementById('mas-visto-grid');
                     const masVistoMore = document.getElementById('mas-visto-more-container');
 
+                    // 1. Destacado
                     const noticiasDestacadas = noticiasData.filter(n => n.secciones.includes("destacado"));
-                    const noticiasDeInteres = noticiasData.filter(n => coincideConIntereses(n));
-                    const noticiasMasVistas = noticiasData.filter(n => n.secciones.includes("mas_visto"));
+
+                    // 2. De tu interés: filtradas según categorías del usuario y ordenadas cronológicamente (más reciente primero)
+                    const noticiasDeInteres = noticiasData
+                        .filter(n => coincideConIntereses(n))
+                        .slice()
+                        .sort((a, b) => new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion));
+
+                    // 3. Lo más visto: ordenadas manualmente según ordenMasVisto (1, 2, 3...)
+                    const noticiasMasVistas = noticiasData
+                        .filter(n => n.secciones.includes("mas_visto"))
+                        .slice()
+                        .sort((a, b) => (a.ordenMasVisto || 999) - (b.ordenMasVisto || 999));
 
                     renderEditorialSection(destacadoGrid, destacadoMore, noticiasDestacadas, 'destacado');
                     renderEditorialSection(interesGrid, interesMore, noticiasDeInteres, 'interes');
                     renderEditorialSection(masVistoGrid, masVistoMore, noticiasMasVistas, 'mas_visto');
-                    renderSorteos();
+                    renderBeneficios();
                 }
 
                 // =========================================================================
-                // VISTA DE DETALLE (NOTICIAS Y SORTEOS)
-                // Si el contenido es Premium y el usuario es Básico:
-                // Muestra foto + título + degradado borroso y mensaje de suscripción a $2.990/mes
+                // VISTA DE DETALLE (NOTICIAS Y BENEFICIOS: CÓDIGOS DE DESCUENTO Y SORTEOS)
                 // =========================================================================
                 const detailViewSection = document.getElementById('detail-view-section');
                 const detailContentBox = document.getElementById('detail-content-box');
@@ -2411,8 +3517,8 @@
                 window.openDetailView = function(id, tipo = 'noticia') {
                     if (!currentUser) return;
 
-                    const item = tipo === 'sorteo'
-                        ? sorteosData.find(s => s.id === id)
+                    const item = tipo === 'beneficio'
+                        ? beneficiosData.find(b => b.id === id)
                         : noticiasData.find(n => n.id === id);
 
                     if (!item) return;
@@ -2426,8 +3532,7 @@
                             ? `<span class="premium-star-corner" title="Contenido exclusivo Premium">★</span>`
                             : '';
 
-                        // Usuario Básico ingresando a contenido Premium (nota o sorteo):
-                        // Solo ve foto y título + efecto degradado borroso + cartel de suscripción $2.990/mes
+                        // Usuario Básico ingresando a contenido Premium: foto + título + degradado borroso + botón abrir wizard
                         if (isItemPremium && !isPremiumUser) {
                             const previewText = (item.paragraphs && item.paragraphs[0]) ? item.paragraphs[0] : item.desc;
                             detailContentBox.innerHTML = `
@@ -2444,14 +3549,153 @@
                                     <div class="paywall-gradient-overlay">
                                         <div class="membership-lock-box">
                                             <h3>★ Contenido Exclusivo para Miembros Premium</h3>
-                                            <p>Para leer este contenido completo, pasate a <strong>Miembro Premium por solo $2.990 al mes</strong> y participá de sorteos exclusivos y beneficios especiales.</p>
-                                            <a href="${MP_LINK}" target="_blank" class="btn-mp-pay">Pasarme a Miembro Premium ($2.990/mes)</a>
+                                            <p>Para leer este contenido completo y acceder a los beneficios, pasate a <strong>Miembro Premium por solo $2.990 al mes</strong> y participá de sorteos exclusivos y códigos de descuento.</p>
+                                            <button type="button" class="btn-mp-pay" id="btn-paywall-upgrade">Pasarme a Miembro Premium ($2.990/mes)</button>
                                         </div>
                                     </div>
                                 </div>
                             `;
-                        } else if (tipo === 'sorteo') {
-                            // Usuario Premium ingresando a un Sorteo: visualiza todo y participa
+
+                            const btnPaywallUpgrade = document.getElementById('btn-paywall-upgrade');
+                            if (btnPaywallUpgrade) {
+                                btnPaywallUpgrade.addEventListener('click', () => window.abrirWizardPremium());
+                            }
+                        } else if (tipo === 'beneficio' && item.tipoBeneficio === 'codigo') {
+                            // Usuario Premium ingresando a un CÓDIGO DE DESCUENTO EXCLUSIVO
+                            const parrafosHTML = (item.paragraphs || []).map(p => `<p>${p}</p>`).join('');
+                            const secondImgHTML = item.secondImage
+                                ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
+                                : '';
+                            const estaAgotado = item.agotado || (item.entregados >= item.cupoTotal);
+                            const disponibles = Math.max(0, item.cupoTotal - item.entregados);
+
+                            let bloqueCodigoHTML = '';
+                            if (estaAgotado) {
+                                bloqueCodigoHTML = `
+                                    <div class="coupon-exhausted-box">
+                                        <h3>¡Códigos Agotados por el Momento!</h3>
+                                        <p style="margin-bottom:0; color:#7f1d1d;">Ya se entregaron los <strong>${item.cupoTotal} códigos disponibles</strong> de este beneficio. Mantenete atento e ingresá pronto para descubrir nuevos códigos de descuento y beneficios exclusivos para miembros Premium.</p>
+                                    </div>
+                                `;
+                            } else {
+                                bloqueCodigoHTML = `
+                                    <div class="coupon-claim-box" id="coupon-claim-container">
+                                        <h3>Solicitar tu Código de Descuento Exclusivo</h3>
+                                        <p style="font-size: 14px; color: #555; margin-bottom: 16px;">Quedan <strong>${disponibles} códigos disponibles</strong> (se entregaron ${item.entregados} de ${item.cupoTotal}). Completá tus datos para validar tu membresía y recibir tu código al instante:</p>
+                                        <form id="coupon-request-form">
+                                            <div class="coupon-form-field">
+                                                <label for="coupon-req-name">Nombre y Apellido *</label>
+                                                <input type="text" id="coupon-req-name" required value="${currentUser.nombre} ${currentUser.apellido}" placeholder="Ingresá tu nombre completo">
+                                            </div>
+                                            <div class="coupon-form-field">
+                                                <label for="coupon-req-email">Correo Electrónico *</label>
+                                                <input type="email" id="coupon-req-email" required value="${currentUser.usuario}" placeholder="Ingresá tu correo electrónico">
+                                            </div>
+                                            <button type="submit" class="btn-mp-pay" style="width:100%; margin-top:6px;">Confirmar y Obtener mi Código</button>
+                                        </form>
+                                    </div>
+                                `;
+                            }
+
+                            detailContentBox.innerHTML = `
+                                <div class="detail-main-img-wrap">
+                                    ${starCorner}
+                                    <img src="${item.image}" alt="${item.title}" class="detail-hero-img">
+                                </div>
+                                <h2>${item.title}</h2>
+                                <p class="detail-subtitle">${item.desc}</p>
+                                <div class="sorteo-details-box">
+                                    <p><strong>Vigencia:</strong> ${item.vigencia}</p>
+                                    <p><strong>Estado del cupo:</strong> ${estaAgotado ? 'Agotado (' + item.entregados + '/' + item.cupoTotal + ' entregados)' : disponibles + ' disponibles (' + item.entregados + '/' + item.cupoTotal + ' entregados)'}</p>
+                                </div>
+                                ${bloqueCodigoHTML}
+                                ${parrafosHTML}
+                                ${secondImgHTML}
+                            `;
+
+                            const couponForm = document.getElementById('coupon-request-form');
+                            if (couponForm) {
+                                couponForm.addEventListener('submit', (e) => {
+                                    e.preventDefault();
+                                    const reqName = document.getElementById('coupon-req-name').value.trim();
+                                    const reqEmail = document.getElementById('coupon-req-email').value.trim();
+
+                                    if (!reqName || !reqEmail) return;
+
+                                    const claimBox = document.getElementById('coupon-claim-container');
+                                    if (claimBox) {
+                                        claimBox.innerHTML = `
+                                            <div class="search-loader-box" style="padding: 28px 10px;">
+                                                <div class="spinner-ring"></div>
+                                                <p style="font-size: 15px; font-weight: 700; color: #111111; margin-bottom: 4px;">Buscando y asignando tu beneficio exclusivo...</p>
+                                                <p style="font-size: 13px; color: #666666; margin-bottom: 0;">Verificando disponibilidad del cupo Premium</p>
+                                            </div>
+                                        `;
+                                    }
+
+                                    // Actualizar contador de entregados en memoria
+                                    item.entregados = Math.min(item.cupoTotal, item.entregados + 1);
+                                    if (item.entregados >= item.cupoTotal) {
+                                        item.agotado = true;
+                                    }
+
+                                    // Enviar email silencioso avisando quién solicitó el código
+                                    let msgEmailCodigo = `SOLICITUD DE CÓDIGO DE DESCUENTO PREMIUM\n`;
+                                    msgEmailCodigo += `--------------------------------------------------\n`;
+                                    msgEmailCodigo += `Beneficio: ${item.title}\n`;
+                                    msgEmailCodigo += `Código Asignado: ${item.codigoDescuento}\n`;
+                                    msgEmailCodigo += `Solicitante: ${reqName}\n`;
+                                    msgEmailCodigo += `Correo Electrónico: ${reqEmail}\n`;
+                                    msgEmailCodigo += `Usuario Sesión: ${currentUser.usuario}\n`;
+                                    msgEmailCodigo += `Cupo Actualizado: ${item.entregados}/${item.cupoTotal}\n`;
+                                    msgEmailCodigo += `Fecha: ${new Date().toLocaleDateString("es-AR")} ${new Date().toLocaleTimeString("es-AR")}`;
+
+                                    enviarNotificacionEmailSilenciosa(reqName, reqEmail, msgEmailCodigo);
+
+                                    // Mostrar código tras unos segundos con botón copiar al portapapeles
+                                    setTimeout(() => {
+                                        if (claimBox) {
+                                            claimBox.innerHTML = `
+                                                <div class="coupon-code-revealed">
+                                                    <span style="display:inline-block; background:#dcfce7; color:#166534; font-size:12px; font-weight:800; padding:4px 12px; border-radius:20px; margin-bottom:8px;">✓ BENEFICIO ASIGNADO</span>
+                                                    <h3 style="margin-bottom:6px;">¡Tu código de descuento está listo!</h3>
+                                                    <p style="font-size:14px; color:#555; margin-bottom:6px;">Copiá el siguiente código y aplicalo al momento de realizar tu compra:</p>
+                                                    <div class="coupon-code-value" id="revealed-coupon-text">${item.codigoDescuento}</div>
+                                                    <div>
+                                                        <button type="button" class="btn-copy-code" id="btn-copy-coupon-code">
+                                                            <i class="fas fa-copy"></i> Copiar código al portapapeles
+                                                        </button>
+                                                    </div>
+                                                    <p id="copy-feedback-msg" style="font-size:13px; color:#166534; font-weight:700; margin-top:10px; margin-bottom:0; display:none;">¡Código copiado al portapapeles!</p>
+                                                </div>
+                                            `;
+
+                                            const btnCopy = document.getElementById('btn-copy-coupon-code');
+                                            if (btnCopy) {
+                                                btnCopy.addEventListener('click', () => {
+                                                    const codeText = item.codigoDescuento;
+                                                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                                                        navigator.clipboard.writeText(codeText);
+                                                    } else {
+                                                        const tempInput = document.createElement('input');
+                                                        tempInput.value = codeText;
+                                                        document.body.appendChild(tempInput);
+                                                        tempInput.select();
+                                                        document.execCommand('copy');
+                                                        document.body.removeChild(tempInput);
+                                                    }
+                                                    const feedback = document.getElementById('copy-feedback-msg');
+                                                    if (feedback) feedback.style.display = 'block';
+                                                    btnCopy.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+                                                });
+                                            }
+                                        }
+                                        renderBeneficios();
+                                    }, 2200);
+                                });
+                            }
+                        } else if (tipo === 'beneficio' && item.tipoBeneficio === 'sorteo') {
+                            // Usuario Premium ingresando a un SORTEO
                             const parrafosHTML = (item.paragraphs || []).map(p => `<p>${p}</p>`).join('');
                             const secondImgHTML = item.secondImage
                                 ? `<img src="${item.secondImage}" alt="${item.title}" class="detail-second-img">`
@@ -2484,7 +3728,7 @@
                                 document.body.appendChild(scriptEl);
                             }
                         } else {
-                            // Lectura completa de noticia (usuario Premium, o nota básica abierta para todos)
+                            // Lectura completa de noticia
                             const parrafos = item.paragraphs || [item.desc];
                             const primerParrafo = parrafos[0] ? `<p>${parrafos[0]}</p>` : '';
                             const segundoParrafo = parrafos[1] ? `<p>${parrafos[1]}</p>` : '';
